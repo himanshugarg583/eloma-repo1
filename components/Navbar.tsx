@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { Menu, X } from "lucide-react";
+import { Menu, Phone, X } from "lucide-react";
 
 import {
   groupName,
@@ -23,6 +23,9 @@ const navItems = [
   { key: "why" as const, label: "Why Us" },
   { key: "industries" as const, label: "Industries" }
 ];
+
+const phoneNumber = "1800 710 388";
+const phoneHref = "tel:1800710388";
 
 function MegaMenu({ menuKey }: { menuKey: MenuKey }) {
   const baseItems =
@@ -101,17 +104,22 @@ export default function Navbar() {
   return (
     <header
       className={cn(
-        "fixed top-0 z-50 w-full border-b border-forest/10 bg-white transition-all",
-        isScrolled ? "shadow-sm" : ""
+        "fixed top-0 z-50 w-full px-3 pt-3 transition-all sm:px-4 sm:pt-4 md:px-6",
+        isScrolled ? "" : ""
       )}
       onMouseLeave={() => setActiveMenu(null)}
     >
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
+      <div
+        className={cn(
+          "mx-auto flex max-w-6xl items-center justify-between rounded-full border border-forest/10 bg-white/90 px-4 py-2 backdrop-blur sm:px-5 sm:py-3",
+          isScrolled ? "shadow-2xl shadow-forest/20" : "shadow-xl shadow-forest/10"
+        )}
+      >
         <Link href="#home" className="group flex items-center gap-3">
-          <span className="flex h-10 w-10 items-center justify-center rounded-full border border-forest/20 text-lg font-semibold text-forest">
+          <span className="flex h-9 w-9 items-center justify-center rounded-full border border-forest/20 text-lg font-semibold text-forest sm:h-10 sm:w-10">
             E
           </span>
-          <span className="font-display text-lg tracking-[0.16em] text-forest">
+          <span className="font-display text-sm tracking-[0.12em] text-forest sm:text-lg sm:tracking-[0.16em]">
             {groupName}
           </span>
         </Link>
@@ -120,7 +128,7 @@ export default function Navbar() {
           {navItems.map((item) => (
             <button
               key={item.key}
-              className="group relative text-sm font-medium uppercase tracking-[0.18em] text-forest/80"
+              className="group relative text-xs font-semibold uppercase tracking-[0.22em] text-forest/70"
               onMouseEnter={() => setActiveMenu(item.key)}
             >
               <span className="relative">
@@ -131,7 +139,7 @@ export default function Navbar() {
           ))}
           <Link
             href="#career"
-            className="group relative text-sm font-medium uppercase tracking-[0.18em] text-forest/80"
+            className="group relative text-xs font-semibold uppercase tracking-[0.22em] text-forest/70"
           >
             <span className="relative">
               Career
@@ -139,7 +147,7 @@ export default function Navbar() {
             </span>
           </Link>
           <button
-            className="group relative text-sm font-medium uppercase tracking-[0.18em] text-forest/80"
+            className="group relative text-xs font-semibold uppercase tracking-[0.22em] text-forest/70"
             onMouseEnter={() => setActiveMenu("locations")}
           >
             <span className="relative">
@@ -150,8 +158,14 @@ export default function Navbar() {
         </nav>
 
         <div className="hidden items-center gap-3 lg:flex">
-          <Button variant="outline">Investor Portal</Button>
-          <Button>Partner with Us</Button>
+          <Link
+            href={phoneHref}
+            className="flex items-center gap-2 rounded-full border border-forest/10 bg-white px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-forest/80 transition-colors hover:border-forest/30"
+          >
+            <Phone size={16} className="text-forest/70" />
+            <span>{phoneNumber}</span>
+          </Link>
+          <Button size="lg">Request a Quote</Button>
         </div>
 
         <button
@@ -171,7 +185,7 @@ export default function Navbar() {
             initial={{ opacity: 0, y: -12 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -12 }}
-            className="border-t border-forest/10 bg-white/95 px-6 py-6 lg:hidden"
+            className="mx-4 mt-4 rounded-3xl border border-forest/10 bg-white/95 px-6 py-6 shadow-lg backdrop-blur lg:hidden"
           >
             <div className="space-y-6">
               {navItems.map((item) => (
@@ -207,8 +221,14 @@ export default function Navbar() {
                 </ul>
               </div>
               <div className="flex flex-col gap-3">
-                <Button variant="outline">Investor Portal</Button>
-                <Button>Partner with Us</Button>
+                <Link
+                  href={phoneHref}
+                  className="flex items-center justify-center gap-2 rounded-full border border-forest/10 bg-white px-4 py-3 text-xs font-semibold uppercase tracking-[0.2em] text-forest/80"
+                >
+                  <Phone size={16} className="text-forest/70" />
+                  <span>{phoneNumber}</span>
+                </Link>
+                <Button size="lg">Request a Quote</Button>
                 <Link href="#career" className="text-sm font-medium text-forest">
                   Career
                 </Link>

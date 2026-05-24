@@ -47,7 +47,7 @@ export default function Hero() {
       className="relative overflow-hidden bg-hero-radial"
     >
       <div className="pointer-events-none absolute inset-0 subtle-grid opacity-40" />
-      <div className="mx-auto grid min-h-[92vh] max-w-6xl items-center gap-10 px-6 pb-16 pt-28 lg:grid-cols-2">
+      <div className="mx-auto grid min-h-[78vh] max-w-6xl items-center gap-8 px-5 pb-12 pt-24 sm:min-h-[84vh] sm:gap-10 sm:px-6 sm:pb-16 sm:pt-28 lg:min-h-[92vh] lg:grid-cols-2">
         <div className="space-y-8">
           <p
             data-hero
@@ -62,14 +62,16 @@ export default function Hero() {
             A legacy of infrastructure, logistics, and innovation united to
             deliver premium experiences across industries and continents.
           </p>
-          <div data-hero className="flex flex-wrap gap-4">
-            <Button size="lg">Explore Group</Button>
-            <Button variant="outline" size="lg">
+          <div data-hero className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:gap-4">
+            <Button size="lg" className="w-full sm:w-auto">
+              Explore Group
+            </Button>
+            <Button variant="outline" size="lg" className="w-full sm:w-auto">
               View Companies
             </Button>
           </div>
         </div>
-        <div className="hero-orb h-[420px] w-full lg:h-[520px]">
+        <div className="hero-orb mx-auto h-[280px] w-full max-w-[420px] sm:h-[360px] lg:h-[520px] lg:max-w-none">
           <ThreeHero />
         </div>
       </div>

@@ -74,14 +74,14 @@ export default function Chatbot() {
   };
 
   return (
-    <div className="fixed bottom-6 right-6 z-50">
+    <div className="fixed bottom-4 right-4 z-50 md:bottom-6 md:right-6">
       <AnimatePresence>
         {open ? (
           <motion.div
             initial={{ opacity: 0, y: 20, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
-            className="glass-panel w-[320px] rounded-3xl border border-forest/10 p-4 shadow-xl"
+            className="glass-panel w-[calc(100vw-2rem)] max-w-[320px] rounded-3xl border border-forest/10 p-4 shadow-xl"
           >
             <div className="flex items-center justify-between">
               <div>

@@ -19,9 +19,11 @@ export default function WhyUs() {
 
     gsap.registerPlugin(ScrollTrigger);
 
-    const ctx = gsap.context(() => {
-      const track = trackRef.current;
-      if (!track) {
+    const track = trackRef.current;
+    const mm = ScrollTrigger.matchMedia();
+
+    mm.add("(min-width: 1024px)", () => {
+      if (!sectionRef.current || !track) {
         return;
       }
 
@@ -38,9 +40,11 @@ export default function WhyUs() {
           pin: true
         }
       });
-    }, sectionRef);
+    });
 
-    return () => ctx.revert();
+    return () => {
+      mm.kill();
+    };
   }, []);
 
   return (
@@ -52,7 +56,7 @@ export default function WhyUs() {
           description="A horizontal story of scale, precision, and premium client outcomes."
         />
       </div>
-      <div className="mt-12 overflow-hidden">
+      <div className="mt-12 overflow-x-auto overflow-y-hidden lg:overflow-hidden">
         <div
           ref={trackRef}
           className="flex gap-6 px-6 pb-10"

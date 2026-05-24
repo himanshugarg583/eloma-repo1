@@ -5,6 +5,7 @@ node_modules/
 .env.example
 
 
+
 # Logs
 logs/
 *.log
@@ -33,7 +34,7 @@ tmp/
 temp/
 config.bat
 .env
-
+.next
 # Baileys auth session (contains private keys for WhatsApp pairing)
 auth_session/
 temp_auto_push.bat
