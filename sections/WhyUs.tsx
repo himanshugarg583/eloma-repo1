@@ -20,7 +20,7 @@ export default function WhyUs() {
     gsap.registerPlugin(ScrollTrigger);
 
     const track = trackRef.current;
-    const mm = ScrollTrigger.matchMedia();
+    const mm = gsap.matchMedia();
 
     mm.add("(min-width: 1024px)", () => {
       if (!sectionRef.current || !track) {
