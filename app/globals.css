@@ -1,0 +1,81 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --accent-gold: #c9a557;
+  --accent-forest: #0c2f2a;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  @apply bg-white text-ink font-sans antialiased;
+}
+
+@media (pointer: fine) {
+  body {
+    cursor: none;
+  }
+}
+
+.section-padding {
+  @apply py-20 md:py-28;
+}
+
+.glass-panel {
+  @apply bg-white/70 backdrop-blur-xl border border-white/70 shadow-lg;
+}
+
+.glass-card {
+  @apply bg-white/60 backdrop-blur-xl border border-forest/10 shadow-lg;
+}
+
+.heading-display {
+  @apply font-display tracking-tight text-4xl md:text-5xl lg:text-6xl;
+}
+
+.subtle-grid {
+  @apply bg-soft-grid;
+}
+
+.custom-cursor {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+.cursor-dot,
+.cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  transform: translate3d(-50%, -50%, 0);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.cursor-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 9999px;
+  background: var(--accent-gold);
+  box-shadow: 0 0 12px rgba(201, 165, 87, 0.5);
+}
+
+.cursor-ring {
+  width: 36px;
+  height: 36px;
+  border-radius: 9999px;
+  border: 1px solid rgba(12, 47, 42, 0.45);
+  box-shadow: 0 0 16px rgba(12, 47, 42, 0.15);
+}
+
+@media (pointer: coarse) {
+  .custom-cursor {
+    display: none;
+  }
+}
