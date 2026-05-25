@@ -1,76 +1,122 @@
 import Image from "next/image";
 import Link from "next/link";
+import { Facebook, Instagram, Linkedin, Mail, Phone, Twitter, Youtube } from "lucide-react";
 
 import { groupName } from "@/lib/data";
 import logoFull from "@/assset/logo/eloma logo.jpeg";
-import { Button } from "@/components/ui/button";
+
+const linkColumns = [
+  {
+    title: "About",
+    links: ["Group Overview", "Leadership", "Our Journey", "Vision & Values", "Milestones"]
+  },
+  {
+    title: "Businesses",
+    links: ["Eloma Logistics", "Eloma Ports & Terminals", "Eloma Infrastructure", "Eloma SupplyTech", "Eloma Warehousing"]
+  },
+  {
+    title: "Resources",
+    links: ["News & Press", "Case Studies", "Investor Relations", "Sustainability", "Careers"]
+  },
+  {
+    title: "Support",
+    links: ["Contact Us", "Customer Login", "Vendor Login", "Become a Partner", "FAQ"]
+  }
+];
+
+const socials = [
+  { icon: Linkedin, href: "#", label: "LinkedIn" },
+  { icon: Twitter, href: "#", label: "Twitter" },
+  { icon: Instagram, href: "#", label: "Instagram" },
+  { icon: Facebook, href: "#", label: "Facebook" },
+  { icon: Youtube, href: "#", label: "YouTube" }
+];
 
 export default function Footer() {
   return (
-    <footer className="border-t border-forest/10 bg-white">
-      <div className="mx-auto grid max-w-6xl gap-10 px-6 py-16 md:grid-cols-4">
-        <div className="space-y-4">
-          <div className="flex items-center gap-3">
-            <Image
-              src={logoFull}
-              alt="Eloma Group logo"
-              className="h-10 w-auto"
-              sizes="120px"
-            />
-            <p className="font-display text-lg text-forest">{groupName}</p>
+    <footer className="bg-forest text-white">
+      <div className="container-x py-16 md:py-20">
+        <div className="grid gap-12 lg:grid-cols-[1.4fr_2.5fr]">
+          {/* Brand block */}
+          <div className="space-y-5">
+            <div className="flex items-center gap-3 rounded-md bg-white/95 px-3 py-2 w-fit">
+              <Image
+                src={logoFull}
+                alt={`${groupName} logo`}
+                className="h-9 w-auto"
+                sizes="120px"
+              />
+            </div>
+            <p className="max-w-sm text-sm leading-relaxed text-white/70">
+              Building global businesses with vision, scale, and excellence — across logistics, infrastructure, and supply-chain technology.
+            </p>
+            <div className="space-y-2 text-sm text-white/70">
+              <a href="tel:1800710388" className="flex items-center gap-2 transition-colors hover:text-gold">
+                <Phone size={14} />
+                <span>1800 710 388</span>
+              </a>
+              <a href="mailto:contact@elomagroup.com" className="flex items-center gap-2 transition-colors hover:text-gold">
+                <Mail size={14} />
+                <span>contact@elomagroup.com</span>
+              </a>
+            </div>
+            <div className="flex gap-2 pt-2">
+              {socials.map((social) => (
+                <Link
+                  key={social.label}
+                  href={social.href}
+                  aria-label={social.label}
+                  className="flex h-9 w-9 items-center justify-center rounded-md border border-white/15 text-white/80 transition-all hover:border-gold hover:bg-gold hover:text-forest"
+                >
+                  <social.icon size={15} />
+                </Link>
+              ))}
+            </div>
           </div>
-          <p className="text-sm text-forest/70">
-            Building global businesses with vision, scale, and excellence.
-          </p>
-          <p className="text-sm text-forest/70">ABN: 00 000 000 000</p>
-        </div>
-        <div className="space-y-3 text-sm text-forest/70">
-          <p className="text-xs uppercase tracking-[0.2em] text-forest/60">
-            Partnerships
-          </p>
-          <ul className="space-y-2">
-            <li>Become a Partner</li>
-            <li>Customer Login</li>
-            <li>Vendor Login</li>
-            <li>Toll Free: 1800 000 000</li>
-          </ul>
-        </div>
-        <div className="space-y-3 text-sm text-forest/70">
-          <p className="text-xs uppercase tracking-[0.2em] text-forest/60">
-            Social
-          </p>
-          <ul className="space-y-2">
-            <li>LinkedIn</li>
-            <li>Instagram</li>
-            <li>Youtube</li>
-            <li>Twitter</li>
-          </ul>
-        </div>
-        <div className="space-y-4">
-          <p className="text-xs uppercase tracking-[0.2em] text-forest/60">
-            Lead Form
-          </p>
-          <form className="space-y-3">
-            <input
-              type="text"
-              placeholder="Full name"
-              className="w-full rounded-full border border-forest/10 px-4 py-2 text-sm"
-            />
-            <input
-              type="email"
-              placeholder="Work email"
-              className="w-full rounded-full border border-forest/10 px-4 py-2 text-sm"
-            />
-            <Button size="lg">Submit</Button>
-          </form>
+
+          {/* Link columns */}
+          <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
+            {linkColumns.map((column) => (
+              <div key={column.title} className="space-y-4">
+                <p className="text-xs font-semibold uppercase tracking-[0.18em] text-gold">
+                  {column.title}
+                </p>
+                <ul className="space-y-3 text-sm">
+                  {column.links.map((link) => (
+                    <li key={link}>
+                      <Link
+                        href="#"
+                        className="text-white/70 transition-colors hover:text-white"
+                      >
+                        {link}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
-      <div className="border-t border-forest/10">
-        <div className="mx-auto flex max-w-6xl flex-col items-start justify-between gap-4 px-6 py-6 text-xs text-forest/60 md:flex-row md:items-center">
-          <p>Copyright {new Date().getFullYear()} {groupName}. All rights reserved.</p>
-          <div className="flex gap-4">
-            <Link href="#">Privacy Policy</Link>
-            <Link href="#">Terms</Link>
+
+      <div className="border-t border-white/10">
+        <div className="container-x flex flex-col items-start justify-between gap-3 py-6 text-xs text-white/60 md:flex-row md:items-center">
+          <p>
+            © {new Date().getFullYear()} {groupName}. All rights reserved. ABN: 00 000 000 000
+          </p>
+          <div className="flex flex-wrap gap-x-5 gap-y-2">
+            <Link href="#" className="transition-colors hover:text-white">
+              Privacy Policy
+            </Link>
+            <Link href="#" className="transition-colors hover:text-white">
+              Terms of Use
+            </Link>
+            <Link href="#" className="transition-colors hover:text-white">
+              Cookie Settings
+            </Link>
+            <Link href="#" className="transition-colors hover:text-white">
+              Modern Slavery Statement
+            </Link>
           </div>
         </div>
       </div>

@@ -63,7 +63,11 @@ export default function WhyUs() {
           style={{ width: "max-content" }}
         >
           {stats.map((stat) => (
-            <StatsCounter key={stat.label} value={stat.value} label={stat.label} />
+            <StatsCounter
+              key={stat.label}
+              value={parseInt(String(stat.value), 10) || 0}
+              label={stat.label}
+            />
           ))}
           <div className="min-w-[280px] rounded-3xl border border-forest/10 bg-white/70 p-6 shadow-lg backdrop-blur-xl">
             <p className="text-xs uppercase tracking-[0.2em] text-forest/60">

@@ -1,69 +1,92 @@
 "use client";
 
+import Image from "next/image";
+import Link from "next/link";
 import { useRef } from "react";
+import { ArrowRight, Globe2, Target, Award } from "lucide-react";
 
 import SectionHeading from "@/components/SectionHeading";
 import { useGsapReveal } from "@/hooks/useGsapReveal";
+
+const pillars = [
+  {
+    icon: Target,
+    title: "Our Mission",
+    description:
+      "Elevate global trade with precision, trust, and premium execution across every customer touchpoint."
+  },
+  {
+    icon: Globe2,
+    title: "Our Vision",
+    description:
+      "Build the most admired integrated logistics and infrastructure group connecting the world's leading brands."
+  },
+  {
+    icon: Award,
+    title: "Our Values",
+    description:
+      "Stewardship, integrity, and long-term thinking — the foundation of every business decision we make."
+  }
+];
 
 export default function AboutGroup() {
   const sectionRef = useRef<HTMLDivElement | null>(null);
   useGsapReveal(sectionRef);
 
   return (
-    <section id="about" ref={sectionRef} className="section-padding">
-      <div className="mx-auto max-w-6xl space-y-12 px-6">
-        <SectionHeading
-          eyebrow="Group introduction"
-          title="A multi-generational group shaping global logistics and infrastructure"
-          description="We orchestrate a portfolio of companies that deliver premium logistics, infrastructure, and technology services with a single standard: excellence."
-        />
-
-        <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr]">
-          <div className="space-y-6 text-forest/70">
-            <p data-reveal>
-              Since our inception, we have built a resilient global platform
-              connecting businesses across continents. Our group unites strategy,
-              innovation, and operational precision to keep complex supply
-              networks flowing seamlessly.
-            </p>
-            <p data-reveal>
-              Our mission is to create trusted, premium experiences across every
-              customer touchpoint, while our vision is to build the most admired
-              integrated logistics and infrastructure group in the region.
-            </p>
-            <div data-reveal className="grid gap-4 md:grid-cols-2">
-              <div className="glass-card rounded-3xl p-5">
-                <p className="text-xs uppercase tracking-[0.2em] text-forest/60">
-                  Mission
-                </p>
-                <p className="mt-3 text-sm text-forest/80">
-                  Elevate global trade with precision, trust, and premium
-                  execution.
-                </p>
-              </div>
-              <div className="glass-card rounded-3xl p-5">
-                <p className="text-xs uppercase tracking-[0.2em] text-forest/60">
-                  Vision
-                </p>
-                <p className="mt-3 text-sm text-forest/80">
-                  Build a future-ready network for the world&apos;s leading brands.
-                </p>
-              </div>
+    <section
+      id="about"
+      ref={sectionRef}
+      className="section-padding bg-white"
+    >
+      <div className="container-x">
+        <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
+          <div data-reveal className="relative">
+            <div className="overflow-hidden rounded-xl shadow-card">
+              <Image
+                src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1400&q=80"
+                alt="Eloma Group corporate offices"
+                width={1400}
+                height={1000}
+                className="h-[480px] w-full object-cover transition-transform duration-700 hover:scale-105"
+              />
             </div>
           </div>
-          <div className="space-y-6">
-            <div data-reveal className="glass-panel rounded-3xl p-6">
-              <p className="text-xs uppercase tracking-[0.2em] text-forest/60">
-                Founder message
-              </p>
-              <p className="mt-4 text-sm text-forest/80">
-                We believe premium logistics is the silent force behind enduring
-                global businesses. Our commitment is to build infrastructure and
-                services worthy of that responsibility.
-              </p>
+
+          <div className="space-y-8">
+            <SectionHeading
+              eyebrow="About the Group"
+              title="A multi-generational group shaping global trade"
+              description="Since our inception, we have built a resilient global platform connecting businesses across continents — uniting strategy, innovation, and operational precision into a single standard of excellence."
+            />
+
+            <div data-reveal className="space-y-5">
+              {pillars.map((pillar) => (
+                <div key={pillar.title} className="flex gap-4">
+                  <div className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-lg bg-forest/5 text-forest">
+                    <pillar.icon size={20} />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-forest">{pillar.title}</h3>
+                    <p className="mt-1 text-sm leading-relaxed text-slate-600">
+                      {pillar.description}
+                    </p>
+                  </div>
+                </div>
+              ))}
             </div>
-            <div data-reveal className="overflow-hidden rounded-3xl">
-              <div className="h-56 w-full bg-gradient-to-br from-forest/10 via-gold/10 to-white" />
+
+            <div data-reveal>
+              <Link
+                href="#subsidiaries"
+                className="group inline-flex items-center gap-2 text-sm font-semibold text-forest transition-colors hover:text-gold-dark"
+              >
+                Learn more about the group
+                <ArrowRight
+                  size={16}
+                  className="transition-transform group-hover:translate-x-1"
+                />
+              </Link>
             </div>
           </div>
         </div>

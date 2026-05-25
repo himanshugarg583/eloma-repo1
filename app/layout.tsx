@@ -1,37 +1,40 @@
 import "./globals.css";
 
 import type { Metadata } from "next";
-import { Cormorant_Garamond, Manrope } from "next/font/google";
+import { Inter, Playfair_Display } from "next/font/google";
 
 import { Providers } from "./providers";
 import { groupName } from "@/lib/data";
 
-const display = Cormorant_Garamond({
+const display = Playfair_Display({
   subsets: ["latin"],
   variable: "--font-display",
-  weight: ["400", "500", "600", "700"]
+  weight: ["500", "600", "700", "800"],
+  display: "swap"
 });
 
-const sans = Manrope({
+const sans = Inter({
   subsets: ["latin"],
   variable: "--font-sans",
-  weight: ["300", "400", "500", "600", "700"]
+  weight: ["300", "400", "500", "600", "700"],
+  display: "swap"
 });
 
 export const metadata: Metadata = {
   title: {
-    default: groupName,
+    default: `${groupName} — Building Global Businesses`,
     template: `%s | ${groupName}`
   },
   description:
-    "Premium global group building logistics, infrastructure, and technology at scale.",
+    "Eloma Group is a global parent company building premium logistics, infrastructure, and supply-chain technology businesses across continents.",
   keywords: [
     "corporate group",
     "logistics",
     "infrastructure",
     "global services",
     "warehousing",
-    "distribution"
+    "distribution",
+    "supply chain"
   ],
   openGraph: {
     title: groupName,

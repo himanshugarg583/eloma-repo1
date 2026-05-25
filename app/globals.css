@@ -14,84 +14,111 @@
 html,
 body {
   background-color: #ffffff;
+  color: #0f172a;
 }
 
 body {
-  @apply text-ink font-sans antialiased;
+  @apply font-sans antialiased;
+  font-feature-settings: "cv11", "ss01";
 }
 
-@media (pointer: fine) {
-  body {
-    cursor: none;
-  }
+/* Layout utilities */
+.container-x {
+  @apply mx-auto w-full max-w-7xl px-6 lg:px-8;
 }
 
 .section-padding {
-  @apply py-20 md:py-28;
+  @apply py-16 md:py-24;
 }
 
-.glass-panel {
-  @apply bg-white/70 backdrop-blur-xl border border-white/70 shadow-lg;
+.section-alt {
+  background-color: #f8fafc;
 }
 
-.glass-card {
-  @apply bg-white/60 backdrop-blur-xl border border-forest/10 shadow-lg;
+/* Typography utilities */
+.eyebrow {
+  @apply inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-forest;
 }
 
-.heading-display {
-  @apply font-display tracking-tight text-4xl md:text-5xl lg:text-6xl 2xl:text-7xl;
+.eyebrow::before {
+  content: "";
+  display: inline-block;
+  width: 28px;
+  height: 1px;
+  background-color: #c9a557;
 }
 
-.subtle-grid {
-  @apply bg-soft-grid;
+.heading-xl {
+  @apply font-display text-3xl font-bold leading-[1.1] tracking-tight text-forest md:text-4xl lg:text-5xl;
 }
 
-.custom-cursor {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 9999;
+.heading-lg {
+  @apply font-display text-2xl font-bold leading-tight tracking-tight text-forest md:text-3xl lg:text-4xl;
 }
 
-.cursor-dot,
-.cursor-ring {
-  position: fixed;
-  top: 0;
-  left: 0;
-  transform: translate3d(-50%, -50%, 0);
+.heading-md {
+  @apply font-display text-xl font-semibold leading-snug tracking-tight text-forest md:text-2xl;
+}
+
+.body-lg {
+  @apply text-base leading-relaxed text-slate-600 md:text-lg;
+}
+
+.body-base {
+  @apply text-sm leading-relaxed text-slate-600 md:text-base;
+}
+
+/* Cards */
+.card-base {
+  @apply rounded-xl border border-slate-200 bg-white shadow-card transition-all duration-300;
+}
+
+.card-base:hover {
+  @apply border-slate-300 shadow-card-hover;
+}
+
+.card-image {
+  @apply overflow-hidden;
+}
+
+.card-image img {
+  @apply transition-transform duration-700 ease-out;
+}
+
+.card-base:hover .card-image img {
+  transform: scale(1.05);
+}
+
+/* Reveal */
+[data-reveal] {
   opacity: 0;
-  transition: opacity 0.2s ease;
 }
 
-.cursor-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 9999px;
-  background: var(--accent-gold);
-  box-shadow: 0 0 12px rgba(201, 165, 87, 0.5);
+/* Selection */
+::selection {
+  background-color: rgba(201, 165, 87, 0.25);
+  color: #0c2f2a;
 }
 
-.cursor-ring {
-  width: 36px;
-  height: 36px;
-  border-radius: 9999px;
-  border: 1px solid rgba(12, 47, 42, 0.45);
-  box-shadow: 0 0 16px rgba(12, 47, 42, 0.15);
+/* Focus rings */
+:focus-visible {
+  outline: 2px solid #c9a557;
+  outline-offset: 2px;
 }
 
-@media (pointer: coarse) {
-  .custom-cursor {
-    display: none;
-  }
+/* Smooth scroll handled by Lenis */
+html.lenis {
+  height: auto;
 }
 
-@media (min-width: 1536px) {
-  .max-w-6xl {
-    max-width: 100%;
-  }
+.lenis.lenis-smooth {
+  scroll-behavior: auto;
+}
 
-  .section-padding {
-    padding-top: 8rem;
-    padding-bottom: 8rem;
-  }
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
 }

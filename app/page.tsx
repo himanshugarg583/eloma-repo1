@@ -17,7 +17,7 @@ export default function Home() {
   return (
     <div className="relative bg-white">
       <Navbar />
-      <main className="pt-24 md:pt-20">
+      <main>
         <Hero />
         <AboutGroup />
         <Subsidiaries />
