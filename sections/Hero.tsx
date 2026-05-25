@@ -44,10 +44,9 @@ export default function Hero() {
     <section
       id="home"
       ref={sectionRef}
-      className="relative overflow-hidden bg-hero-radial"
+      className="relative overflow-hidden bg-white"
     >
-      <div className="pointer-events-none absolute inset-0 subtle-grid opacity-40" />
-      <div className="mx-auto grid min-h-[78vh] max-w-6xl items-center gap-8 px-5 pb-12 pt-24 sm:min-h-[84vh] sm:gap-10 sm:px-6 sm:pb-16 sm:pt-28 lg:min-h-[92vh] lg:grid-cols-2">
+      <div className="grid min-h-[78vh] w-full max-w-none items-center gap-8 px-5 pb-12 pt-24 sm:min-h-[84vh] sm:gap-10 sm:px-6 sm:pb-16 sm:pt-28 lg:min-h-[92vh] lg:grid-cols-2 2xl:gap-16 2xl:min-h-[88vh] 2xl:px-20">
         <div className="space-y-8">
           <p
             data-hero

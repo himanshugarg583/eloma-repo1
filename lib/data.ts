@@ -1,6 +1,47 @@
 // Placeholder content - replace with official group data.
 export const groupName = "Eloma Group";
 
+export const navAbout = [
+  "Group Overview",
+  "Our Journey",
+  "Vision & Values",
+  "Milestones",
+  "Leadership",
+  "Chairman's Message",
+  "Board of Directors",
+  "Leadership Team"
+];
+
+export const navBusinesses = [
+  "Real Estate Division",
+  "Construction Division",
+  "Manufacturing Division",
+  "Logistics Division",
+  "Energy Division",
+  "Hospitality Division"
+];
+
+export const navSustainability = ["ESG", "CSR Initiatives", "Community Impact"];
+
+export const navMedia = [
+  "News & Updates",
+  "Press Releases",
+  "Awards & Recognition",
+  "Gallery"
+];
+
+export const navCareers = [
+  "Work With Us",
+  "Current Openings",
+  "Life at Group"
+];
+
+export const navContact = [
+  "Contact form",
+  "Corporate office",
+  "Branch locations"
+];
+
 export const navServices = [
   "Interstate Road Transport",
   "Warehousing - Multi Location",

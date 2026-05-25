@@ -1,6 +1,8 @@
+import Image from "next/image";
 import Link from "next/link";
 
 import { groupName } from "@/lib/data";
+import logoFull from "@/assset/logo/eloma logo.jpeg";
 import { Button } from "@/components/ui/button";
 
 export default function Footer() {
@@ -8,7 +10,15 @@ export default function Footer() {
     <footer className="border-t border-forest/10 bg-white">
       <div className="mx-auto grid max-w-6xl gap-10 px-6 py-16 md:grid-cols-4">
         <div className="space-y-4">
-          <p className="font-display text-lg text-forest">{groupName}</p>
+          <div className="flex items-center gap-3">
+            <Image
+              src={logoFull}
+              alt="Eloma Group logo"
+              className="h-10 w-auto"
+              sizes="120px"
+            />
+            <p className="font-display text-lg text-forest">{groupName}</p>
+          </div>
           <p className="text-sm text-forest/70">
             Building global businesses with vision, scale, and excellence.
           </p>
