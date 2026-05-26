@@ -3,10 +3,10 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useRef } from "react";
-import { ArrowRight, Globe2, Target, Award } from "lucide-react";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { ArrowRight, Award, Globe2, Target } from "lucide-react";
 
 import SectionHeading from "@/components/SectionHeading";
-import { useGsapReveal } from "@/hooks/useGsapReveal";
 
 const pillars = [
   {
@@ -31,67 +31,123 @@ const pillars = [
 
 export default function AboutGroup() {
   const sectionRef = useRef<HTMLDivElement | null>(null);
-  useGsapReveal(sectionRef);
+  const imageRef = useRef<HTMLDivElement | null>(null);
+
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"]
+  });
+  const imageY = useTransform(scrollYProgress, [0, 1], ["-8%", "8%"]);
+  const imageScale = useTransform(scrollYProgress, [0, 0.5, 1], [1.05, 1, 1.04]);
 
   return (
     <section
       id="about"
       ref={sectionRef}
-      className="section-padding bg-white"
+      className="section-padding relative overflow-hidden bg-white"
     >
+      {/* Decorative orb */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -left-32 top-32 -z-10 h-[420px] w-[420px] rounded-full bg-gold/8 blur-3xl"
+      />
+
       <div className="container-x">
-        <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
-          <div data-reveal className="relative">
-            <div className="overflow-hidden rounded-xl shadow-card">
-              <Image
-                src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1400&q=80"
-                alt="Eloma Group corporate offices"
-                width={1400}
-                height={1000}
-                className="h-[480px] w-full object-cover transition-transform duration-700 hover:scale-105"
-              />
-            </div>
+        <div className="grid items-start gap-12 lg:grid-cols-2 lg:gap-16">
+          {/* Sticky image column */}
+          <div className="lg:sticky lg:top-28">
+            <motion.div
+              ref={imageRef}
+              initial={{ clipPath: "inset(0 100% 0 0)" }}
+              whileInView={{ clipPath: "inset(0 0% 0 0)" }}
+              viewport={{ once: true, margin: "-15% 0px" }}
+              transition={{ duration: 1.4, ease: [0.76, 0, 0.24, 1] }}
+              className="relative overflow-hidden rounded-2xl shadow-card"
+            >
+              <motion.div style={{ y: imageY, scale: imageScale }}>
+                <Image
+                  src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1400&q=80"
+                  alt="Eloma Group corporate offices"
+                  width={1400}
+                  height={1000}
+                  className="h-[520px] w-full object-cover"
+                />
+              </motion.div>
+              {/* Subtle corner brand mark */}
+              <div className="absolute bottom-5 left-5 right-5 flex items-end justify-between">
+                <div className="rounded-full bg-white/95 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-wider text-forest backdrop-blur">
+                  Eloma Group · Est. Global
+                </div>
+                <div className="rounded-full bg-forest/80 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-wider text-gold backdrop-blur">
+                  Since Inception
+                </div>
+              </div>
+            </motion.div>
           </div>
 
           <div className="space-y-8">
             <SectionHeading
-              eyebrow="WHO WE ARE"
+              eyebrow="Who We Are"
               title="A diversified business group driving innovation across industries"
               description="Eloma Group is an entrepreneur-focused organization bringing together expertise in transportation, digital solutions, virtual security, travel and customer support services. We operate as a unified ecosystem of businesses, delivering integrated solutions that drive efficiency, growth, and long-term value."
             />
 
-            <div data-reveal className="space-y-5">
-              {pillars.map((pillar) => (
-                <div key={pillar.title} className="flex gap-4">
-                  <div className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-lg bg-forest/5 text-forest">
-                    <pillar.icon size={20} />
+            <div className="space-y-4">
+              {pillars.map((pillar, idx) => (
+                <motion.div
+                  key={pillar.title}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-80px" }}
+                  transition={{
+                    duration: 0.7,
+                    delay: idx * 0.12,
+                    ease: [0.22, 1, 0.36, 1]
+                  }}
+                  className="group flex gap-4 rounded-xl border border-transparent p-4 transition-all duration-500 hover:-translate-y-0.5 hover:border-slate-200 hover:bg-slate-50"
+                >
+                  <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-forest/5 text-forest transition-all duration-500 group-hover:rotate-6 group-hover:bg-forest group-hover:text-white">
+                    <pillar.icon size={20} strokeWidth={1.8} />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-forest">{pillar.title}</h3>
+                    <h3 className="font-display text-lg font-semibold text-forest">
+                      {pillar.title}
+                    </h3>
                     <p className="mt-1 text-sm leading-relaxed text-slate-600">
                       {pillar.description}
                     </p>
                   </div>
-                </div>
+                </motion.div>
               ))}
             </div>
 
-            <div data-reveal className="rounded-lg bg-slate-50 px-4 py-3 text-sm text-slate-600">
-              4+ Business Verticals | Multiple Industries | One Unified Vision for Sustainable Growth
-            </div>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7, delay: 0.4 }}
+              className="rounded-xl border border-slate-200 bg-gradient-to-br from-slate-50 to-white px-5 py-4 text-sm text-slate-600"
+            >
+              <span className="font-semibold text-forest">4+</span> Business
+              Verticals <span className="mx-2 text-slate-300">|</span>
+              <span className="font-semibold text-forest"> Multiple</span> Industries
+              <span className="mx-2 text-slate-300">|</span>
+              <span className="font-semibold text-forest"> One</span> Unified Vision
+            </motion.div>
 
-            <div data-reveal>
-              <Link
-                href="#subsidiaries"
-                className="group inline-flex items-center gap-2 text-sm font-semibold text-forest transition-colors hover:text-gold-dark"
-              >
+            <Link
+              href="#subsidiaries"
+              className="group inline-flex items-center gap-2 text-sm font-semibold text-forest transition-colors hover:text-gold-dark"
+            >
+              <span className="relative">
                 Learn more about the group
-                <ArrowRight
-                  size={16}
-                  className="transition-transform group-hover:translate-x-1"
-                />
-              </Link>
-            </div>
+                <span className="absolute bottom-0 left-0 h-px w-full origin-left bg-forest transition-transform duration-500 group-hover:scale-x-0 group-hover:bg-gold-dark" />
+              </span>
+              <ArrowRight
+                size={16}
+                className="transition-transform group-hover:translate-x-1"
+              />
+            </Link>
           </div>
         </div>
       </div>

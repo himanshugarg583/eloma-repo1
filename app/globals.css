@@ -92,6 +92,13 @@ body {
 /* Reveal */
 [data-reveal] {
   opacity: 0;
+  will-change: transform, opacity;
+}
+
+/* Marquee pause helpers */
+.animate-marquee-left,
+.animate-marquee-right {
+  will-change: transform;
 }
 
 /* Selection */

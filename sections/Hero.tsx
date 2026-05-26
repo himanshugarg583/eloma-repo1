@@ -2,11 +2,17 @@
 
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
-import { gsap } from "gsap";
+import {
+  AnimatePresence,
+  motion,
+  useScroll,
+  useTransform
+} from "framer-motion";
 import { ArrowRight, Play } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
+import MagneticButton from "@/components/animations/MagneticButton";
+import Marquee from "@/components/animations/Marquee";
 
 const heroSlides = [
   {
@@ -31,59 +37,66 @@ const heroSlides = [
   }
 ];
 
-const SLIDE_INTERVAL = 2800;
+const SLIDE_INTERVAL = 3200;
+const INTRO_DELAY = 2.2;
+
+const titleLines = [
+  ["Powering", "Businesses."],
+  ["Connecting", "Industries."],
+  ["Building", "the", "Future."]
+];
+
+const marqueeItems = [
+  "Logistics",
+  "Digital Solutions",
+  "Virtual Security",
+  "Travel Services",
+  "Customer Support",
+  "Supply Chain",
+  "Infrastructure",
+  "Global Trade"
+];
 
 export default function Hero() {
   const sectionRef = useRef<HTMLDivElement | null>(null);
   const [activeSlide, setActiveSlide] = useState(0);
 
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start start", "end start"]
+  });
+  const imgY = useTransform(scrollYProgress, [0, 1], ["0%", "20%"]);
+  const contentY = useTransform(scrollYProgress, [0, 1], ["0%", "-15%"]);
+  const opacity = useTransform(scrollYProgress, [0, 0.9], [1, 0]);
+
   useEffect(() => {
     const id = window.setInterval(() => {
       setActiveSlide((prev) => (prev + 1) % heroSlides.length);
     }, SLIDE_INTERVAL);
-
     return () => window.clearInterval(id);
-  }, []);
-
-  useEffect(() => {
-    if (!sectionRef.current) {
-      return;
-    }
-
-    const ctx = gsap.context(() => {
-      gsap.fromTo(
-        "[data-hero]",
-        { y: 24, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 1,
-          ease: "power3.out",
-          stagger: 0.1
-        }
-      );
-    }, sectionRef);
-
-    return () => ctx.revert();
   }, []);
 
   return (
     <section
       id="home"
       ref={sectionRef}
-      className="relative isolate overflow-hidden bg-white"
+      className="relative isolate min-h-[100vh] overflow-hidden bg-forest"
     >
-      {/* Background slideshow */}
-      <div className="absolute inset-0 -z-10">
+      {/* Parallax slideshow background */}
+      <motion.div className="absolute inset-0 -z-10" style={{ y: imgY }}>
         <AnimatePresence mode="sync">
           <motion.div
             key={activeSlide}
-            initial={{ opacity: 0, scale: 1 }}
-            animate={{ opacity: 1, scale: 1.12 }}
-            exit={{ opacity: 0, scale: 1.15 }}
+            initial={{ opacity: 0, scale: 1.18, filter: "blur(8px)" }}
+            animate={{ opacity: 1, scale: 1.05, filter: "blur(0px)" }}
+            exit={{ opacity: 0, scale: 1, filter: "blur(6px)" }}
             transition={{
-              opacity: { duration: 1.2, ease: "easeInOut" },
-              scale: { duration: SLIDE_INTERVAL / 1000 + 1.2, ease: "linear" }
+              opacity: { duration: 1.4, ease: [0.22, 1, 0.36, 1] },
+              scale: {
+                duration: SLIDE_INTERVAL / 1000 + 1.4,
+                ease: "linear"
+              },
+              filter: { duration: 1.2 }
             }}
             className="absolute inset-0"
           >
@@ -97,34 +110,92 @@ export default function Hero() {
             />
           </motion.div>
         </AnimatePresence>
-        <div className="absolute inset-0 bg-gradient-to-r from-forest/85 via-forest/70 to-forest/30" />
-        <div className="absolute inset-0 bg-gradient-to-t from-forest-dark/60 via-transparent to-transparent" />
-      </div>
+        <div className="absolute inset-0 bg-gradient-to-r from-forest/90 via-forest/70 to-forest/30" />
+        <div className="absolute inset-0 bg-gradient-to-t from-forest-dark/80 via-transparent to-transparent" />
+        {/* Decorative orb */}
+        <motion.div
+          aria-hidden
+          className="absolute -right-32 top-1/4 h-[420px] w-[420px] rounded-full bg-gold/20 blur-3xl"
+          animate={{
+            scale: [1, 1.15, 1],
+            opacity: [0.4, 0.6, 0.4]
+          }}
+          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+        />
+      </motion.div>
 
-      <div className="container-x relative flex min-h-[88vh] flex-col justify-center pb-24 pt-32 md:pb-32 md:pt-40">
-        <div className="max-w-3xl space-y-6 text-white">
-          <p
-            data-hero
-            className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-gold"
-          >
-            <span className="inline-block h-px w-7 bg-gold" />
-            Eloma Group
-          </p>
-          <h1
-            data-hero
-            className="font-display text-4xl font-bold leading-[1.05] tracking-tight md:text-5xl lg:text-6xl xl:text-7xl"
-          >
-            Powering Businesses. Connecting Industries. Building the Future.
-          </h1>
-          <p
-            data-hero
-            className="max-w-2xl text-base leading-relaxed text-white/85 md:text-lg"
-          >
-            A dynamic business group uniting logistics, digital innovation,
-            security, travel, and customer solutions - driven by purpose,
-            performance, and sustainability.
-          </p>
-          <div data-hero className="flex flex-col gap-3 pt-2 sm:flex-row">
+      <motion.div
+        style={{ y: contentY, opacity }}
+        className="container-x relative flex min-h-[100vh] flex-col justify-end pb-24 pt-32 md:pb-32 md:pt-40"
+      >
+        {/* Eyebrow */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: INTRO_DELAY, duration: 0.7 }}
+          className="mb-6 inline-flex items-center gap-3"
+        >
+          <span className="relative flex h-2 w-2">
+            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-gold opacity-75" />
+            <span className="relative inline-flex h-2 w-2 rounded-full bg-gold" />
+          </span>
+          <span className="text-xs font-semibold uppercase tracking-[0.32em] text-gold">
+            Eloma Group · Est. Global Operations
+          </span>
+        </motion.div>
+
+        {/* Title — line-by-line word reveal */}
+        <h1 className="max-w-5xl font-display text-[2.6rem] font-bold leading-[1.02] tracking-tight text-white sm:text-5xl md:text-6xl lg:text-[5.5rem] xl:text-[6.5rem]">
+          {titleLines.map((line, lineIdx) => (
+            <span key={lineIdx} className="block overflow-hidden pb-1">
+              <motion.span
+                initial={{ y: "110%", opacity: 0 }}
+                animate={{ y: "0%", opacity: 1 }}
+                transition={{
+                  delay: INTRO_DELAY + 0.1 + lineIdx * 0.18,
+                  duration: 1.1,
+                  ease: [0.22, 1, 0.36, 1]
+                }}
+                className="block"
+              >
+                {line.map((word, wIdx) => (
+                  <span
+                    key={`${word}-${wIdx}`}
+                    className={
+                      wIdx === line.length - 1 && lineIdx === titleLines.length - 1
+                        ? "italic text-gold/90"
+                        : ""
+                    }
+                  >
+                    {word}
+                    {wIdx < line.length - 1 ? " " : ""}
+                  </span>
+                ))}
+              </motion.span>
+            </span>
+          ))}
+        </h1>
+
+        {/* Subtitle */}
+        <motion.p
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: INTRO_DELAY + 0.8, duration: 0.8 }}
+          className="mt-8 max-w-xl text-base leading-relaxed text-white/80 md:text-lg"
+        >
+          A dynamic business group uniting logistics, digital innovation,
+          security, travel, and customer solutions — driven by purpose,
+          performance, and sustainability.
+        </motion.p>
+
+        {/* CTAs */}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: INTRO_DELAY + 1, duration: 0.7 }}
+          className="mt-10 flex flex-col items-start gap-4 sm:flex-row sm:items-center"
+        >
+          <MagneticButton strength={12}>
             <Button size="lg" className="group">
               Explore the Group
               <ArrowRight
@@ -132,43 +203,79 @@ export default function Hero() {
                 className="transition-transform group-hover:translate-x-1"
               />
             </Button>
+          </MagneticButton>
+          <MagneticButton strength={10}>
             <Button
               variant="outline"
               size="lg"
-              className="border-white/40 bg-white/10 text-white backdrop-blur hover:border-white hover:bg-white hover:text-forest"
+              className="border-white/30 bg-white/5 text-white backdrop-blur hover:border-white hover:bg-white hover:text-forest"
             >
-              <Play size={16} />
+              <span className="flex h-7 w-7 items-center justify-center rounded-full bg-gold text-forest">
+                <Play size={12} className="ml-0.5" />
+              </span>
               Meet Our Businesses
             </Button>
+          </MagneticButton>
+        </motion.div>
+
+        {/* Bottom row: slide indicators + counter */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: INTRO_DELAY + 1.3, duration: 0.8 }}
+          className="mt-16 flex flex-col gap-6 border-t border-white/15 pt-6 md:flex-row md:items-center md:justify-between"
+        >
+          <div className="flex items-center gap-3">
+            {heroSlides.map((_, idx) => (
+              <button
+                key={idx}
+                onClick={() => setActiveSlide(idx)}
+                aria-label={`Show slide ${idx + 1}`}
+                className="group flex h-2 items-center"
+              >
+                <span
+                  className={`block h-[3px] rounded-full transition-all duration-500 ${
+                    idx === activeSlide
+                      ? "w-12 bg-gold"
+                      : "w-6 bg-white/30 group-hover:bg-white/60"
+                  }`}
+                />
+              </button>
+            ))}
+            <span className="ml-2 font-display text-xs text-white/60">
+              {String(activeSlide + 1).padStart(2, "0")}
+              <span className="mx-1">/</span>
+              {String(heroSlides.length).padStart(2, "0")}
+            </span>
           </div>
-        </div>
 
-        {/* Slide indicators */}
-        <div data-hero className="mt-14 flex items-center gap-3">
-          {heroSlides.map((_, idx) => (
-            <button
-              key={idx}
-              onClick={() => setActiveSlide(idx)}
-              aria-label={`Show slide ${idx + 1}`}
-              className="group flex h-2 items-center"
+          <div className="hidden items-center gap-3 md:flex">
+            <div className="h-px w-12 bg-white/30" />
+            <p className="text-xs uppercase tracking-[0.28em] text-white/60">
+              Scroll to explore
+            </p>
+            <motion.div
+              animate={{ y: [0, 6, 0] }}
+              transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
+              className="h-3 w-px bg-gold"
+            />
+          </div>
+        </motion.div>
+      </motion.div>
+
+      {/* Marquee strip */}
+      <div className="absolute bottom-0 left-0 right-0 border-y border-white/10 bg-forest-dark/60 py-4 backdrop-blur">
+        <Marquee speed={45}>
+          {marqueeItems.map((item, idx) => (
+            <span
+              key={`${item}-${idx}`}
+              className="mx-8 flex items-center gap-8 whitespace-nowrap text-sm font-semibold uppercase tracking-[0.2em] text-white/70"
             >
-              <span
-                className={`block h-[3px] rounded-full transition-all duration-500 ${
-                  idx === activeSlide
-                    ? "w-12 bg-gold"
-                    : "w-6 bg-white/40 group-hover:bg-white/70"
-                }`}
-              />
-            </button>
+              {item}
+              <span className="h-1 w-1 rounded-full bg-gold" />
+            </span>
           ))}
-        </div>
-      </div>
-
-      {/* Scroll indicator */}
-      <div className="absolute bottom-8 left-1/2 hidden -translate-x-1/2 md:block">
-        <div className="flex h-10 w-6 items-start justify-center rounded-full border border-white/40 p-1">
-          <div className="h-2 w-1 animate-bounce rounded-full bg-white/80" />
-        </div>
+        </Marquee>
       </div>
     </section>
   );

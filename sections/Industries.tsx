@@ -1,60 +1,106 @@
 "use client";
 
 import { useRef } from "react";
+import { motion } from "framer-motion";
 import {
-  Truck,
-  Cpu,
-  ShieldCheck,
-  Headset,
-  Plane
+  ShoppingBag,
+  Car,
+  Shirt,
+  Store,
+  FlaskConical,
+  HeartPulse,
+  Factory,
+  HardHat,
+  Wheat,
+  Building2,
+  Plane,
+  Ship
 } from "lucide-react";
 
 import SectionHeading from "@/components/SectionHeading";
-import { useGsapReveal } from "@/hooks/useGsapReveal";
+import Marquee from "@/components/animations/Marquee";
 
-const industries = [
-  { name: "Transportation & Logistics", icon: Truck },
-  { name: "Digital & Technology", icon: Cpu },
-  { name: "Security & Risk Management", icon: ShieldCheck },
-  { name: "Customer Support & Call Center", icon: Headset },
-  { name: "Travel and Tourism", icon: Plane }
+const rowOne = [
+  { name: "FMCG", icon: ShoppingBag },
+  { name: "Automobile", icon: Car },
+  { name: "Fashion & Lifestyle", icon: Shirt },
+  { name: "Retail", icon: Store },
+  { name: "Chemical", icon: FlaskConical },
+  { name: "Pharma & Healthcare", icon: HeartPulse }
 ];
+
+const rowTwo = [
+  { name: "Manufacturing", icon: Factory },
+  { name: "Construction", icon: HardHat },
+  { name: "Agricultural", icon: Wheat },
+  { name: "Real Estate", icon: Building2 },
+  { name: "Aviation", icon: Plane },
+  { name: "Maritime", icon: Ship }
+];
+
+function IndustryTag({
+  name,
+  Icon
+}: {
+  name: string;
+  Icon: typeof ShoppingBag;
+}) {
+  return (
+    <span className="mx-3 inline-flex items-center gap-3 rounded-full border border-slate-200 bg-white px-5 py-3 text-sm font-semibold text-forest shadow-card transition-all hover:-translate-y-0.5 hover:border-forest hover:shadow-card-hover">
+      <span className="flex h-7 w-7 items-center justify-center rounded-full bg-forest/5 text-forest">
+        <Icon size={14} strokeWidth={2} />
+      </span>
+      {name}
+    </span>
+  );
+}
 
 export default function Industries() {
   const sectionRef = useRef<HTMLDivElement | null>(null);
-  useGsapReveal(sectionRef);
 
   return (
     <section
       id="industries"
       ref={sectionRef}
-      className="section-padding section-alt"
+      className="section-padding section-alt relative overflow-hidden"
     >
+      {/* Decorative top fade */}
       <div className="container-x">
         <SectionHeading
           eyebrow="Industries We Serve"
-          title="Focused expertise across essential sectors"
-          description="We bring connected solutions to the industries that keep people, businesses, and communities moving."
+          title="Tailored capabilities for complex sectors"
+          description="Specialized expertise aligned with the unique demands of every industry — from regulated pharma cold chains to high-velocity FMCG distribution."
           align="center"
         />
-
-        <div className="mt-14 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {industries.map((industry) => (
-            <div
-              key={industry.name}
-              data-reveal
-              className="group flex items-center gap-4 rounded-xl border border-slate-200 bg-white p-5 transition-all duration-300 hover:-translate-y-0.5 hover:border-forest hover:shadow-card-hover"
-            >
-              <div className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-lg bg-slate-50 text-forest transition-colors duration-300 group-hover:bg-forest group-hover:text-white">
-                <industry.icon size={20} strokeWidth={1.8} />
-              </div>
-              <span className="text-sm font-semibold text-forest sm:text-base">
-                {industry.name}
-              </span>
-            </div>
-          ))}
-        </div>
       </div>
+
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+        className="mt-14 space-y-4"
+      >
+        <div className="relative">
+          {/* Edge fades */}
+          <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-24 bg-gradient-to-r from-slate-50 to-transparent" />
+          <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-24 bg-gradient-to-l from-slate-50 to-transparent" />
+          <Marquee speed={50}>
+            {rowOne.map((it, idx) => (
+              <IndustryTag key={`${it.name}-${idx}`} name={it.name} Icon={it.icon} />
+            ))}
+          </Marquee>
+        </div>
+        <div className="relative">
+          <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-24 bg-gradient-to-r from-slate-50 to-transparent" />
+          <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-24 bg-gradient-to-l from-slate-50 to-transparent" />
+          <Marquee direction="right" speed={55}>
+            {rowTwo.map((it, idx) => (
+              <IndustryTag key={`${it.name}-${idx}`} name={it.name} Icon={it.icon} />
+            ))}
+          </Marquee>
+        </div>
+      </motion.div>
     </section>
   );
 }

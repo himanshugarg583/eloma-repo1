@@ -41,7 +41,11 @@ const config: Config = {
       },
       animation: {
         "fade-in-up": "fadeInUp 0.8s ease-out forwards",
-        "slow-zoom": "slowZoom 18s ease-in-out infinite alternate"
+        "slow-zoom": "slowZoom 18s ease-in-out infinite alternate",
+        "marquee-left": "marqueeLeft var(--marquee-duration, 40s) linear infinite",
+        "marquee-right": "marqueeRight var(--marquee-duration, 40s) linear infinite",
+        "spin-slow": "spin 22s linear infinite",
+        "float": "float 6s ease-in-out infinite"
       },
       keyframes: {
         fadeInUp: {
@@ -51,6 +55,18 @@ const config: Config = {
         slowZoom: {
           "0%": { transform: "scale(1)" },
           "100%": { transform: "scale(1.08)" }
+        },
+        marqueeLeft: {
+          "0%": { transform: "translateX(0)" },
+          "100%": { transform: "translateX(-100%)" }
+        },
+        marqueeRight: {
+          "0%": { transform: "translateX(-100%)" },
+          "100%": { transform: "translateX(0)" }
+        },
+        float: {
+          "0%, 100%": { transform: "translateY(0)" },
+          "50%": { transform: "translateY(-12px)" }
         }
       }
     }

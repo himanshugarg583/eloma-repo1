@@ -1,106 +1,72 @@
 "use client";
 
-import { useLayoutEffect, useRef } from "react";
+import { useRef } from "react";
+import { motion } from "framer-motion";
 import {
-  Leaf,
+  Package,
+  Ship,
+  Truck,
+  Warehouse,
+  Zap,
   ShieldCheck,
-  Cpu,
-  Recycle,
-  Handshake,
-  Globe2,
   ArrowUpRight
 } from "lucide-react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 import SectionHeading from "@/components/SectionHeading";
-import { useGsapReveal } from "@/hooks/useGsapReveal";
 
 const services = [
   {
-    title: "Eco-Conscious Operations",
+    title: "Interstate Road Transport",
     description:
-      "We reduce environmental impact across transportation, digital, and operational processes.",
-    icon: Leaf
+      "Premium fleet operations and real-time route intelligence across long-haul corridors.",
+    icon: Truck,
+    span: "lg:col-span-2",
+    accent: "from-forest/8 to-transparent"
   },
   {
-    title: "Ethical Practices",
+    title: "Multi-Location Warehousing",
     description:
-      "Responsible governance, transparency, and people-first standards guide our growth.",
-    icon: ShieldCheck
+      "Climate-ready storage with precision inventory governance and rapid fulfillment.",
+    icon: Warehouse,
+    span: "",
+    accent: "from-gold/10 to-transparent"
   },
   {
-    title: "Smarter Technologies",
+    title: "Container Movement",
     description:
-      "Digital innovation helps us optimize routes, resources, and service reliability.",
-    icon: Cpu
+      "Port to customer delivery with high-security handling and seamless cross-dock.",
+    icon: Ship,
+    span: "",
+    accent: "from-forest/8 to-transparent"
   },
   {
-    title: "Lower Carbon Footprint",
+    title: "Contract Logistics",
     description:
-      "From fleet efficiency to process design, we prioritize measurable reductions.",
-    icon: Recycle
+      "Long-term integrated logistics solutions designed for complex supply chains.",
+    icon: ShieldCheck,
+    span: "",
+    accent: "from-gold/10 to-transparent"
   },
   {
-    title: "Responsible Partnerships",
+    title: "Same and Next Day Delivery",
     description:
-      "We collaborate with businesses that share our commitment to sustainable impact.",
-    icon: Handshake
+      "Time-critical distribution with premium SLAs across metropolitan networks.",
+    icon: Zap,
+    span: "",
+    accent: "from-forest/8 to-transparent"
   },
   {
-    title: "Resilient Future",
+    title: "Metro Distribution",
     description:
-      "Long-term value creation for businesses, communities, and the planet.",
-    icon: Globe2
+      "High-frequency metropolitan delivery built for speed, safety, and reliability.",
+    icon: Package,
+    span: "lg:col-span-2",
+    accent: "from-gold/10 to-transparent"
   }
 ];
 
 export default function Services() {
   const sectionRef = useRef<HTMLDivElement | null>(null);
-  const headingRef = useRef<HTMLDivElement | null>(null);
-  const gridRef = useRef<HTMLDivElement | null>(null);
-  useGsapReveal(sectionRef);
-
-  useLayoutEffect(() => {
-    if (!sectionRef.current || !headingRef.current || !gridRef.current) {
-      return;
-    }
-
-    gsap.registerPlugin(ScrollTrigger);
-
-    const ctx = gsap.context(() => {
-      const cards = gridRef.current?.querySelectorAll("[data-service-card]") ?? [];
-
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top 75%",
-          end: "bottom 70%",
-          toggleActions: "play none none reverse"
-        }
-      });
-
-      tl.fromTo(
-        headingRef.current,
-        { x: -60, opacity: 0 },
-        { x: 0, opacity: 1, duration: 0.7, ease: "power3.out" }
-      )
-        .fromTo(
-          gridRef.current,
-          { x: 60, opacity: 0 },
-          { x: 0, opacity: 1, duration: 0.7, ease: "power3.out" },
-          "-=0.35"
-        )
-        .fromTo(
-          cards,
-          { y: 22, opacity: 0 },
-          { y: 0, opacity: 1, duration: 0.55, ease: "power3.out", stagger: 0.08 },
-          "-=0.3"
-        );
-    }, sectionRef);
-
-    return () => ctx.revert();
-  }, []);
 
   return (
     <section
@@ -109,40 +75,67 @@ export default function Services() {
       className="section-padding bg-white"
     >
       <div className="container-x">
-        <div ref={headingRef}>
-          <SectionHeading
-            eyebrow="Sustainability & Responsibility"
-            title="Committed to sustainable growth and responsible business"
-            description="Sustainability is a core part of how we operate and grow. We build solutions that are efficient, ethical, and resilient for the long term."
-            align="center"
-          />
-        </div>
+        <SectionHeading
+          eyebrow="What We Do"
+          title="Precision services across the supply chain"
+          description="From port to customer, the group delivers a complete spectrum of logistics services — engineered with uncompromising focus on reliability."
+          align="center"
+        />
 
-        <div
-          ref={gridRef}
-          className="mt-14 grid gap-px overflow-hidden rounded-xl border border-slate-200 bg-slate-200 sm:grid-cols-2 lg:grid-cols-3"
-        >
-          {services.map((service) => (
-            <div
+        <div className="mt-14 grid gap-4 lg:grid-cols-4">
+          {services.map((service, idx) => (
+            <motion.div
               key={service.title}
-              data-reveal
-              data-service-card
-              className="group relative flex flex-col bg-white p-8 transition-colors duration-300 hover:bg-slate-50"
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-80px" }}
+              transition={{
+                duration: 0.7,
+                delay: idx * 0.08,
+                ease: [0.22, 1, 0.36, 1]
+              }}
+              className={`group relative isolate overflow-hidden rounded-2xl border border-slate-200 bg-white p-7 transition-all duration-500 hover:-translate-y-1 hover:border-forest hover:shadow-card-hover md:p-8 ${service.span}`}
             >
-              <div className="mb-5 inline-flex h-12 w-12 items-center justify-center rounded-lg bg-forest/5 text-forest transition-all duration-300 group-hover:bg-forest group-hover:text-white">
-                <service.icon size={22} strokeWidth={1.8} />
+              {/* Animated gradient on hover */}
+              <div
+                className={`pointer-events-none absolute inset-0 -z-10 bg-gradient-to-br ${service.accent} opacity-0 transition-opacity duration-500 group-hover:opacity-100`}
+              />
+              {/* Big translucent icon corner */}
+              <service.icon
+                className="pointer-events-none absolute -right-4 -top-4 h-32 w-32 text-forest/[0.04] transition-all duration-700 group-hover:rotate-12 group-hover:text-forest/[0.07]"
+                strokeWidth={1}
+              />
+
+              <div className="relative">
+                <div className="mb-5 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-forest text-white shadow-md transition-all duration-500 group-hover:bg-gold group-hover:text-forest">
+                  <service.icon size={22} strokeWidth={1.8} />
+                </div>
+                <h3 className="font-display text-xl font-semibold text-forest">
+                  {service.title}
+                </h3>
+                <p className="mt-2 max-w-md text-sm leading-relaxed text-slate-600">
+                  {service.description}
+                </p>
+                <div className="mt-5 flex items-center gap-1.5 text-xs font-semibold text-forest">
+                  <span className="relative overflow-hidden">
+                    <motion.span
+                      className="block"
+                      initial={{ y: 0 }}
+                      whileHover={{ y: -2 }}
+                    >
+                      Explore service
+                    </motion.span>
+                  </span>
+                  <ArrowUpRight
+                    size={14}
+                    className="transition-transform duration-500 group-hover:translate-x-1 group-hover:-translate-y-1"
+                  />
+                </div>
               </div>
-              <h3 className="font-display text-lg font-semibold text-forest">
-                {service.title}
-              </h3>
-              <p className="mt-2 flex-1 text-sm leading-relaxed text-slate-600">
-                {service.description}
-              </p>
-              <div className="mt-5 flex items-center gap-1.5 text-xs font-semibold text-forest opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                <span>Learn more</span>
-                <ArrowUpRight size={14} />
-              </div>
-            </div>
+
+              {/* Bottom border draw */}
+              <span className="pointer-events-none absolute bottom-0 left-0 h-[2px] w-0 bg-gold transition-all duration-700 group-hover:w-full" />
+            </motion.div>
           ))}
         </div>
       </div>
