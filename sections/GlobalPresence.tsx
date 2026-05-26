@@ -8,9 +8,11 @@ import SectionHeading from "@/components/SectionHeading";
 
 const markers = [
   { name: "Sydney", country: "Australia", left: "82%", top: "78%" },
+  { name: "Mumbai", country: "India", left: "68%", top: "58%" },
   { name: "Singapore", country: "Singapore", left: "73%", top: "58%" },
-  { name: "Tokyo", country: "Japan", left: "85%", top: "38%" },
   { name: "Beijing", country: "China", left: "77%", top: "36%" },
+  { name: "London", country: "UK", left: "46%", top: "30%" },
+  { name: "Dubai", country: "UAE", left: "60%", top: "52%" },
   { name: "New York", country: "USA", left: "26%", top: "38%" },
   { name: "Toronto", country: "Canada", left: "24%", top: "32%" }
 ];
@@ -18,23 +20,23 @@ const markers = [
 const capabilities = [
   {
     icon: Globe2,
-    title: "Asia-Pacific Hub",
-    description: "Operations across Sydney, Singapore, Tokyo, and Beijing serving regional trade flows."
+    title: "Global Footprint",
+    description: "Presence across Australia, India, USA, Canada, China, UK, UAE, and Singapore."
   },
   {
     icon: Anchor,
-    title: "Strategic Port Access",
-    description: "Direct partnerships with major container terminals across the Pacific corridor."
+    title: "Connected Industries",
+    description: "A unified ecosystem serving logistics, technology, security, travel, and customer support."
   },
   {
     icon: Network,
-    title: "Multi-Modal Network",
-    description: "Air, ocean, road, and rail integration with a single operational standard."
+    title: "Collaborative Network",
+    description: "Partnership-driven operations that bring businesses closer together." 
   },
   {
     icon: ShieldCheck,
-    title: "24/7 Operations",
-    description: "Round-the-clock executive response across every regional hub we operate."
+    title: "Responsible Growth",
+    description: "Focused on sustainable, ethical, and future-ready business practices."
   }
 ];
 
@@ -44,8 +46,8 @@ export default function GlobalPresence() {
       <div className="container-x">
         <SectionHeading
           eyebrow="Global Presence"
-          title="A network spanning the world's most vital corridors"
-          description="Strategic hubs across Asia-Pacific, North America, and beyond — connecting trade and powering enterprise growth."
+          title="A growing presence across key global regions"
+          description="We operate across multiple countries, connecting businesses and communities through trusted, scalable solutions."
           align="center"
         />
 

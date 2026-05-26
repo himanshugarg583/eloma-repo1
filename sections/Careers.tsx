@@ -51,9 +51,22 @@ export default function Careers() {
           <div className="space-y-8 lg:sticky lg:top-28">
             <SectionHeading
               eyebrow="Careers"
-              title="Join a group that moves the world"
-              description="We are building an elite team across operations, innovation, and client experience — united by a single standard of excellence."
+              title="Life at Eloma"
+              description="At Eloma, work is about learning, growing, and building something meaningful. We support each other with respect, trust, and growth every day."
             />
+            <div data-reveal className="rounded-xl border border-slate-200 bg-white p-5 text-sm text-slate-600">
+              <p className="font-semibold text-forest">Why Work at Eloma?</p>
+              <p className="mt-2">
+                We are a growing company based in Australia, India, USA, Canada, China, UK, UAE,
+                and Singapore. Your ideas are heard, your efforts are valued, and your work matters.
+              </p>
+              <ul className="mt-3 space-y-1.5">
+                <li>Fair chances for everyone</li>
+                <li>Learning by doing</li>
+                <li>Growing together as a team</li>
+                <li>A healthy work-life balance</li>
+              </ul>
+            </div>
             <div data-reveal className="relative overflow-hidden rounded-xl">
               <Image
                 src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=1400&q=80"
@@ -68,7 +81,7 @@ export default function Careers() {
                   Life at Eloma
                 </p>
                 <p className="mt-1 font-display text-lg font-semibold">
-                  A culture of stewardship and excellence
+                  Build your future with us
                 </p>
               </div>
             </div>

@@ -2,30 +2,22 @@
 
 import { useRef } from "react";
 import {
-  ShoppingBag,
-  Car,
-  Shirt,
-  Store,
-  FlaskConical,
-  HeartPulse,
-  Factory,
-  HardHat,
-  Wheat
+  Truck,
+  Cpu,
+  ShieldCheck,
+  Headset,
+  Plane
 } from "lucide-react";
 
 import SectionHeading from "@/components/SectionHeading";
 import { useGsapReveal } from "@/hooks/useGsapReveal";
 
 const industries = [
-  { name: "FMCG", icon: ShoppingBag },
-  { name: "Automobile", icon: Car },
-  { name: "Fashion & Lifestyle", icon: Shirt },
-  { name: "Retail", icon: Store },
-  { name: "Chemical", icon: FlaskConical },
-  { name: "Pharma & Healthcare", icon: HeartPulse },
-  { name: "Manufacturing", icon: Factory },
-  { name: "Construction", icon: HardHat },
-  { name: "Agricultural", icon: Wheat }
+  { name: "Transportation & Logistics", icon: Truck },
+  { name: "Digital & Technology", icon: Cpu },
+  { name: "Security & Risk Management", icon: ShieldCheck },
+  { name: "Customer Support & Call Center", icon: Headset },
+  { name: "Travel and Tourism", icon: Plane }
 ];
 
 export default function Industries() {
@@ -41,12 +33,12 @@ export default function Industries() {
       <div className="container-x">
         <SectionHeading
           eyebrow="Industries We Serve"
-          title="Tailored capabilities for complex sectors"
-          description="Specialized expertise aligned with the unique demands of every industry — from regulated pharma cold chains to high-velocity FMCG distribution."
+          title="Focused expertise across essential sectors"
+          description="We bring connected solutions to the industries that keep people, businesses, and communities moving."
           align="center"
         />
 
-        <div className="mt-14 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-3">
+        <div className="mt-14 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {industries.map((industry) => (
             <div
               key={industry.name}

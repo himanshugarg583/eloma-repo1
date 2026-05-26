@@ -2,40 +2,42 @@
 export const groupName = "Eloma Group";
 
 export const navAbout = [
-  "Group Overview",
+  "Who We Are",
   "Our Journey",
   "Vision & Values",
-  "Milestones",
   "Leadership",
-  "Chairman's Message",
-  "Board of Directors",
-  "Leadership Team"
+  "Founder Message",
+  "Sustainability",
+  "Global Presence",
+  "Life at Eloma"
 ];
 
 export const navBusinesses = [
-  "Eloma Logistics",
-  "Eloma Ports and Terminals",
-  "Eloma Infrastructure",
-  "Eloma SupplyTech",
-  "Eloma Warehousing",
-  "Eloma Distribution",
-  "Eloma Mobility",
-  "Eloma Global Trade"
+  "Logistics and Transportation",
+  "Digital and Technology",
+  "Security and Risk Management",
+  "Travel and Tourism",
+  "Customer Support and Call Center"
 ];
 
-export const navSustainability = ["ESG", "CSR Initiatives", "Community Impact"];
+export const navSustainability = [
+  "Eco-Conscious Operations",
+  "Ethical Practices",
+  "Responsible Partnerships",
+  "Long-Term Impact"
+];
 
 export const navMedia = [
+  "Leadership Messages",
+  "Connecting Australia",
   "News & Updates",
-  "Press Releases",
-  "Awards & Recognition",
-  "Gallery"
+  "Media Kit"
 ];
 
 export const navCareers = [
   "Work With Us",
   "Current Openings",
-  "Life at Group"
+  "Life at Eloma"
 ];
 
 export const navContact = [
@@ -45,17 +47,12 @@ export const navContact = [
 ];
 
 export const navServices = [
-  "Interstate Road Transport",
-  "Warehousing - Multi Location",
-  "Container Movement - Port to Customer",
-  "Pallet Re-Packaging",
-  "Metro Distribution",
-  "International Receiving",
-  "Regional Deliveries",
-  "Taxi Trucks",
-  "Contract Logistics",
-  "Same Day Delivery",
-  "Next Day Delivery"
+  "Eco-Conscious Operations",
+  "Ethical Practices",
+  "Smarter Technologies",
+  "Lower Carbon Footprint",
+  "Responsible Partnerships",
+  "Resilient Future"
 ];
 
 export const navWhyUs = [
@@ -69,15 +66,11 @@ export const navWhyUs = [
 ];
 
 export const navIndustries = [
-  "FMCG",
-  "Automobile",
-  "Fashion and Lifestyle",
-  "Retail",
-  "Chemical",
-  "Pharma and Healthcare",
-  "Manufacturing",
-  "Construction",
-  "Agricultural"
+  "Transportation and Logistics",
+  "Digital and Technology",
+  "Security and Risk Management",
+  "Customer Support and Call Center",
+  "Travel and Tourism"
 ];
 
 export const navLocations = [
@@ -86,177 +79,164 @@ export const navLocations = [
     cities: ["Sydney", "Melbourne", "Adelaide", "Perth", "Brisbane"]
   },
   {
-    country: "China",
-    cities: ["Beijing"]
-  },
-  {
-    country: "Singapore",
-    cities: ["Singapore"]
-  },
-  {
-    country: "Japan",
-    cities: ["Tokyo"]
+    country: "India",
+    cities: ["Mumbai", "Bengaluru", "Delhi"]
   },
   {
     country: "USA",
-    cities: ["New York"]
+    cities: ["New York", "Chicago", "Dallas"]
   },
   {
     country: "Canada",
     cities: ["Toronto"]
+  },
+  {
+    country: "China",
+    cities: ["Beijing"]
+  },
+  {
+    country: "UK",
+    cities: ["London"]
+  },
+  {
+    country: "UAE",
+    cities: ["Dubai"]
+  },
+  {
+    country: "Singapore",
+    cities: ["Singapore"]
   }
 ];
 
 export const subsidiaries = [
   {
     name: "Eloma Logistics",
-    industry: "Integrated Logistics",
-    description: "End-to-end transport, warehousing, and distribution with premium SLAs.",
+    industry: "Transportation and Logistics",
+    description: "Integrated transport and logistics solutions built for reliability and scale.",
     image:
       "https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?auto=format&fit=crop&w=1200&q=80"
   },
   {
-    name: "Eloma Ports and Terminals",
-    industry: "Port Operations",
-    description: "High-throughput port handling with precision container movement.",
-    image:
-      "https://images.unsplash.com/photo-1577416412292-747c6607f055?auto=format&fit=crop&w=1200&q=80"
-  },
-  {
-    name: "Eloma Infrastructure",
-    industry: "Infrastructure Development",
-    description: "Designing resilient logistics infrastructure across global corridors.",
-    image:
-      "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1200&q=80"
-  },
-  {
-    name: "Eloma SupplyTech",
-    industry: "Supply Chain Technology",
-    description: "AI-enabled visibility and optimization for complex networks.",
+    name: "Eloma Digital",
+    industry: "Digital and Technology",
+    description: "Technology-driven platforms that power smarter operations and insights.",
     image:
       "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=80"
   },
   {
-    name: "Eloma Warehousing",
-    industry: "Multi-Location Warehousing",
-    description: "Climate-ready storage with rapid fulfillment capabilities.",
+    name: "Eloma Security",
+    industry: "Security and Risk Management",
+    description: "Virtual security and risk solutions designed for safety and trust.",
     image:
-      "https://images.unsplash.com/photo-1553413077-190dd305871c?auto=format&fit=crop&w=1200&q=80"
+      "https://images.unsplash.com/photo-1556155092-8707de31f9c4?auto=format&fit=crop&w=1200&q=80"
   },
   {
-    name: "Eloma Distribution",
-    industry: "Last Mile and Metro",
-    description: "Precision metro distribution with premium delivery assurance.",
+    name: "Eloma Travel",
+    industry: "Travel and Tourism",
+    description: "Travel services focused on seamless experiences and trusted support.",
     image:
-      "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=1200&q=80"
+      "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=80"
   },
   {
-    name: "Eloma Mobility",
-    industry: "Fleet and Mobility",
-    description: "Specialized fleet operations for critical and high-value cargo.",
+    name: "Eloma Customer Solutions",
+    industry: "Customer Support",
+    description: "Customer support and call center services that strengthen relationships.",
     image:
-      "https://images.unsplash.com/photo-1519003722824-194d4455a60c?auto=format&fit=crop&w=1200&q=80"
-  },
-  {
-    name: "Eloma Global Trade",
-    industry: "International Trade",
-    description: "Global trade facilitation with compliance-first operations.",
-    image:
-      "https://images.unsplash.com/photo-1494412651409-8963ce7935a7?auto=format&fit=crop&w=1200&q=80"
+      "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=1200&q=80"
   }
 ];
 
 export const services = [
   {
-    title: "Global Freight and Road Transport",
-    description: "Premium interstate and regional road transport with real-time visibility."
+    title: "Eco-Conscious Operations",
+    description: "Reducing environmental impact across logistics and digital processes."
   },
   {
-    title: "Multi-Location Warehousing",
-    description: "Distributed warehousing with rapid fulfillment and precise control."
+    title: "Ethical Practices",
+    description: "Responsible governance and transparent business standards."
   },
   {
-    title: "Port to Customer Movement",
-    description: "Seamless container handling and high-speed cross-dock operations."
+    title: "Smarter Technologies",
+    description: "Innovation that drives efficiency and smarter operations."
   },
   {
-    title: "Contract Logistics",
-    description: "Long-term, bespoke supply chain solutions for complex operations."
+    title: "Lower Carbon Footprint",
+    description: "Strategic improvements focused on measurable reductions."
   },
   {
-    title: "Same and Next Day Delivery",
-    description: "Premium delivery commitments for time-critical cargo."
+    title: "Responsible Partnerships",
+    description: "Collaboration that supports sustainable impact and growth."
   },
   {
-    title: "Metro Distribution",
-    description: "Urban distribution optimized for speed, safety, and reliability."
+    title: "Resilient Future",
+    description: "Long-term value for businesses, communities, and the planet."
   }
 ];
 
 export const industries = [
-  "FMCG",
-  "Automobile",
-  "Fashion and Lifestyle",
-  "Retail",
-  "Chemical",
-  "Pharma and Healthcare",
-  "Manufacturing",
-  "Construction",
-  "Agricultural"
+  "Transportation and Logistics",
+  "Digital and Technology",
+  "Security and Risk Management",
+  "Customer Support and Call Center",
+  "Travel and Tourism"
 ];
 
 export const stats = [
-  { label: "Years of excellence", value: "28+" },
-  { label: "Countries connected", value: "12" },
-  { label: "Clients served", value: "460+" },
-  { label: "Warehouses", value: "85" }
+  { label: "Business verticals", value: "4+" },
+  { label: "Countries present", value: "8" },
+  { label: "Industries served", value: "Multiple" },
+  { label: "Unified vision", value: "1" }
 ];
 
 export const caseStudies = [
   {
-    title: "Global FMCG Network Rebuild",
-    description: "Reduced lead time by 36 percent across three regions through a fully integrated distribution overhaul.",
-    category: "Supply Chain",
+    title: "Visionary Leadership",
+    description: "Leadership focused on building a multi-business ecosystem designed for long-term impact.",
+    category: "Leadership",
     image:
-      "https://images.unsplash.com/photo-1566576912321-d58ddd7a6088?auto=format&fit=crop&w=1200&q=80"
+      "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=1200&q=80"
   },
   {
-    title: "Pharma Cold Chain Excellence",
-    description: "Zero deviation compliance for regulated products worldwide with continuous monitoring and audit trail.",
-    category: "Healthcare",
+    title: "Founder Message",
+    description:
+      "Eloma Group was built with a vision to go beyond a single business - to create an ecosystem where innovation, efficiency, and sustainability drive real impact.",
+    category: "R J, Founder",
     image:
-      "https://images.unsplash.com/photo-1587854692152-cbe660dbde88?auto=format&fit=crop&w=1200&q=80"
+      "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=80"
   },
   {
-    title: "Automotive JIT Acceleration",
-    description: "Streamlined inbound parts with predictive delivery orchestration across manufacturing plants.",
-    category: "Manufacturing",
+    title: "Unified Vision",
+    description: "One connected group aligning purpose, performance, and sustainability across industries.",
+    category: "Group Vision",
     image:
-      "https://images.unsplash.com/photo-1565043666747-69f6646db940?auto=format&fit=crop&w=1200&q=80"
+      "https://images.unsplash.com/photo-1494412651409-8963ce7935a7?auto=format&fit=crop&w=1200&q=80"
   }
 ];
 
 export const blogPosts = [
   {
-    title: "The Future of Premium Logistics",
-    description: "How luxury-grade logistics is redefining global supply chains and customer expectations.",
-    category: "Industry Insights",
+    title: "Connecting Cities",
+    description:
+      "We make distance feel smaller by building smooth, reliable connections across regions.",
+    category: "Motto",
     date: "May 14, 2026",
     image:
       "https://images.unsplash.com/photo-1586528116493-7e85f5a98a40?auto=format&fit=crop&w=1200&q=80"
   },
   {
-    title: "Sustainable Infrastructure at Scale",
-    description: "A new standard for greener, smarter logistics networks built around responsible growth.",
-    category: "Sustainability",
+    title: "Connecting Businesses",
+    description:
+      "We help services reach people faster and keep communication clear and easy.",
+    category: "Connection",
     date: "April 28, 2026",
     image:
       "https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?auto=format&fit=crop&w=1200&q=80"
   },
   {
-    title: "AI-Driven Visibility",
-    description: "Turning complex operations into transparent, decisive systems for the next decade of trade.",
-    category: "Technology",
+    title: "Connecting Opportunities",
+    description:
+      "When people and businesses are well connected, work becomes easier and growth becomes faster.",
+    category: "Australia",
     date: "April 10, 2026",
     image:
       "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1200&q=80"

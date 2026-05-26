@@ -12,11 +12,17 @@ const linkColumns = [
   },
   {
     title: "Businesses",
-    links: ["Eloma Logistics", "Eloma Ports & Terminals", "Eloma Infrastructure", "Eloma SupplyTech", "Eloma Warehousing"]
+    links: [
+      "Logistics & Transportation",
+      "Digital & Technology",
+      "Security & Risk",
+      "Travel & Tourism",
+      "Customer Support"
+    ]
   },
   {
     title: "Resources",
-    links: ["News & Press", "Case Studies", "Investor Relations", "Sustainability", "Careers"]
+    links: ["News & Press", "Leadership", "Sustainability", "Careers", "Contact"]
   },
   {
     title: "Support",
@@ -48,7 +54,7 @@ export default function Footer() {
               />
             </div>
             <p className="max-w-sm text-sm leading-relaxed text-white/70">
-              Building global businesses with vision, scale, and excellence — across logistics, infrastructure, and supply-chain technology.
+              Powering businesses across logistics, digital innovation, security, travel, and customer solutions - driven by purpose and sustainability.
             </p>
             <div className="space-y-2 text-sm text-white/70">
               <a href="tel:1800710388" className="flex items-center gap-2 transition-colors hover:text-gold">

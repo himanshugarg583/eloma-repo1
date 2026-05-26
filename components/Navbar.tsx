@@ -31,7 +31,7 @@ type MenuKey =
 const navItems: Array<{ key: Exclude<MenuKey, null>; label: string; href: string }> = [
   { key: "about", label: "About Us", href: "#about" },
   { key: "businesses", label: "Our Businesses", href: "#subsidiaries" },
-  { key: "sustainability", label: "Sustainability", href: "#" },
+  { key: "sustainability", label: "Sustainability", href: "#services" },
   { key: "media", label: "Media", href: "#blogs" },
   { key: "careers", label: "Careers", href: "#career" },
   { key: "contact", label: "Contact Us", href: "#contact" }
@@ -50,40 +50,40 @@ const navMenu: Record<Exclude<MenuKey, null>, {
 }> = {
   about: {
     eyebrow: "About Us",
-    title: "Group overview and leadership",
-    description: "A legacy of stewardship, governance, and long-term value creation.",
+    title: "Who we are and how we lead",
+    description: "A unified group driven by innovation, scalability, and sustainable growth.",
     items: navAbout,
     ctaLabel: "Explore Group",
     ctaHref: "#about"
   },
   businesses: {
     eyebrow: "Our Businesses",
-    title: "Eight focused operating platforms",
-    description: "Diversified businesses delivering scale across critical sectors.",
+    title: "Focused business verticals",
+    description: "Logistics, digital innovation, security, travel, and customer solutions working as one.",
     items: navBusinesses,
     ctaLabel: "View Companies",
     ctaHref: "#subsidiaries"
   },
   sustainability: {
     eyebrow: "Sustainability",
-    title: "Building trust through ESG",
-    description: "Programs that strengthen communities and drive responsible growth.",
+    title: "Responsible growth",
+    description: "Eco-conscious operations, ethical practices, and long-term impact.",
     items: navSustainability,
     ctaLabel: "Our ESG Focus",
-    ctaHref: "#"
+    ctaHref: "#services"
   },
   media: {
     eyebrow: "Media",
-    title: "News and recognition",
-    description: "Updates, announcements, and awards across the group.",
+    title: "Stories and insights",
+    description: "Leadership messages, the motto, and updates across the group.",
     items: navMedia,
     ctaLabel: "Visit Newsroom",
     ctaHref: "#blogs"
   },
   careers: {
     eyebrow: "Careers",
-    title: "Work with the group",
-    description: "Opportunities across operations, strategy, and innovation.",
+    title: "Grow with Eloma",
+    description: "Learn, grow, and build something meaningful with a global team.",
     items: navCareers,
     ctaLabel: "View Openings",
     ctaHref: "#career"
@@ -156,47 +156,47 @@ export default function Navbar() {
   const [activeMenu, setActiveMenu] = useState<MenuKey>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
   const isScrolled = useScrollY(20);
+  const isTransparent = !isScrolled;
 
   return (
     <header
       className={cn(
-        "fixed top-0 z-50 w-full bg-white transition-all duration-200",
-        isScrolled
-          ? "border-b border-slate-200 shadow-sm"
-          : "border-b border-slate-100"
+        "top-0 z-50 w-full transition-all duration-300",
+        isTransparent
+          ? "absolute bg-transparent"
+          : "fixed bg-white shadow-sm"
       )}
       onMouseLeave={() => setActiveMenu(null)}
     >
       {/* Top utility bar */}
-      <div className="hidden border-b border-slate-100 bg-slate-50 lg:block">
-        <div className="container-x flex h-9 items-center justify-between text-xs text-slate-600">
-          <div className="flex items-center gap-5">
-            <span>Global Group Company</span>
-            <span className="text-slate-300">|</span>
-            <Link href="#" className="transition-colors hover:text-forest">
-              Investor Relations
-            </Link>
-            <Link href="#" className="transition-colors hover:text-forest">
-              Newsroom
-            </Link>
-            <Link href="#" className="transition-colors hover:text-forest">
-              Sustainability
-            </Link>
-          </div>
-          <div className="flex items-center gap-5">
-            <Link
-              href={phoneHref}
-              className="flex items-center gap-2 transition-colors hover:text-forest"
-            >
-              <Phone size={12} />
-              <span>{phoneNumber}</span>
-            </Link>
-            <Link href="#" className="transition-colors hover:text-forest">
-              EN
-            </Link>
+      {isTransparent ? (
+        <div className="hidden bg-white/5 lg:block">
+          <div className="container-x flex h-9 items-center justify-between text-xs text-white/80">
+            <div className="flex items-center gap-5">
+              <span>Global Group Company</span>
+              <span className="text-white/30">|</span>
+              <Link href="#" className="transition-colors hover:text-white">
+                Sustainability
+              </Link>
+              <Link href="#" className="transition-colors hover:text-white">
+                Partner With Us
+              </Link>
+            </div>
+            <div className="flex items-center gap-5">
+              <Link
+                href={phoneHref}
+                className="flex items-center gap-2 transition-colors hover:text-white"
+              >
+                <Phone size={12} />
+                <span>{phoneNumber}</span>
+              </Link>
+              <Link href="#" className="transition-colors hover:text-white">
+                EN
+              </Link>
+            </div>
           </div>
         </div>
-      </div>
+      ) : null}
 
       {/* Main navbar */}
       <div className="container-x flex h-16 items-center justify-between md:h-20">
@@ -215,8 +215,11 @@ export default function Navbar() {
             <button
               key={item.key}
               className={cn(
-                "group relative flex items-center gap-1 px-3 py-2 text-sm font-medium text-slate-700 transition-colors hover:text-forest",
-                activeMenu === item.key && "text-forest"
+                "group relative flex items-center gap-1 px-3 py-2 text-sm font-medium transition-colors",
+                isTransparent
+                  ? "text-white/85 hover:text-white"
+                  : "text-slate-700 hover:text-forest",
+                activeMenu === item.key && (isTransparent ? "text-white" : "text-forest")
               )}
               onMouseEnter={() => setActiveMenu(item.key)}
             >
@@ -224,8 +227,9 @@ export default function Navbar() {
               <ChevronDown
                 size={14}
                 className={cn(
-                  "text-slate-400 transition-transform duration-200",
-                  activeMenu === item.key && "rotate-180 text-forest"
+                  "transition-transform duration-200",
+                  isTransparent ? "text-white/60" : "text-slate-400",
+                  activeMenu === item.key && (isTransparent ? "rotate-180 text-white" : "rotate-180 text-forest")
                 )}
               />
               <span
@@ -240,16 +244,35 @@ export default function Navbar() {
 
         <div className="hidden items-center gap-2 lg:flex">
           <button
-            className="rounded-md p-2 text-slate-600 transition-colors hover:bg-slate-100 hover:text-forest"
+            className={cn(
+              "rounded-md p-2 transition-colors",
+              isTransparent
+                ? "text-white/80 hover:bg-white/10 hover:text-white"
+                : "text-slate-600 hover:bg-slate-100 hover:text-forest"
+            )}
             aria-label="Search"
           >
             <Search size={18} />
           </button>
-          <Button size="sm">Request a Quote</Button>
+          <Button
+            size="sm"
+            className={cn(
+              isTransparent
+                ? "bg-white text-forest hover:bg-white/90"
+                : ""
+            )}
+          >
+            Request a Quote
+          </Button>
         </div>
 
         <button
-          className="flex items-center justify-center rounded-md border border-slate-200 p-2 text-forest lg:hidden"
+          className={cn(
+            "flex items-center justify-center rounded-md border p-2 lg:hidden",
+            isTransparent
+              ? "border-white/40 text-white"
+              : "border-slate-200 text-forest"
+          )}
           onClick={() => setMobileOpen((prev) => !prev)}
           aria-label="Toggle navigation"
         >

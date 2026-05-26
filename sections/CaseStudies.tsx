@@ -23,12 +23,12 @@ export default function CaseStudies() {
       <div className="container-x">
         <div className="flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
           <SectionHeading
-            eyebrow="Case Studies"
-            title="Proof of premium execution"
-            description="Complex transformations delivered by Eloma Group companies — measured in outcomes that matter."
+            eyebrow="Leadership"
+            title="Driven by visionary leadership"
+            description="Our growth is guided by strong leadership, clear vision, and a commitment to creating lasting impact."
           />
           <Button variant="outline" size="sm" className="hidden md:inline-flex">
-            All Case Studies
+            Leadership Stories
             <ArrowUpRight size={16} />
           </Button>
         </div>
@@ -61,7 +61,7 @@ export default function CaseStudies() {
                   {study.description}
                 </p>
                 <div className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-forest">
-                  <span>Read case study</span>
+                  <span>Read more</span>
                   <ArrowUpRight
                     size={15}
                     className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
@@ -74,7 +74,7 @@ export default function CaseStudies() {
 
         <div className="mt-10 flex justify-center md:hidden">
           <Button variant="outline" size="sm">
-            All Case Studies
+            Leadership Stories
             <ArrowUpRight size={16} />
           </Button>
         </div>

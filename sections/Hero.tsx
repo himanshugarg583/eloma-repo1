@@ -108,25 +108,25 @@ export default function Hero() {
             className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-gold"
           >
             <span className="inline-block h-px w-7 bg-gold" />
-            Global Group Company
+            Eloma Group
           </p>
           <h1
             data-hero
             className="font-display text-4xl font-bold leading-[1.05] tracking-tight md:text-5xl lg:text-6xl xl:text-7xl"
           >
-            Building global businesses with vision, scale and excellence
+            Powering Businesses. Connecting Industries. Building the Future.
           </h1>
           <p
             data-hero
             className="max-w-2xl text-base leading-relaxed text-white/85 md:text-lg"
           >
-            A multi-generational parent company orchestrating eight focused
-            businesses across logistics, infrastructure, supply-chain technology,
-            and global trade.
+            A dynamic business group uniting logistics, digital innovation,
+            security, travel, and customer solutions - driven by purpose,
+            performance, and sustainability.
           </p>
           <div data-hero className="flex flex-col gap-3 pt-2 sm:flex-row">
             <Button size="lg" className="group">
-              Explore Group
+              Explore the Group
               <ArrowRight
                 size={18}
                 className="transition-transform group-hover:translate-x-1"
@@ -138,7 +138,7 @@ export default function Hero() {
               className="border-white/40 bg-white/10 text-white backdrop-blur hover:border-white hover:bg-white hover:text-forest"
             >
               <Play size={16} />
-              Watch Our Story
+              Meet Our Businesses
             </Button>
           </div>
         </div>

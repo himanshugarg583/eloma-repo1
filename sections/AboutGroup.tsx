@@ -11,21 +11,21 @@ import { useGsapReveal } from "@/hooks/useGsapReveal";
 const pillars = [
   {
     icon: Target,
-    title: "Our Mission",
+    title: "Entrepreneur-Focused",
     description:
-      "Elevate global trade with precision, trust, and premium execution across every customer touchpoint."
+      "Built by entrepreneurs to unite expertise across transportation, digital solutions, security, travel, and customer support."
   },
   {
     icon: Globe2,
-    title: "Our Vision",
+    title: "Unified Ecosystem",
     description:
-      "Build the most admired integrated logistics and infrastructure group connecting the world's leading brands."
+      "An integrated group delivering connected solutions that drive efficiency, growth, and long-term value."
   },
   {
     icon: Award,
-    title: "Our Values",
+    title: "Sustainable Growth",
     description:
-      "Stewardship, integrity, and long-term thinking — the foundation of every business decision we make."
+      "Innovation, scalability, and sustainability guide how we help businesses adapt and succeed."
   }
 ];
 
@@ -55,9 +55,9 @@ export default function AboutGroup() {
 
           <div className="space-y-8">
             <SectionHeading
-              eyebrow="About the Group"
-              title="A multi-generational group shaping global trade"
-              description="Since our inception, we have built a resilient global platform connecting businesses across continents — uniting strategy, innovation, and operational precision into a single standard of excellence."
+              eyebrow="WHO WE ARE"
+              title="A diversified business group driving innovation across industries"
+              description="Eloma Group is an entrepreneur-focused organization bringing together expertise in transportation, digital solutions, virtual security, travel and customer support services. We operate as a unified ecosystem of businesses, delivering integrated solutions that drive efficiency, growth, and long-term value."
             />
 
             <div data-reveal className="space-y-5">
@@ -74,6 +74,10 @@ export default function AboutGroup() {
                   </div>
                 </div>
               ))}
+            </div>
+
+            <div data-reveal className="rounded-lg bg-slate-50 px-4 py-3 text-sm text-slate-600">
+              4+ Business Verticals | Multiple Industries | One Unified Vision for Sustainable Growth
             </div>
 
             <div data-reveal>

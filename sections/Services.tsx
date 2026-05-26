@@ -1,61 +1,106 @@
 "use client";
 
-import { useRef } from "react";
+import { useLayoutEffect, useRef } from "react";
 import {
-  Package,
-  Ship,
-  Truck,
-  Warehouse,
-  Zap,
+  Leaf,
   ShieldCheck,
+  Cpu,
+  Recycle,
+  Handshake,
+  Globe2,
   ArrowUpRight
 } from "lucide-react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 import SectionHeading from "@/components/SectionHeading";
 import { useGsapReveal } from "@/hooks/useGsapReveal";
 
 const services = [
   {
-    title: "Interstate Road Transport",
+    title: "Eco-Conscious Operations",
     description:
-      "Premium fleet operations and real-time route intelligence across long-haul corridors.",
-    icon: Truck
+      "We reduce environmental impact across transportation, digital, and operational processes.",
+    icon: Leaf
   },
   {
-    title: "Multi-Location Warehousing",
+    title: "Ethical Practices",
     description:
-      "Climate-ready storage with precision inventory governance and rapid fulfillment.",
-    icon: Warehouse
-  },
-  {
-    title: "Container Movement",
-    description:
-      "Port to customer delivery with high-security handling and seamless cross-dock.",
-    icon: Ship
-  },
-  {
-    title: "Contract Logistics",
-    description:
-      "Long-term integrated logistics solutions designed for complex supply chains.",
+      "Responsible governance, transparency, and people-first standards guide our growth.",
     icon: ShieldCheck
   },
   {
-    title: "Same and Next Day Delivery",
+    title: "Smarter Technologies",
     description:
-      "Time-critical distribution with premium SLAs across metropolitan networks.",
-    icon: Zap
+      "Digital innovation helps us optimize routes, resources, and service reliability.",
+    icon: Cpu
   },
   {
-    title: "Metro Distribution",
+    title: "Lower Carbon Footprint",
     description:
-      "High-frequency metropolitan delivery built for speed, safety, and reliability.",
-    icon: Package
+      "From fleet efficiency to process design, we prioritize measurable reductions.",
+    icon: Recycle
+  },
+  {
+    title: "Responsible Partnerships",
+    description:
+      "We collaborate with businesses that share our commitment to sustainable impact.",
+    icon: Handshake
+  },
+  {
+    title: "Resilient Future",
+    description:
+      "Long-term value creation for businesses, communities, and the planet.",
+    icon: Globe2
   }
 ];
 
 export default function Services() {
   const sectionRef = useRef<HTMLDivElement | null>(null);
+  const headingRef = useRef<HTMLDivElement | null>(null);
+  const gridRef = useRef<HTMLDivElement | null>(null);
   useGsapReveal(sectionRef);
+
+  useLayoutEffect(() => {
+    if (!sectionRef.current || !headingRef.current || !gridRef.current) {
+      return;
+    }
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    const ctx = gsap.context(() => {
+      const cards = gridRef.current?.querySelectorAll("[data-service-card]") ?? [];
+
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 75%",
+          end: "bottom 70%",
+          toggleActions: "play none none reverse"
+        }
+      });
+
+      tl.fromTo(
+        headingRef.current,
+        { x: -60, opacity: 0 },
+        { x: 0, opacity: 1, duration: 0.7, ease: "power3.out" }
+      )
+        .fromTo(
+          gridRef.current,
+          { x: 60, opacity: 0 },
+          { x: 0, opacity: 1, duration: 0.7, ease: "power3.out" },
+          "-=0.35"
+        )
+        .fromTo(
+          cards,
+          { y: 22, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.55, ease: "power3.out", stagger: 0.08 },
+          "-=0.3"
+        );
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
 
   return (
     <section
@@ -64,18 +109,24 @@ export default function Services() {
       className="section-padding bg-white"
     >
       <div className="container-x">
-        <SectionHeading
-          eyebrow="What We Do"
-          title="Precision services across the supply chain"
-          description="From port to customer, the group delivers a complete spectrum of logistics services — engineered with uncompromising focus on reliability."
-          align="center"
-        />
+        <div ref={headingRef}>
+          <SectionHeading
+            eyebrow="Sustainability & Responsibility"
+            title="Committed to sustainable growth and responsible business"
+            description="Sustainability is a core part of how we operate and grow. We build solutions that are efficient, ethical, and resilient for the long term."
+            align="center"
+          />
+        </div>
 
-        <div className="mt-14 grid gap-px overflow-hidden rounded-xl border border-slate-200 bg-slate-200 sm:grid-cols-2 lg:grid-cols-3">
+        <div
+          ref={gridRef}
+          className="mt-14 grid gap-px overflow-hidden rounded-xl border border-slate-200 bg-slate-200 sm:grid-cols-2 lg:grid-cols-3"
+        >
           {services.map((service) => (
             <div
               key={service.title}
               data-reveal
+              data-service-card
               className="group relative flex flex-col bg-white p-8 transition-colors duration-300 hover:bg-slate-50"
             >
               <div className="mb-5 inline-flex h-12 w-12 items-center justify-center rounded-lg bg-forest/5 text-forest transition-all duration-300 group-hover:bg-forest group-hover:text-white">
@@ -88,7 +139,7 @@ export default function Services() {
                 {service.description}
               </p>
               <div className="mt-5 flex items-center gap-1.5 text-xs font-semibold text-forest opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                <span>Explore service</span>
+                <span>Learn more</span>
                 <ArrowUpRight size={14} />
               </div>
             </div>

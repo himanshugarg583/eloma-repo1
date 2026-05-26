@@ -24,14 +24,14 @@ export default function Investors() {
             <div>
               <p className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-gold">
                 <span className="inline-block h-px w-7 bg-gold" />
-                Investors & Partners
+                Sustainability Journey
               </p>
               <h2 className="mt-4 font-display text-3xl font-bold leading-tight text-white md:text-4xl lg:text-5xl">
-                A premium platform for long-term growth
+                Be a part of our sustainable journey
               </h2>
               <p className="mt-5 max-w-xl text-base leading-relaxed text-white/80">
-                Access the latest investor updates, partnership opportunities,
-                and strategic initiatives across the Eloma Group of companies.
+                Together, we can reduce environmental impact, drive smarter
+                operations, and build businesses that are sustainable for tomorrow.
               </p>
               <div className="mt-8 flex flex-col gap-3 sm:flex-row">
                 <Button
@@ -39,7 +39,7 @@ export default function Investors() {
                   variant="secondary"
                   className="bg-gold text-forest hover:bg-gold-soft"
                 >
-                  Investor Relations
+                  Partner with Us
                   <ArrowRight size={18} />
                 </Button>
                 <Button
@@ -47,7 +47,7 @@ export default function Investors() {
                   variant="outline"
                   className="border-white/30 bg-transparent text-white hover:bg-white hover:text-forest"
                 >
-                  Partner with Us
+                  Talk Sustainability
                 </Button>
               </div>
             </div>
@@ -58,9 +58,9 @@ export default function Investors() {
                   <LineChart size={20} />
                 </div>
                 <div>
-                  <p className="font-semibold text-white">Investor Relations</p>
+                  <p className="font-semibold text-white">Collaboration</p>
                   <p className="mt-1 text-sm text-white/70">
-                    Annual reports, financial updates, and governance disclosures.
+                    Partner with a forward-thinking ecosystem focused on impact.
                   </p>
                 </div>
               </div>
@@ -69,9 +69,9 @@ export default function Investors() {
                   <Handshake size={20} />
                 </div>
                 <div>
-                  <p className="font-semibold text-white">Strategic Partnerships</p>
+                  <p className="font-semibold text-white">Responsible Growth</p>
                   <p className="mt-1 text-sm text-white/70">
-                    Co-investment, joint ventures, and supplier partnership programs.
+                    Eco-conscious practices, ethical standards, and long-term value.
                   </p>
                 </div>
               </div>

@@ -20,31 +20,43 @@ export default function WhyUs() {
     gsap.registerPlugin(ScrollTrigger);
 
     const track = trackRef.current;
-    const mm = gsap.matchMedia();
+    const ctx = gsap.context(() => {
+      const mm = gsap.matchMedia();
 
-    mm.add("(min-width: 1024px)", () => {
-      if (!sectionRef.current || !track) {
-        return;
-      }
-
-      const totalScroll = track.scrollWidth - track.clientWidth;
-
-      gsap.to(track, {
-        x: -totalScroll,
-        ease: "none",
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top top",
-          end: () => `+=${track.scrollWidth}`,
-          scrub: 1,
-          pin: true
+      mm.add("(min-width: 1024px)", () => {
+        if (!sectionRef.current || !track) {
+          return;
         }
-      });
-    });
 
-    return () => {
-      mm.kill();
-    };
+        const totalScroll = track.scrollWidth - track.clientWidth;
+
+        if (totalScroll <= 0) {
+          return;
+        }
+
+        gsap.to(track, {
+          x: -totalScroll,
+          ease: "none",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top top",
+            end: () => `+=${totalScroll}`,
+            scrub: 1,
+            pin: true,
+            pinReparent: true,
+            pinSpacing: true,
+            invalidateOnRefresh: true,
+            anticipatePin: 1
+          }
+        });
+      });
+
+      return () => {
+        mm.kill();
+      };
+    }, sectionRef);
+
+    return () => ctx.revert();
   }, []);
 
   return (

@@ -26,7 +26,7 @@ const contactItems = [
   {
     icon: MapPin,
     label: "Regional Offices",
-    value: "Singapore · Tokyo · Beijing · New York · Toronto"
+    value: "Australia · India · USA · Canada · China · UK · UAE · Singapore"
   }
 ];
 
@@ -47,7 +47,7 @@ export default function Contact() {
         <SectionHeading
           eyebrow="Contact"
           title="Connect with the Eloma Group"
-          description="Share your requirements and our executive team will respond within one business day."
+          description="Share your requirements and our team will respond with the right solution."
           align="center"
         />
 
@@ -62,8 +62,8 @@ export default function Contact() {
                 We&apos;d love to hear from you
               </h3>
               <p className="mt-2 text-sm leading-relaxed text-slate-600">
-                Whether you&apos;re exploring a partnership or need a logistics
-                solution, our team is ready to help.
+                Whether you are exploring a partnership or need business support,
+                our team is ready to help.
               </p>
 
               <div className="mt-6 space-y-5">

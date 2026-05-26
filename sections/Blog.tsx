@@ -23,12 +23,12 @@ export default function Blog() {
       <div className="container-x">
         <div className="flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
           <SectionHeading
-            eyebrow="News & Insights"
-            title="Latest thinking from our group"
-            description="Ideas, innovation, and strategy from leaders across the Eloma Group ecosystem."
+            eyebrow="Our Motto"
+            title="Connecting Australia"
+            description="We bring people, businesses, ideas, and opportunities closer together across the country."
           />
           <Button variant="outline" size="sm" className="hidden md:inline-flex">
-            View Newsroom
+            View More
             <ArrowUpRight size={16} />
           </Button>
         </div>
@@ -68,7 +68,7 @@ export default function Blog() {
                   {post.description}
                 </p>
                 <div className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-forest">
-                  <span>Read article</span>
+                  <span>Read more</span>
                   <ArrowUpRight
                     size={15}
                     className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
@@ -81,7 +81,7 @@ export default function Blog() {
 
         <div className="mt-10 flex justify-center md:hidden">
           <Button variant="outline" size="sm">
-            View Newsroom
+            View More
             <ArrowUpRight size={16} />
           </Button>
         </div>
