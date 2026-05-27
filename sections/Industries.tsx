@@ -3,57 +3,47 @@
 import { useRef } from "react";
 import { motion } from "framer-motion";
 import {
-  ShoppingBag,
-  Car,
-  Shirt,
-  Store,
-  FlaskConical,
-  HeartPulse,
-  Factory,
-  HardHat,
-  Wheat,
-  Building2,
-  Plane,
-  Ship
+  Truck,
+  MonitorSmartphone,
+  ShieldCheck,
+  Headset,
+  Plane
 } from "lucide-react";
 
 import SectionHeading from "@/components/SectionHeading";
-import Marquee from "@/components/animations/Marquee";
 
-const rowOne = [
-  { name: "FMCG", icon: ShoppingBag },
-  { name: "Automobile", icon: Car },
-  { name: "Fashion & Lifestyle", icon: Shirt },
-  { name: "Retail", icon: Store },
-  { name: "Chemical", icon: FlaskConical },
-  { name: "Pharma & Healthcare", icon: HeartPulse }
+const verticals = [
+  {
+    name: "Transportation & Logistics",
+    description:
+      "Integrated transport and logistics solutions built for reliability and scale.",
+    icon: Truck
+  },
+  {
+    name: "Digital & Technology",
+    description:
+      "Technology-driven platforms that power smarter operations and insights.",
+    icon: MonitorSmartphone
+  },
+  {
+    name: "Security & Risk Management",
+    description:
+      "Virtual security and risk solutions designed for safety and trust.",
+    icon: ShieldCheck
+  },
+  {
+    name: "Customer Support & Call Center",
+    description:
+      "Customer support and call center services that strengthen relationships.",
+    icon: Headset
+  },
+  {
+    name: "Travel & Tourism",
+    description:
+      "Travel services focused on seamless experiences and trusted support.",
+    icon: Plane
+  }
 ];
-
-const rowTwo = [
-  { name: "Manufacturing", icon: Factory },
-  { name: "Construction", icon: HardHat },
-  { name: "Agricultural", icon: Wheat },
-  { name: "Real Estate", icon: Building2 },
-  { name: "Aviation", icon: Plane },
-  { name: "Maritime", icon: Ship }
-];
-
-function IndustryTag({
-  name,
-  Icon
-}: {
-  name: string;
-  Icon: typeof ShoppingBag;
-}) {
-  return (
-    <span className="mx-3 inline-flex items-center gap-3 rounded-full border border-slate-200 bg-white px-5 py-3 text-sm font-semibold text-forest shadow-card transition-all hover:-translate-y-0.5 hover:border-forest hover:shadow-card-hover">
-      <span className="flex h-7 w-7 items-center justify-center rounded-full bg-forest/5 text-forest">
-        <Icon size={14} strokeWidth={2} />
-      </span>
-      {name}
-    </span>
-  );
-}
 
 export default function Industries() {
   const sectionRef = useRef<HTMLDivElement | null>(null);
@@ -64,43 +54,52 @@ export default function Industries() {
       ref={sectionRef}
       className="section-padding section-alt relative overflow-hidden"
     >
-      {/* Decorative top fade */}
       <div className="container-x">
         <SectionHeading
           eyebrow="Industries We Serve"
-          title="Tailored capabilities for complex sectors"
-          description="Specialized expertise aligned with the unique demands of every industry — from regulated pharma cold chains to high-velocity FMCG distribution."
+          title="Connected expertise across five core verticals"
+          description="We bring together transportation, digital, security, customer support, and travel — operating as one integrated ecosystem that delivers efficiency, growth, and long-term value."
           align="center"
         />
-      </div>
 
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-        className="mt-14 space-y-4"
-      >
-        <div className="relative">
-          {/* Edge fades */}
-          <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-24 bg-gradient-to-r from-slate-50 to-transparent" />
-          <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-24 bg-gradient-to-l from-slate-50 to-transparent" />
-          <Marquee speed={50}>
-            {rowOne.map((it, idx) => (
-              <IndustryTag key={`${it.name}-${idx}`} name={it.name} Icon={it.icon} />
-            ))}
-          </Marquee>
+        <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {verticals.map((vertical, idx) => (
+            <motion.div
+              key={vertical.name}
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-80px" }}
+              transition={{
+                duration: 0.7,
+                delay: idx * 0.1,
+                ease: [0.22, 1, 0.36, 1]
+              }}
+              className="group relative isolate overflow-hidden rounded-2xl border border-slate-200 bg-white p-7 transition-all duration-500 hover:-translate-y-1 hover:border-forest hover:shadow-card-hover md:p-8"
+            >
+              {/* Big translucent icon corner */}
+              <vertical.icon
+                className="pointer-events-none absolute -right-4 -top-4 h-28 w-28 text-forest/[0.04] transition-all duration-700 group-hover:rotate-12 group-hover:text-forest/[0.07]"
+                strokeWidth={1}
+              />
+
+              <div className="relative">
+                <div className="mb-5 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-forest text-white shadow-md transition-all duration-500 group-hover:bg-gold group-hover:text-forest">
+                  <vertical.icon size={22} strokeWidth={1.8} />
+                </div>
+                <h3 className="font-display text-xl font-semibold text-forest">
+                  {vertical.name}
+                </h3>
+                <p className="mt-2 text-sm leading-relaxed text-slate-600">
+                  {vertical.description}
+                </p>
+              </div>
+
+              {/* Bottom border draw */}
+              <span className="pointer-events-none absolute bottom-0 left-0 h-[2px] w-0 bg-gold transition-all duration-700 group-hover:w-full" />
+            </motion.div>
+          ))}
         </div>
-        <div className="relative">
-          <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-24 bg-gradient-to-r from-slate-50 to-transparent" />
-          <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-24 bg-gradient-to-l from-slate-50 to-transparent" />
-          <Marquee direction="right" speed={55}>
-            {rowTwo.map((it, idx) => (
-              <IndustryTag key={`${it.name}-${idx}`} name={it.name} Icon={it.icon} />
-            ))}
-          </Marquee>
-        </div>
-      </motion.div>
+      </div>
     </section>
   );
 }

@@ -25,13 +25,13 @@ export default function Blog() {
       <div className="container-x">
         <div className="flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
           <SectionHeading
-            eyebrow="News & Insights"
-            title="Latest thinking from our group"
-            description="Ideas, innovation, and strategy from leaders across the Eloma Group ecosystem."
+            eyebrow="Our Motto"
+            title="Connecting Australia"
+            description="Our motto is simple — Connecting Australia. It means bringing people, businesses, ideas, and opportunities closer together, making distances feel smaller through smooth, reliable connections."
           />
           <MagneticButton strength={10} className="hidden md:inline-flex">
             <Button variant="outline" size="sm">
-              View Newsroom
+              Read Our Story
               <ArrowUpRight size={16} />
             </Button>
           </MagneticButton>
@@ -147,7 +147,7 @@ export default function Blog() {
 
         <div className="mt-10 flex justify-center md:hidden">
           <Button variant="outline" size="sm">
-            View Newsroom
+            Read Our Story
             <ArrowUpRight size={16} />
           </Button>
         </div>

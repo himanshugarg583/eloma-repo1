@@ -35,13 +35,13 @@ export default function CaseStudies() {
         <div className="container-x">
           <div className="flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
             <SectionHeading
-              eyebrow="Case Studies"
-              title="Proof of premium execution"
-              description="Complex transformations delivered by Eloma Group companies — measured in outcomes that matter."
+              eyebrow="Leadership"
+              title="Driven by visionary leadership"
+              description="Our growth is guided by strong leadership, clear vision, and a commitment to building businesses that create lasting impact. Our leaders bring together industry expertise, innovation, and a forward-thinking mindset to shape a multi-business ecosystem built for the future."
             />
             <MagneticButton strength={10} className="hidden md:inline-flex">
               <Button variant="outline" size="sm">
-                All Case Studies
+                Meet Our Leadership
                 <ArrowUpRight size={16} />
               </Button>
             </MagneticButton>
@@ -73,7 +73,7 @@ export default function CaseStudies() {
                   {study.category}
                 </span>
                 <span className="absolute right-5 top-5 inline-flex items-center justify-center rounded-full border border-white/50 bg-white/10 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider text-white backdrop-blur">
-                  Case 0{idx + 1}
+                  0{idx + 1}
                 </span>
               </div>
               <div className="flex flex-1 flex-col p-8">
@@ -85,7 +85,7 @@ export default function CaseStudies() {
                 </p>
                 <div className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-forest">
                   <span className="relative">
-                    Read full case study
+                    Read more
                     <span className="absolute bottom-0 left-0 h-px w-0 bg-forest transition-all duration-500 group-hover:w-full" />
                   </span>
                   <ArrowUpRight
@@ -127,7 +127,7 @@ export default function CaseStudies() {
                   {study.description}
                 </p>
                 <div className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-forest">
-                  <span>Read case study</span>
+                  <span>Read more</span>
                   <ArrowUpRight size={15} />
                 </div>
               </div>
@@ -144,7 +144,7 @@ export default function CaseStudies() {
             />
           </div>
           <p className="mt-2 text-xs uppercase tracking-[0.2em] text-slate-500">
-            Scroll to explore case studies
+            Scroll to explore
           </p>
         </div>
       </div>

@@ -92,6 +92,18 @@ export default function AboutGroup() {
               description="Eloma Group is an entrepreneur-focused organization bringing together expertise in transportation, digital solutions, virtual security, travel and customer support services. We operate as a unified ecosystem of businesses, delivering integrated solutions that drive efficiency, growth, and long-term value."
             />
 
+            <motion.p
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-80px" }}
+              transition={{ duration: 0.7, delay: 0.1 }}
+              className="max-w-xl text-base leading-relaxed text-slate-600"
+            >
+              With a strong focus on innovation, scalability, and sustainability,
+              we empower businesses across sectors to adapt, evolve, and succeed
+              in a rapidly changing world.
+            </motion.p>
+
             <div className="space-y-4">
               {pillars.map((pillar, idx) => (
                 <motion.div
@@ -133,10 +145,11 @@ export default function AboutGroup() {
               <span className="font-semibold text-forest"> Multiple</span> Industries
               <span className="mx-2 text-slate-300">|</span>
               <span className="font-semibold text-forest"> One</span> Unified Vision
+              for Sustainable Growth
             </motion.div>
 
             <Link
-              href="#subsidiaries"
+              href="#industries"
               className="group inline-flex items-center gap-2 text-sm font-semibold text-forest transition-colors hover:text-gold-dark"
             >
               <span className="relative">

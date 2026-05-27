@@ -1,22 +1,19 @@
 "use client";
 
-import Image from "next/image";
-import { useRef } from "react";
-import { motion, useInView } from "framer-motion";
-import { Anchor, Globe2, MapPin, Network, ShieldCheck } from "lucide-react";
+import dynamic from "next/dynamic";
+import { motion } from "framer-motion";
+import { Anchor, Globe2, Network, RotateCw, ShieldCheck } from "lucide-react";
 
 import SectionHeading from "@/components/SectionHeading";
 
-const markers = [
-  { name: "Sydney", country: "Australia", left: "82%", top: "78%" },
-  { name: "Mumbai", country: "India", left: "68%", top: "58%" },
-  { name: "Singapore", country: "Singapore", left: "73%", top: "62%" },
-  { name: "Beijing", country: "China", left: "77%", top: "36%" },
-  { name: "London", country: "UK", left: "46%", top: "30%" },
-  { name: "Dubai", country: "UAE", left: "60%", top: "52%" },
-  { name: "New York", country: "USA", left: "26%", top: "38%" },
-  { name: "Toronto", country: "Canada", left: "24%", top: "32%" }
-];
+const GlobeScene = dynamic(() => import("@/components/GlobeScene"), {
+  ssr: false,
+  loading: () => (
+    <div className="flex h-full w-full items-center justify-center">
+      <span className="h-10 w-10 animate-spin rounded-full border-2 border-white/20 border-t-gold" />
+    </div>
+  )
+});
 
 const capabilities = [
   {
@@ -44,19 +41,7 @@ const capabilities = [
   }
 ];
 
-const arcPaths = [
-  "M200 175 C 350 100, 500 100, 615 195",
-  "M615 195 C 600 260, 600 280, 600 295",
-  "M615 195 C 660 220, 680 240, 685 195",
-  "M600 295 C 660 360, 700 380, 660 395",
-  "M200 175 C 280 200, 360 220, 480 260",
-  "M480 260 C 540 280, 580 280, 615 195"
-];
-
 export default function GlobalPresence() {
-  const mapRef = useRef<HTMLDivElement | null>(null);
-  const mapInView = useInView(mapRef, { once: true, margin: "-15% 0px" });
-
   return (
     <section id="global" className="section-padding relative overflow-hidden bg-white">
       <div className="container-x relative">
@@ -68,71 +53,40 @@ export default function GlobalPresence() {
         />
 
         <div className="mt-14 grid gap-10 lg:grid-cols-[1.5fr_1fr] lg:items-center">
-          {/* Map */}
-          <div
-            ref={mapRef}
-            className="relative overflow-hidden rounded-2xl border border-slate-200 bg-slate-50"
+          {/* Interactive 3D globe */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-15% 0px" }}
+            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+            className="relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-forest via-forest-dark to-[#04140f] shadow-2xl"
           >
-            <div className="relative aspect-[16/10] w-full">
-              <Image
-                src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=2000&q=80"
-                alt="Global network"
-                fill
-                sizes="(min-width: 1024px) 60vw, 100vw"
-                className="object-cover opacity-25"
-              />
+            {/* Ambient radial glow */}
+            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_45%,rgba(72,201,138,0.18),transparent_60%)]" />
 
-              {/* Animated arc paths */}
-              <svg
-                viewBox="0 0 800 500"
-                className="absolute inset-0 h-full w-full text-forest/50"
-                preserveAspectRatio="none"
-              >
-                {arcPaths.map((d, idx) => (
-                  <motion.path
-                    key={idx}
-                    d={d}
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="1.5"
-                    strokeDasharray="4 4"
-                    initial={{ pathLength: 0, opacity: 0 }}
-                    animate={mapInView ? { pathLength: 1, opacity: 1 } : undefined}
-                    transition={{
-                      pathLength: { duration: 2, ease: [0.22, 1, 0.36, 1], delay: idx * 0.2 },
-                      opacity: { duration: 0.5, delay: idx * 0.2 }
-                    }}
-                  />
-                ))}
-              </svg>
-
-              {/* Markers */}
-              {markers.map((marker, idx) => (
-                <motion.div
-                  key={marker.name}
-                  className="absolute"
-                  style={{ left: marker.left, top: marker.top }}
-                  initial={{ scale: 0, opacity: 0 }}
-                  animate={mapInView ? { scale: 1, opacity: 1 } : undefined}
-                  transition={{
-                    delay: 0.5 + idx * 0.12,
-                    duration: 0.5,
-                    ease: [0.22, 1, 0.36, 1]
-                  }}
-                >
-                  <div className="group relative -translate-x-1/2 -translate-y-1/2">
-                    <span className="absolute inset-0 -m-2 animate-ping rounded-full bg-gold/40" />
-                    <div className="relative flex items-center gap-1.5 rounded-full bg-forest px-2.5 py-1 shadow-md transition-transform group-hover:scale-110">
-                      <MapPin size={10} className="text-gold" />
-                      <span className="text-[10px] font-semibold text-white">
-                        {marker.name}
-                      </span>
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
+            <div className="relative aspect-[16/12] w-full sm:aspect-[16/11]">
+              <GlobeScene />
             </div>
-          </div>
+
+            {/* Drag-to-rotate hint */}
+            <div className="pointer-events-none absolute bottom-4 left-4 flex items-center gap-2 rounded-full border border-white/10 bg-forest-dark/60 px-3 py-1.5 backdrop-blur">
+              <RotateCw size={13} className="text-gold" />
+              <span className="text-[11px] font-medium uppercase tracking-wider text-white/70">
+                Drag to rotate · Hover the pins
+              </span>
+            </div>
+
+            {/* Live counter */}
+            <div className="pointer-events-none absolute right-4 top-4 flex items-center gap-2 rounded-full border border-white/10 bg-forest-dark/60 px-3 py-1.5 backdrop-blur">
+              <span className="relative flex h-2 w-2">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-gold opacity-75" />
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-gold" />
+              </span>
+              <span className="text-[11px] font-semibold text-white">
+                8 global hubs
+              </span>
+            </div>
+          </motion.div>
 
           {/* Capabilities */}
           <div className="space-y-4">

@@ -1,43 +1,13 @@
 "use client";
 
-import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
-import {
-  AnimatePresence,
-  motion,
-  useScroll,
-  useTransform
-} from "framer-motion";
+import { useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowRight, Play } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import MagneticButton from "@/components/animations/MagneticButton";
 import Marquee from "@/components/animations/Marquee";
 
-const heroSlides = [
-  {
-    src: "https://images.unsplash.com/photo-1494412651409-8963ce7935a7?auto=format&fit=crop&w=2400&q=80",
-    alt: "Container ship at global port"
-  },
-  {
-    src: "https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?auto=format&fit=crop&w=2400&q=80",
-    alt: "Long-haul truck on highway"
-  },
-  {
-    src: "https://images.unsplash.com/photo-1577416412292-747c6607f055?auto=format&fit=crop&w=2400&q=80",
-    alt: "Port crane lifting container"
-  },
-  {
-    src: "https://images.unsplash.com/photo-1553413077-190dd305871c?auto=format&fit=crop&w=2400&q=80",
-    alt: "Modern warehouse interior"
-  },
-  {
-    src: "https://images.unsplash.com/photo-1486325212027-8081e485255e?auto=format&fit=crop&w=2400&q=80",
-    alt: "Corporate skyline at dawn"
-  }
-];
-
-const SLIDE_INTERVAL = 3200;
 const INTRO_DELAY = 2.2;
 
 const titleLines = [
@@ -59,22 +29,14 @@ const marqueeItems = [
 
 export default function Hero() {
   const sectionRef = useRef<HTMLDivElement | null>(null);
-  const [activeSlide, setActiveSlide] = useState(0);
 
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start start", "end start"]
   });
-  const imgY = useTransform(scrollYProgress, [0, 1], ["0%", "20%"]);
+  const videoY = useTransform(scrollYProgress, [0, 1], ["0%", "20%"]);
   const contentY = useTransform(scrollYProgress, [0, 1], ["0%", "-15%"]);
   const opacity = useTransform(scrollYProgress, [0, 0.9], [1, 0]);
-
-  useEffect(() => {
-    const id = window.setInterval(() => {
-      setActiveSlide((prev) => (prev + 1) % heroSlides.length);
-    }, SLIDE_INTERVAL);
-    return () => window.clearInterval(id);
-  }, []);
 
   return (
     <section
@@ -82,36 +44,25 @@ export default function Hero() {
       ref={sectionRef}
       className="relative isolate min-h-[100vh] overflow-hidden bg-forest"
     >
-      {/* Parallax slideshow background */}
-      <motion.div className="absolute inset-0 -z-10" style={{ y: imgY }}>
-        <AnimatePresence mode="sync">
-          <motion.div
-            key={activeSlide}
-            initial={{ opacity: 0, scale: 1.18, filter: "blur(8px)" }}
-            animate={{ opacity: 1, scale: 1.05, filter: "blur(0px)" }}
-            exit={{ opacity: 0, scale: 1, filter: "blur(6px)" }}
-            transition={{
-              opacity: { duration: 1.4, ease: [0.22, 1, 0.36, 1] },
-              scale: {
-                duration: SLIDE_INTERVAL / 1000 + 1.4,
-                ease: "linear"
-              },
-              filter: { duration: 1.2 }
-            }}
-            className="absolute inset-0"
-          >
-            <Image
-              src={heroSlides[activeSlide].src}
-              alt={heroSlides[activeSlide].alt}
-              fill
-              priority={activeSlide === 0}
-              sizes="100vw"
-              className="object-cover"
-            />
-          </motion.div>
-        </AnimatePresence>
-        <div className="absolute inset-0 bg-gradient-to-r from-forest/90 via-forest/70 to-forest/30" />
-        <div className="absolute inset-0 bg-gradient-to-t from-forest-dark/80 via-transparent to-transparent" />
+      {/* Parallax video background — glowing global network */}
+      <motion.div className="absolute inset-0 -z-10" style={{ y: videoY }}>
+        <motion.video
+          initial={{ opacity: 0, scale: 1.12 }}
+          animate={{ opacity: 1, scale: 1.04 }}
+          transition={{ opacity: { duration: 1.6, ease: [0.22, 1, 0.36, 1] }, scale: { duration: 6, ease: "easeOut" } }}
+          className="absolute inset-0 h-full w-full object-cover"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="auto"
+          poster="/videos/hero-globe-poster.jpg"
+          aria-hidden
+        >
+          <source src="/videos/hero-globe.mp4" type="video/mp4" />
+        </motion.video>
+        <div className="absolute inset-0 bg-gradient-to-r from-forest/90 via-forest/65 to-forest/25" />
+        <div className="absolute inset-0 bg-gradient-to-t from-forest-dark/85 via-transparent to-forest-dark/40" />
         {/* Decorative orb */}
         <motion.div
           aria-hidden
@@ -218,7 +169,7 @@ export default function Hero() {
           </MagneticButton>
         </motion.div>
 
-        {/* Bottom row: slide indicators + counter */}
+        {/* Bottom row: tagline + scroll cue */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -226,27 +177,10 @@ export default function Hero() {
           className="mt-16 flex flex-col gap-6 border-t border-white/15 pt-6 md:flex-row md:items-center md:justify-between"
         >
           <div className="flex items-center gap-3">
-            {heroSlides.map((_, idx) => (
-              <button
-                key={idx}
-                onClick={() => setActiveSlide(idx)}
-                aria-label={`Show slide ${idx + 1}`}
-                className="group flex h-2 items-center"
-              >
-                <span
-                  className={`block h-[3px] rounded-full transition-all duration-500 ${
-                    idx === activeSlide
-                      ? "w-12 bg-gold"
-                      : "w-6 bg-white/30 group-hover:bg-white/60"
-                  }`}
-                />
-              </button>
-            ))}
-            <span className="ml-2 font-display text-xs text-white/60">
-              {String(activeSlide + 1).padStart(2, "0")}
-              <span className="mx-1">/</span>
-              {String(heroSlides.length).padStart(2, "0")}
-            </span>
+            <div className="h-px w-12 bg-gold/60" />
+            <p className="text-xs uppercase tracking-[0.28em] text-white/60">
+              One group · A connected world
+            </p>
           </div>
 
           <div className="hidden items-center gap-3 md:flex">

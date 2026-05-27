@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { ArrowRight, Handshake, LineChart } from "lucide-react";
+import { ArrowRight, Leaf, Sprout } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import MagneticButton from "@/components/animations/MagneticButton";
@@ -67,14 +67,14 @@ export default function Investors() {
                 className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-gold"
               >
                 <span className="inline-block h-px w-7 bg-gold" />
-                Investors & Partners
+                Be a Part of Our Sustainable Journey
               </motion.p>
 
               <h2
                 className="mt-4 font-display text-3xl font-bold leading-[1.1] tracking-tight text-white md:text-4xl lg:text-5xl"
-                aria-label="A premium platform for long-term growth"
+                aria-label="Together, we can build a better future"
               >
-                {"A premium platform for long-term growth".split(" ").map((w, i) => (
+                {"Together, we can build a better future".split(" ").map((w, i) => (
                   <span
                     key={`${w}-${i}`}
                     className="relative mr-2 inline-block overflow-hidden align-baseline"
@@ -83,8 +83,7 @@ export default function Investors() {
                     <motion.span
                       className="inline-block"
                       initial={{ y: "115%" }}
-                      whileInView={{ y: "0%" }}
-                      viewport={{ once: true }}
+                      animate={{ y: "0%" }}
                       transition={{
                         duration: 0.85,
                         ease: [0.22, 1, 0.36, 1],
@@ -104,8 +103,11 @@ export default function Investors() {
                 transition={{ duration: 0.7, delay: 0.7 }}
                 className="mt-5 max-w-xl text-base leading-relaxed text-white/80"
               >
-                Access the latest investor updates, partnership opportunities,
-                and strategic initiatives across the Eloma Group of companies.
+                Meaningful change happens when businesses come together with a
+                shared purpose. By partnering with us, you join a forward-thinking
+                ecosystem that values eco-conscious practices, ethical standards,
+                and future-ready solutions — reducing environmental impact and
+                building businesses that are sustainable for tomorrow.
               </motion.p>
               <motion.div
                 initial={{ opacity: 0, y: 12 }}
@@ -120,7 +122,7 @@ export default function Investors() {
                     variant="secondary"
                     className="bg-gold text-forest hover:bg-gold-soft"
                   >
-                    Investor Relations
+                    Partner With Us
                     <ArrowRight size={18} />
                   </Button>
                 </MagneticButton>
@@ -130,7 +132,7 @@ export default function Investors() {
                     variant="outline"
                     className="border-white/30 bg-transparent text-white hover:bg-white hover:text-forest"
                   >
-                    Partner with Us
+                    Get in Touch
                   </Button>
                 </MagneticButton>
               </motion.div>
@@ -139,16 +141,16 @@ export default function Investors() {
             <div className="space-y-4">
               {[
                 {
-                  icon: LineChart,
-                  title: "Investor Relations",
+                  icon: Leaf,
+                  title: "Eco-Conscious Practices",
                   description:
-                    "Annual reports, financial updates, and governance disclosures."
+                    "Reducing environmental impact and driving smarter, cleaner operations together."
                 },
                 {
-                  icon: Handshake,
-                  title: "Strategic Partnerships",
+                  icon: Sprout,
+                  title: "Future-Ready Solutions",
                   description:
-                    "Co-investment, joint ventures, and supplier partnership programs."
+                    "Ethical standards and resilient solutions built for long-term, sustainable impact."
                 }
               ].map((card, idx) => (
                 <motion.div

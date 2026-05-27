@@ -1,39 +1,40 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 import { useRef } from "react";
 import { motion } from "framer-motion";
-import { ArrowUpRight, Briefcase, MapPin } from "lucide-react";
+import {
+  ArrowUpRight,
+  Scale,
+  GraduationCap,
+  Users,
+  HeartHandshake
+} from "lucide-react";
 
 import SectionHeading from "@/components/SectionHeading";
 import { Button } from "@/components/ui/button";
 import MagneticButton from "@/components/animations/MagneticButton";
 
-const roles = [
+const values = [
   {
-    title: "Regional Operations Director",
-    department: "Operations",
-    location: "Sydney, Australia",
-    type: "Full-time"
+    icon: Scale,
+    title: "Fair chances for everyone",
+    description: "Equal opportunity and respect at the heart of how we work."
   },
   {
-    title: "Logistics Innovation Lead",
-    department: "Technology",
-    location: "Singapore",
-    type: "Full-time"
+    icon: GraduationCap,
+    title: "Learning by doing",
+    description: "Try new things, learn new skills, and become better every day."
   },
   {
-    title: "Fleet Excellence Manager",
-    department: "Fleet & Mobility",
-    location: "Melbourne, Australia",
-    type: "Full-time"
+    icon: Users,
+    title: "Growing together as a team",
+    description: "We support each other and build something meaningful together."
   },
   {
-    title: "Global Partnerships Manager",
-    department: "Strategy",
-    location: "New York, USA",
-    type: "Full-time"
+    icon: HeartHandshake,
+    title: "A healthy work-life balance",
+    description: "Real opportunities to grow — not just in work, but in life too."
   }
 ];
 
@@ -54,9 +55,9 @@ export default function Careers() {
         <div className="grid gap-12 lg:grid-cols-[1fr_1.3fr] lg:items-start">
           <div className="space-y-8 lg:sticky lg:top-28">
             <SectionHeading
-              eyebrow="Careers"
-              title="Join a group that moves the world"
-              description="We are building an elite team across operations, innovation, and client experience — united by a single standard of excellence."
+              eyebrow="Life at Eloma"
+              title="You don't just work — you build your future"
+              description="At Eloma, work is not just about a job. It is about learning, growing, and building something meaningful. We are a team of people who support each other, built on simple ideas — respect, trust, and growth."
             />
             <motion.div
               initial={{ clipPath: "inset(0 0 100% 0)" }}
@@ -78,80 +79,66 @@ export default function Careers() {
                   Life at Eloma
                 </p>
                 <p className="mt-1 font-display text-lg font-semibold">
-                  A culture of stewardship and excellence
+                  A culture of respect, trust, and growth
                 </p>
               </div>
             </motion.div>
           </div>
 
-          <div className="space-y-3">
-            <motion.p
+          <div className="space-y-6">
+            <motion.div
               initial={{ opacity: 0, y: 14 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
-              className="text-xs font-semibold uppercase tracking-wider text-slate-500"
+              className="space-y-3"
             >
-              Current Openings
-            </motion.p>
-            {roles.map((role, idx) => (
-              <motion.div
-                key={role.title}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-80px" }}
-                transition={{
-                  duration: 0.7,
-                  delay: idx * 0.1,
-                  ease: [0.22, 1, 0.36, 1]
-                }}
-              >
-                <Link
-                  href="#"
-                  className="group relative flex flex-col items-start justify-between gap-4 overflow-hidden rounded-2xl border border-slate-200 bg-white p-5 transition-all duration-500 hover:-translate-y-0.5 hover:border-forest hover:shadow-card-hover sm:flex-row sm:items-center md:p-6"
+              <p className="text-xs font-semibold uppercase tracking-wider text-slate-500">
+                Why Work at Eloma?
+              </p>
+              <p className="text-base leading-relaxed text-slate-600">
+                Eloma Group is a growing company based in Australia, India, US,
+                Canada, China, UK, UAE and Singapore. We give people real
+                opportunities to grow — not just in work, but in life too. Here,
+                your work matters, your ideas are heard, and your efforts are
+                valued.
+              </p>
+            </motion.div>
+
+            <div className="grid gap-3 sm:grid-cols-2">
+              {values.map((value, idx) => (
+                <motion.div
+                  key={value.title}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-80px" }}
+                  transition={{
+                    duration: 0.7,
+                    delay: idx * 0.1,
+                    ease: [0.22, 1, 0.36, 1]
+                  }}
+                  className="group relative overflow-hidden rounded-2xl border border-slate-200 bg-white p-5 transition-all duration-500 hover:-translate-y-0.5 hover:border-forest hover:shadow-card-hover md:p-6"
                 >
-                  {/* slide-in accent */}
                   <span className="pointer-events-none absolute left-0 top-0 h-full w-0 bg-gradient-to-r from-gold/10 to-transparent transition-all duration-500 group-hover:w-1/2" />
-                  <div className="relative flex-1 space-y-2">
-                    <h3 className="font-display text-lg font-semibold text-forest transition-colors group-hover:text-gold-dark">
-                      {role.title}
-                    </h3>
-                    <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-slate-600">
-                      <span className="inline-flex items-center gap-1.5">
-                        <Briefcase size={12} />
-                        {role.department}
-                      </span>
-                      <span className="inline-flex items-center gap-1.5">
-                        <MapPin size={12} />
-                        {role.location}
-                      </span>
-                      <span className="rounded-full bg-slate-100 px-2.5 py-0.5 font-semibold text-slate-700">
-                        {role.type}
-                      </span>
+                  <div className="relative">
+                    <div className="mb-4 inline-flex h-11 w-11 items-center justify-center rounded-xl bg-forest/5 text-forest transition-all duration-500 group-hover:rotate-6 group-hover:bg-forest group-hover:text-white">
+                      <value.icon size={20} strokeWidth={1.8} />
                     </div>
+                    <h3 className="font-display text-base font-semibold text-forest">
+                      {value.title}
+                    </h3>
+                    <p className="mt-1 text-sm leading-relaxed text-slate-600">
+                      {value.description}
+                    </p>
                   </div>
-                  <div className="relative inline-flex items-center gap-1.5 text-sm font-semibold text-forest">
-                    <span className="relative overflow-hidden">
-                      <motion.span
-                        className="block"
-                        initial={{ y: 0 }}
-                        whileHover={{ y: -2 }}
-                      >
-                        Apply now
-                      </motion.span>
-                    </span>
-                    <ArrowUpRight
-                      size={15}
-                      className="transition-transform duration-500 group-hover:translate-x-1 group-hover:-translate-y-1"
-                    />
-                  </div>
-                </Link>
-              </motion.div>
-            ))}
-            <div className="pt-4">
+                </motion.div>
+              ))}
+            </div>
+
+            <div className="pt-2">
               <MagneticButton strength={10}>
-                <Button variant="outline" size="sm">
-                  View All Openings
+                <Button size="sm">
+                  Join Our Team
                   <ArrowUpRight size={16} />
                 </Button>
               </MagneticButton>

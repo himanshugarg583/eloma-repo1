@@ -3,12 +3,12 @@
 import { useRef } from "react";
 import { motion } from "framer-motion";
 import {
-  Package,
-  Ship,
-  Truck,
-  Warehouse,
-  Zap,
-  ShieldCheck,
+  Leaf,
+  Scale,
+  Cpu,
+  Wind,
+  Handshake,
+  Sprout,
   ArrowUpRight
 } from "lucide-react";
 
@@ -16,50 +16,50 @@ import SectionHeading from "@/components/SectionHeading";
 
 const services = [
   {
-    title: "Interstate Road Transport",
+    title: "Eco-Conscious Operations",
     description:
-      "Premium fleet operations and real-time route intelligence across long-haul corridors.",
-    icon: Truck,
+      "Reducing environmental impact across our transportation, digital, and operational processes.",
+    icon: Leaf,
     span: "lg:col-span-2",
     accent: "from-forest/8 to-transparent"
   },
   {
-    title: "Multi-Location Warehousing",
+    title: "Ethical Practices",
     description:
-      "Climate-ready storage with precision inventory governance and rapid fulfillment.",
-    icon: Warehouse,
+      "Responsible governance, transparency, and ethical standards across every business vertical.",
+    icon: Scale,
     span: "",
     accent: "from-gold/10 to-transparent"
   },
   {
-    title: "Container Movement",
+    title: "Smarter Technologies",
     description:
-      "Port to customer delivery with high-security handling and seamless cross-dock.",
-    icon: Ship,
+      "Adopting smarter technologies that drive efficiency without compromising the environment.",
+    icon: Cpu,
     span: "",
     accent: "from-forest/8 to-transparent"
   },
   {
-    title: "Contract Logistics",
+    title: "Lower Carbon Footprint",
     description:
-      "Long-term integrated logistics solutions designed for complex supply chains.",
-    icon: ShieldCheck,
+      "Strategic improvements focused on measurable reductions and long-term value creation.",
+    icon: Wind,
     span: "",
     accent: "from-gold/10 to-transparent"
   },
   {
-    title: "Same and Next Day Delivery",
+    title: "Responsible Partnerships",
     description:
-      "Time-critical distribution with premium SLAs across metropolitan networks.",
-    icon: Zap,
+      "Collaboration that supports sustainable impact for businesses, communities, and the planet.",
+    icon: Handshake,
     span: "",
     accent: "from-forest/8 to-transparent"
   },
   {
-    title: "Metro Distribution",
+    title: "A Resilient Future",
     description:
-      "High-frequency metropolitan delivery built for speed, safety, and reliability.",
-    icon: Package,
+      "Building solutions that contribute to a more responsible and resilient future for all.",
+    icon: Sprout,
     span: "lg:col-span-2",
     accent: "from-gold/10 to-transparent"
   }
@@ -76,9 +76,9 @@ export default function Services() {
     >
       <div className="container-x">
         <SectionHeading
-          eyebrow="What We Do"
-          title="Precision services across the supply chain"
-          description="From port to customer, the group delivers a complete spectrum of logistics services — engineered with uncompromising focus on reliability."
+          eyebrow="Sustainability & Responsibility"
+          title="Committed to sustainable growth and responsible business"
+          description="At Eloma Group, sustainability is not just a commitment; it is a core part of how we operate and grow. Across all our business verticals, we strive to minimize environmental impact, promote ethical practices, and build a more responsible and resilient future."
           align="center"
         />
 
@@ -123,7 +123,7 @@ export default function Services() {
                       initial={{ y: 0 }}
                       whileHover={{ y: -2 }}
                     >
-                      Explore service
+                      Learn more
                     </motion.span>
                   </span>
                   <ArrowUpRight
