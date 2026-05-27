@@ -2,29 +2,31 @@
 export const groupName = "Eloma Group";
 
 export const navAbout = [
-  "Who We Are",
-  "Our Journey",
-  "Vision & Values",
-  "Leadership",
-  "Founder Message",
-  "Sustainability",
-  "Global Presence",
-  "Life at Eloma"
+  "About Us",
+  "Blog",
+  "Newsroom",
+  "Partners"
 ];
 
 export const navBusinesses = [
-  "Logistics and Transportation",
-  "Digital and Technology",
-  "Security and Risk Management",
-  "Travel and Tourism",
-  "Customer Support and Call Center"
+  { type: "header", label: "Business" },
+  { type: "item", label: "Supply Chain" },
+  { type: "item", label: "IT Infrastructure" },
+  { type: "item", label: "Call Centre" },
+  { type: "item", label: "Travel" },
+  { type: "item", label: "Imports" },
+  { type: "header", label: "Companies" },
+  { type: "item", label: "EG Transport" },
+  { type: "item", label: "EG Digital Australia" },
+  { type: "item", label: "EG Travels" },
+  { type: "item", label: "EG Imports" },
+  { type: "item", label: "EG Foundations" }
 ];
 
 export const navSustainability = [
-  "Eco-Conscious Operations",
-  "Ethical Practices",
-  "Responsible Partnerships",
-  "Long-Term Impact"
+  "Bivry",
+  "Weeseeyou",
+  "EG Digital"
 ];
 
 export const navMedia = [

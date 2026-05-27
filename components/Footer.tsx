@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Facebook, Instagram, Linkedin, Mail, Phone, Twitter, Youtube } from "lucide-react";
 
 import { groupName } from "@/lib/data";
-import logoFull from "@/assset/logo/eloma logo.jpeg";
+import logoFull from "@/assset/logo/Eloma Group-01 logo.png";
 
 const linkColumns = [
   {
@@ -49,8 +49,8 @@ export default function Footer() {
               <Image
                 src={logoFull}
                 alt={`${groupName} logo`}
-                className="h-9 w-auto"
-                sizes="120px"
+                className="h-10 w-auto md:h-12"
+                sizes="160px"
               />
             </div>
             <p className="max-w-sm text-sm leading-relaxed text-white/70">

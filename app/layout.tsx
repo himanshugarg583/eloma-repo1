@@ -1,7 +1,7 @@
 import "./globals.css";
 
 import type { Metadata } from "next";
-import { Inter, Playfair_Display } from "next/font/google";
+import { Playfair_Display, Source_Sans_3 } from "next/font/google";
 
 import { Providers } from "./providers";
 import { groupName } from "@/lib/data";
@@ -13,7 +13,7 @@ const display = Playfair_Display({
   display: "swap"
 });
 
-const sans = Inter({
+const sans = Source_Sans_3({
   subsets: ["latin"],
   variable: "--font-sans",
   weight: ["300", "400", "500", "600", "700"],

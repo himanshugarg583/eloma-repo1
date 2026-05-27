@@ -20,7 +20,7 @@ export default function Home() {
       <main>
         <Hero />
         <AboutGroup />
-        <Subsidiaries />
+        {/* <Subsidiaries /> */}
         <Services />
         <Industries />
         <GlobalPresence />

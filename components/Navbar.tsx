@@ -14,7 +14,7 @@ import {
   navMedia,
   navSustainability
 } from "@/lib/data";
-import logoMark from "@/assset/logo/eloma_logo-removebg-preview.png";
+import logoMark from "@/assset/logo/Eloma Group-01 logo.png";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useScrollY } from "@/hooks/useScrollY";
@@ -23,19 +23,28 @@ type MenuKey =
   | "about"
   | "businesses"
   | "sustainability"
-  | "media"
+  // | "media"
   | "careers"
   | "contact"
   | null;
 
+type MenuItem =
+  | string
+  | {
+      type: "header" | "item";
+      label: string;
+    };
+
 const navItems: Array<{ key: Exclude<MenuKey, null>; label: string; href: string }> = [
-  { key: "about", label: "About Us", href: "#about" },
+  { key: "about", label: "About Us", href: "/about" },
   { key: "businesses", label: "Our Businesses", href: "#subsidiaries" },
   { key: "sustainability", label: "Sustainability", href: "#services" },
-  { key: "media", label: "Media", href: "#blogs" },
+  // { key: "media", label: "Media", href: "#blogs" },
   { key: "careers", label: "Careers", href: "#career" },
-  { key: "contact", label: "Contact Us", href: "#contact" }
+  { key: "contact", label: "Contact Us", href: "/contact" }
 ];
+
+const dropdownMenuKeys: Exclude<MenuKey, null>[] = ["about", "businesses", "contact"];
 
 const phoneNumber = "1800 710 388";
 const phoneHref = "tel:1800710388";
@@ -44,7 +53,7 @@ const navMenu: Record<Exclude<MenuKey, null>, {
   eyebrow: string;
   title: string;
   description: string;
-  items: string[];
+  items: MenuItem[];
   ctaLabel: string;
   ctaHref: string;
 }> = {
@@ -54,7 +63,7 @@ const navMenu: Record<Exclude<MenuKey, null>, {
     description: "A unified group driven by innovation, scalability, and sustainable growth.",
     items: navAbout,
     ctaLabel: "Explore Group",
-    ctaHref: "#about"
+    ctaHref: "/about"
   },
   businesses: {
     eyebrow: "Our Businesses",
@@ -94,7 +103,7 @@ const navMenu: Record<Exclude<MenuKey, null>, {
     description: "Reach corporate offices or local branch teams quickly.",
     items: navContact,
     ctaLabel: "Get in touch",
-    ctaHref: "#contact"
+    ctaHref: "/contact"
   }
 };
 
@@ -104,7 +113,12 @@ function MegaMenu({ menuKey }: { menuKey: MenuKey }) {
   }
 
   const menu = navMenu[menuKey];
-  const useTwoColumns = menu.items.length > 5;
+  const isHeader = (item: MenuItem) =>
+    typeof item === "object" && item.type === "header";
+  const getLabel = (item: MenuItem) =>
+    typeof item === "string" ? item : item.label;
+  const itemCount = menu.items.filter((item) => !isHeader(item)).length;
+  const useTwoColumns = itemCount > 5;
 
   return (
     <motion.div
@@ -116,8 +130,8 @@ function MegaMenu({ menuKey }: { menuKey: MenuKey }) {
     >
       <div className="container-x grid gap-10 py-10 lg:grid-cols-[1.4fr_1fr]">
         <div>
-          <p className="eyebrow">{menu.eyebrow}</p>
-          <h3 className="mt-4 font-display text-2xl font-semibold text-forest">
+          <p className="eyebrow text-slate-500">{menu.eyebrow}</p>
+          <h3 className="mt-4 font-display text-[22px] font-semibold text-slate-900">
             {menu.title}
           </h3>
           <p className="mt-3 max-w-md text-sm leading-relaxed text-slate-600">
@@ -129,23 +143,43 @@ function MegaMenu({ menuKey }: { menuKey: MenuKey }) {
         </div>
         <ul
           className={cn(
-            "grid gap-x-8 gap-y-3 text-sm",
+            "grid gap-x-8 gap-y-3 text-[15px]",
             useTwoColumns ? "grid-cols-2" : "grid-cols-1"
           )}
         >
-          {menu.items.map((item) => (
-            <li key={item}>
-              <Link
-                href={menu.ctaHref}
-                className="group flex items-center justify-between border-b border-slate-100 py-2 font-medium text-slate-700 transition-colors hover:text-forest"
-              >
-                <span>{item}</span>
-                <span className="translate-x-0 text-gold opacity-0 transition-all duration-200 group-hover:translate-x-1 group-hover:opacity-100">
-                  →
-                </span>
-              </Link>
-            </li>
-          ))}
+          {menu.items.map((item) => {
+            const label = getLabel(item);
+
+            if (isHeader(item)) {
+              return (
+                <li
+                  key={label}
+                  className={cn(
+                    "pt-3 text-[11px] font-semibold uppercase tracking-[0.2em] text-slate-400",
+                    useTwoColumns && "col-span-2"
+                  )}
+                >
+                  {label}
+                </li>
+              );
+            }
+
+            return (
+              <li key={label}>
+                <Link
+                  href={menu.ctaHref}
+                  className="group flex items-center justify-between border-b border-slate-100 py-2 font-medium text-slate-900 transition-colors hover:text-black"
+                >
+                  <span className="transition-transform duration-200 group-hover:translate-x-1">
+                    {label}
+                  </span>
+                  <span className="translate-x-0 text-slate-900 opacity-0 transition-all duration-200 group-hover:translate-x-1 group-hover:opacity-100">
+                    →
+                  </span>
+                </Link>
+              </li>
+            );
+          })}
         </ul>
       </div>
     </motion.div>
@@ -178,9 +212,9 @@ export default function Navbar() {
               <Link href="#" className="transition-colors hover:text-white">
                 Sustainability
               </Link>
-              <Link href="#" className="transition-colors hover:text-white">
+              {/* <Link href="#" className="transition-colors hover:text-white">
                 Partner With Us
-              </Link>
+              </Link> */}
             </div>
             <div className="flex items-center gap-5">
               <Link
@@ -201,45 +235,74 @@ export default function Navbar() {
       {/* Main navbar */}
       <div className="container-x flex h-16 items-center justify-between md:h-20">
         <Link href="#home" className="flex items-center">
-          <Image
-            src={logoMark}
-            alt="Eloma Group"
-            className="h-12 w-auto md:h-14"
-            priority
-            sizes="140px"
-          />
+          <span
+            className={cn(
+              "inline-flex items-center rounded-md px-2 py-1 transition-colors",
+              isTransparent ? "bg-white/90 shadow-sm" : "bg-transparent"
+            )}
+          >
+            <Image
+              src={logoMark}
+              alt="Eloma Group"
+              className="h-10 w-auto md:h-12"
+              // className="h-10 w-15 md:h-12"
+              priority
+              sizes="140px"
+            />
+          </span>
         </Link>
 
         <nav className="hidden items-center gap-1 lg:flex">
-          {navItems.map((item) => (
-            <button
-              key={item.key}
-              className={cn(
-                "group relative flex items-center gap-1 px-3 py-2 text-sm font-medium transition-colors",
-                isTransparent
-                  ? "text-white/85 hover:text-white"
-                  : "text-slate-700 hover:text-forest",
-                activeMenu === item.key && (isTransparent ? "text-white" : "text-forest")
-              )}
-              onMouseEnter={() => setActiveMenu(item.key)}
-            >
-              <span>{item.label}</span>
-              <ChevronDown
-                size={14}
+          {navItems.map((item) => {
+            const hasDropdown = dropdownMenuKeys.includes(item.key);
+
+            if (!hasDropdown) {
+              return (
+                <Link
+                  key={item.key}
+                  href={item.href}
+                  className={cn(
+                    "relative px-3 py-2 text-[15px] font-medium transition-colors md:text-base",
+                    isTransparent
+                      ? "text-white hover:text-white"
+                      : "text-slate-900 hover:text-black"
+                  )}
+                >
+                  {item.label}
+                </Link>
+              );
+            }
+
+            return (
+              <button
+                key={item.key}
                 className={cn(
-                  "transition-transform duration-200",
-                  isTransparent ? "text-white/60" : "text-slate-400",
-                  activeMenu === item.key && (isTransparent ? "rotate-180 text-white" : "rotate-180 text-forest")
+                  "group relative flex items-center gap-1 px-3 py-2 text-[15px] font-medium transition-colors md:text-base",
+                  isTransparent
+                    ? "text-white hover:text-white"
+                    : "text-slate-900 hover:text-black",
+                  activeMenu === item.key && (isTransparent ? "text-white" : "text-black")
                 )}
-              />
-              <span
-                className={cn(
-                  "absolute -bottom-0.5 left-3 right-3 h-0.5 origin-left scale-x-0 bg-gold transition-transform duration-300",
-                  activeMenu === item.key && "scale-x-100"
-                )}
-              />
-            </button>
-          ))}
+                onMouseEnter={() => setActiveMenu(item.key)}
+              >
+                <span>{item.label}</span>
+                <ChevronDown
+                  size={14}
+                  className={cn(
+                    "transition-transform duration-200",
+                    isTransparent ? "text-white/70" : "text-slate-500",
+                    activeMenu === item.key && (isTransparent ? "rotate-180 text-white" : "rotate-180 text-black")
+                  )}
+                />
+                <span
+                  className={cn(
+                    "absolute -bottom-0.5 left-3 right-3 h-0.5 origin-left scale-x-0 bg-gold transition-transform duration-300",
+                    activeMenu === item.key && "scale-x-100"
+                  )}
+                />
+              </button>
+            );
+          })}
         </nav>
 
         <div className="hidden items-center gap-2 lg:flex">
@@ -252,7 +315,7 @@ export default function Navbar() {
             )}
             aria-label="Search"
           >
-            <Search size={18} />
+          
           </button>
           <Button
             size="sm"
@@ -280,7 +343,11 @@ export default function Navbar() {
         </button>
       </div>
 
-      <AnimatePresence>{activeMenu && <MegaMenu menuKey={activeMenu} />}</AnimatePresence>
+      <AnimatePresence>
+        {activeMenu && dropdownMenuKeys.includes(activeMenu) ? (
+          <MegaMenu menuKey={activeMenu} />
+        ) : null}
+      </AnimatePresence>
 
       <AnimatePresence>
         {mobileOpen ? (
@@ -292,32 +359,63 @@ export default function Navbar() {
             className="overflow-hidden border-t border-slate-200 bg-white lg:hidden"
           >
             <div className="container-x space-y-5 py-6">
-              {navItems.map((item) => (
-                <details
-                  key={item.key}
-                  className="group border-b border-slate-100 pb-4"
-                >
-                  <summary className="flex cursor-pointer items-center justify-between text-sm font-semibold text-forest">
-                    {item.label}
-                    <ChevronDown
-                      size={16}
-                      className="text-slate-400 transition-transform group-open:rotate-180"
-                    />
-                  </summary>
-                  <ul className="mt-3 space-y-2 pl-2 text-sm text-slate-600">
-                    {navMenu[item.key].items.map((entry) => (
-                      <li key={entry}>
-                        <Link
-                          href={navMenu[item.key].ctaHref}
-                          className="block py-1 transition-colors hover:text-forest"
-                        >
-                          {entry}
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                </details>
-              ))}
+              {navItems.map((item) => {
+                const hasDropdown = dropdownMenuKeys.includes(item.key);
+
+                if (!hasDropdown) {
+                  return (
+                    <Link
+                      key={item.key}
+                      href={item.href}
+                      className="flex items-center justify-between border-b border-slate-100 pb-4 text-sm font-semibold text-forest"
+                    >
+                      {item.label}
+                    </Link>
+                  );
+                }
+
+                return (
+                  <details
+                    key={item.key}
+                    className="group border-b border-slate-100 pb-4"
+                  >
+                    <summary className="flex cursor-pointer items-center justify-between text-sm font-semibold text-slate-900">
+                      {item.label}
+                      <ChevronDown
+                        size={16}
+                        className="text-slate-400 transition-transform group-open:rotate-180"
+                      />
+                    </summary>
+                    <ul className="mt-3 space-y-2 pl-2 text-sm text-slate-600">
+                      {navMenu[item.key].items.map((entry) => {
+                        const label = typeof entry === "string" ? entry : entry.label;
+
+                        if (typeof entry === "object" && entry.type === "header") {
+                          return (
+                            <li
+                              key={label}
+                              className="pt-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-slate-400"
+                            >
+                              {label}
+                            </li>
+                          );
+                        }
+
+                        return (
+                          <li key={label}>
+                            <Link
+                              href={navMenu[item.key].ctaHref}
+                              className="block py-1 text-slate-900 transition-colors hover:text-black"
+                            >
+                              {label}
+                            </Link>
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  </details>
+                );
+              })}
               <div className="flex flex-col gap-3 pt-2">
                 <Link
                   href={phoneHref}
