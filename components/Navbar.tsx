@@ -81,14 +81,6 @@ const navMenu: Record<Exclude<MenuKey, null>, {
     ctaLabel: "Our ESG Focus",
     ctaHref: "#services"
   },
-  media: {
-    eyebrow: "Media",
-    title: "Stories and insights",
-    description: "Leadership messages, the motto, and updates across the group.",
-    items: navMedia,
-    ctaLabel: "Visit Newsroom",
-    ctaHref: "#blogs"
-  },
   careers: {
     eyebrow: "Careers",
     title: "Grow with Eloma",
