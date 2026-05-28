@@ -44,7 +44,7 @@ const navItems: Array<{ key: Exclude<MenuKey, null>; label: string; href: string
   { key: "contact", label: "Contact Us", href: "/contact" }
 ];
 
-const dropdownMenuKeys: Exclude<MenuKey, null>[] = ["about", "businesses", "contact"];
+const dropdownMenuKeys: Exclude<MenuKey, null>[] = ["about", "businesses"];
 
 const phoneNumber = "1800 710 388";
 const phoneHref = "tel:1800710388";
@@ -234,7 +234,7 @@ export default function Navbar() {
 
       {/* Main navbar */}
       <div className="container-x flex h-16 items-center justify-between md:h-20">
-        <Link href="#home" className="flex items-center">
+        <Link href="/" className="flex items-center">
           <span
             className={cn(
               "inline-flex items-center rounded-md px-2 py-1 transition-colors",
