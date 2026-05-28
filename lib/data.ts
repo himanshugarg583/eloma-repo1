@@ -8,7 +8,7 @@ export const navAbout = [
   "Partners"
 ];
 
-export const navBusinesses = [
+export const navBusinesses: Array<{ type: "header" | "item"; label: string }> = [
   { type: "header", label: "Business" },
   { type: "item", label: "Supply Chain" },
   { type: "item", label: "IT Infrastructure" },
