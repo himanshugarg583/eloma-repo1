@@ -89,7 +89,7 @@ export default function PageIntro() {
                   transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
                   className="relative z-10"
                 >
-                  <Image src={introLogo} alt="Eloma" width={140} height={140} />
+                  <Image src={introLogo} alt="Eloma" width={250} height={250} />
                 </motion.div>
               </div>
 

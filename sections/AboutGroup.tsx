@@ -53,9 +53,9 @@ export default function AboutGroup() {
       />
 
       <div className="container-x">
-        <div className="grid items-start gap-12 lg:grid-cols-2 lg:gap-16">
+        <div className="grid items-start gap-8 lg:grid-cols-2 lg:gap-10">
           {/* Sticky image column */}
-          <div className="lg:sticky lg:top-28">
+          <div className="lg:sticky lg:top-2">
             <motion.div
               ref={imageRef}
               initial={{ clipPath: "inset(0 100% 0 0)" }}
@@ -85,7 +85,7 @@ export default function AboutGroup() {
             </motion.div>
           </div>
 
-          <div className="space-y-8">
+          <div className="space-y-[-28]">
             <SectionHeading
               eyebrow="Who We Are"
               title="A diversified business group driving innovation across industries"
@@ -104,7 +104,7 @@ export default function AboutGroup() {
               in a rapidly changing world.
             </motion.p>
 
-            <div className="space-y-4">
+            <div className="space-y-[-6]">
               {pillars.map((pillar, idx) => (
                 <motion.div
                   key={pillar.title}

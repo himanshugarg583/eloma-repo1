@@ -119,39 +119,49 @@ function MegaMenu({ menuKey }: { menuKey: MenuKey }) {
           </Button>
         </div>
 
-        <ul className={cn("grid gap-x-8 gap-y-3 text-[15px]", useTwoColumns ? "grid-cols-2" : "grid-cols-1")}>
-          {menu.items.map((item) => {
-            const label = getLabel(item);
+        {/* Render items grouped by header in columns (vertical lists per header) */}
+        {(() => {
+          const groups: Array<{ header: string; items: string[] }> = [];
+          let current: { header: string; items: string[] } | null = null;
 
-            if (isHeader(item)) {
-              return (
-                <li
-                  key={label}
-                  className={cn(
-                    "pt-3 text-[11px] font-semibold uppercase tracking-[0.2em] text-slate-400",
-                    useTwoColumns && "col-span-2"
-                  )}
-                >
-                  {label}
-                </li>
-              );
+          menu.items.forEach((it) => {
+            if (typeof it === "object" && it.type === "header") {
+              current = { header: it.label, items: [] };
+              groups.push(current);
+            } else {
+              const label = getLabel(it);
+              if (!current) {
+                current = { header: "", items: [] };
+                groups.push(current);
+              }
+              current.items.push(label);
             }
+          });
 
-            return (
-              <li key={label}>
-                <Link
-                  href={menu.ctaHref}
-                  className="group flex items-center justify-between border-b border-slate-100 py-2 font-medium text-black transition-colors hover:text-black"
-                >
-                  <span className="transition-transform duration-200 group-hover:translate-x-1">{label}</span>
-                  <span className="translate-x-0 text-black opacity-0 transition-all duration-200 group-hover:translate-x-1 group-hover:opacity-100">
-                    →
-                  </span>
-                </Link>
-              </li>
-            );
-          })}
-        </ul>
+          return (
+            <div className="grid grid-cols-1 gap-8 text-[15px] sm:grid-cols-2 lg:grid-cols-2">
+              {groups.map((g) => (
+                <div key={g.header}>
+                  <div className="pt-3 text-[11px] font-semibold uppercase tracking-[0.2em] text-slate-400">
+                    {g.header}
+                  </div>
+                  <ul className="mt-3 space-y-2">
+                    {g.items.map((label) => (
+                      <li key={label}>
+                        <Link
+                          href={menu.ctaHref}
+                          className="block border-b border-slate-100 py-2 font-medium text-black transition-colors hover:text-black"
+                        >
+                          {label}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+          );
+        })()}
       </div>
     </motion.div>
   );
@@ -167,7 +177,7 @@ export default function Navbar() {
     <header
       className={cn(
         "top-0 z-50 w-full transition-all duration-300",
-        isTransparent ? "absolute bg-transparent" : "fixed bg-white shadow-sm"
+        isTransparent ? "absolute bg-transparent" : "fixed bg-blue shadow-sm"
       )}
       onMouseLeave={() => setActiveMenu(null)}
     >

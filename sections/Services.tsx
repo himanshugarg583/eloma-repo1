@@ -82,7 +82,7 @@ export default function Services() {
           align="center"
         />
 
-        <div className="mt-14 grid gap-4 lg:grid-cols-4">
+        <div className="mt-5 grid gap-4 lg:grid-cols-4">
           {services.map((service, idx) => (
             <motion.div
               key={service.title}
