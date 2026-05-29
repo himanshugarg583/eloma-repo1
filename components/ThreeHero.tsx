@@ -119,7 +119,7 @@ function Globe() {
         </mesh>
         <mesh rotation={[0.6, 0.2, 0]}>
           <torusGeometry args={[1.4, 0.02, 16, 100]} />
-          <meshStandardMaterial color="#c9a557" metalness={0.9} />
+          <meshStandardMaterial color="#3CB98C" metalness={0.9} />
         </mesh>
       </Float>
     </group>

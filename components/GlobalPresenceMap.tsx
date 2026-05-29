@@ -4,8 +4,8 @@ import Image from "next/image";
 import { useState } from "react";
 import { Mail, Phone } from "lucide-react";
 
-import mapImage from "@/assset/map-images.svg";
 import pinImage from "@/assset/pin.png";
+const mapSrc = "/map-images.svg";
 
 const offices = {
 	global: [
@@ -122,7 +122,7 @@ export default function GlobalPresenceMap() {
 
 						<div className="gpm-map-svg-wrap">
 							<div className="gpm-map-image">
-								<Image src={mapImage} alt="World map" width={1170} height={780} priority />
+											<Image src={mapSrc} alt="World map" width={1170} height={780} unoptimized priority />
 								<div className="gpm-map-overlay">
 									{currentOffices.map((office) => {
 										const left = `${(office.cx / 960) * 100}%`;

@@ -10,16 +10,20 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      screens: {
+        '3xl': '1920px',
+        '4xl': '2560px'
+      },
       colors: {
         gold: {
-          DEFAULT: "#c9a557",
-          soft: "#e8d7aa",
-          dark: "#a8862f"
+          DEFAULT: "#3CB98C",
+          soft: "#5ec9a3",
+          dark: "#2a8a6b"
         },
         forest: {
-          DEFAULT: "#0c2f2a",
-          dark: "#06201c",
-          light: "#1a4a43"
+          DEFAULT: "#08213C",
+          dark: "#051829",
+          light: "#0d3a5e"
         },
         ink: "#0f172a"
       },
@@ -37,7 +41,7 @@ const config: Config = {
         "hero-gradient":
           "linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0) 60%, rgba(255,255,255,1) 100%)",
         "forest-gradient":
-          "linear-gradient(135deg, #0c2f2a 0%, #06201c 100%)"
+          "linear-gradient(135deg, #08213C 0%, #051829 100%)"
       },
       animation: {
         "fade-in-up": "fadeInUp 0.8s ease-out forwards",

@@ -96,9 +96,9 @@ export default function Hero() {
         </motion.div>
 
         {/* Title — line-by-line word reveal */}
-        <h1 className="max-w-5xl font-display text-[2.6rem] font-bold leading-[1.02] tracking-tight text-white sm:text-5xl md:text-6xl lg:text-[5.5rem] xl:text-[6.5rem]">
+        <h1 className="max-w-5xl font-display text-[2.6rem] font-bold leading-[1.05] tracking-tight text-white sm:text-5xl md:text-6xl lg:text-[3.2rem] xl:text-[4rem]">
           {titleLines.map((line, lineIdx) => (
-            <span key={lineIdx} className="block overflow-hidden pb-1">
+            <span key={lineIdx} className="block overflow-hidden pb-5">
               <motion.span
                 initial={{ y: "110%", opacity: 0 }}
                 animate={{ y: "0%", opacity: 1 }}
@@ -197,20 +197,7 @@ export default function Hero() {
         </motion.div>
       </motion.div>
 
-      {/* Marquee strip */}
-      <div className="absolute bottom-0 left-0 right-0 border-y border-white/10 bg-forest-dark/60 py-4 backdrop-blur">
-        <Marquee speed={45}>
-          {marqueeItems.map((item, idx) => (
-            <span
-              key={`${item}-${idx}`}
-              className="mx-8 flex items-center gap-8 whitespace-nowrap text-sm font-semibold uppercase tracking-[0.2em] text-white/70"
-            >
-              {item}
-              <span className="h-1 w-1 rounded-full bg-gold" />
-            </span>
-          ))}
-        </Marquee>
-      </div>
+
     </section>
   );
 }

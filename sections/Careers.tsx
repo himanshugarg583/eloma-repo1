@@ -45,7 +45,8 @@ export default function Careers() {
     <section
       id="career"
       ref={sectionRef}
-      className="section-padding section-alt relative overflow-hidden"
+      className="section-padding section-alt relative overflow-hidden bg-[#ffffff]"
+      style={{ backgroundColor: "#ffffff" }}
     >
       <div
         aria-hidden

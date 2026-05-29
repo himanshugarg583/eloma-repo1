@@ -166,7 +166,7 @@ function GlobeGroup() {
       {/* Graticule wireframe for a globe structure */}
       <mesh>
         <sphereGeometry args={[GLOBE_RADIUS * 0.992, 36, 24]} />
-        <meshBasicMaterial color="#1a4a43" wireframe transparent opacity={0.35} />
+        <meshBasicMaterial color="#0d3a5e" wireframe transparent opacity={0.35} />
       </mesh>
 
       {/* Glowing particle shell */}
@@ -179,7 +179,7 @@ function GlobeGroup() {
           start={arc.start}
           end={arc.end}
           mid={arc.mid}
-          color="#c9a557"
+          color="#3CB98C"
           lineWidth={1}
           transparent
           opacity={hovered === arc.name || hovered === HUB ? 0.9 : 0.35}

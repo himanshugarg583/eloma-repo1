@@ -14,7 +14,7 @@ import {
   navMedia,
   navSustainability
 } from "@/lib/data";
-import logoMark from "@/assset/logo/Eloma Group-01 logo.png";
+import logoMark from "@/assset/logo/eloma_logo-removebg-preview.png";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useScrollY } from "@/hooks/useScrollY";
@@ -23,7 +23,6 @@ type MenuKey =
   | "about"
   | "businesses"
   | "sustainability"
-  // | "media"
   | "careers"
   | "contact"
   | null;
@@ -201,9 +200,9 @@ export default function Navbar() {
             <div className="flex items-center gap-5">
               <span>Global Group Company</span>
               <span className="text-white/30">|</span>
-              <Link href="#" className="transition-colors hover:text-white">
+              {/* <Link href="#" className="transition-colors hover:text-white">
                 Sustainability
-              </Link>
+              </Link> */}
               {/* <Link href="#" className="transition-colors hover:text-white">
                 Partner With Us
               </Link> */}

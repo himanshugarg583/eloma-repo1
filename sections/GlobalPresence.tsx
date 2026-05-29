@@ -44,8 +44,8 @@ const capabilities = [
 export default function GlobalPresence() {
   return (
     <section id="global" className="section-padding relative overflow-hidden bg-white">
-      <div className="container-x relative">
-        <SectionHeading
+      <div className="container-x relative pb-50 gap-10">
+        <SectionHeading className="mb-50 gap-9"
           eyebrow="Global Presence"
           title="A growing presence across key global regions"
           description="We operate across multiple countries, connecting businesses and communities through trusted, scalable solutions."
@@ -59,7 +59,8 @@ export default function GlobalPresence() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-15% 0px" }}
             transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-            className="relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-forest via-forest-dark to-[#04140f] shadow-2xl"
+            // className="relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-forest via-forest-dark to-[#04140f] shadow-2xl bg-white"
+            className="relative overflow-hidden rounded-2xl border border-white/10  bg-white"
           >
             {/* Ambient radial glow */}
             <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_45%,rgba(72,201,138,0.18),transparent_60%)]" />

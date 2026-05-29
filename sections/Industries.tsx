@@ -52,7 +52,8 @@ export default function Industries() {
     <section
       id="industries"
       ref={sectionRef}
-      className="section-padding section-alt relative overflow-hidden"
+        className="section-padding relative overflow-hidden bg-[#ffffff]"
+        style={{ backgroundColor: "#ffffff" }}
     >
       <div className="container-x">
         <SectionHeading

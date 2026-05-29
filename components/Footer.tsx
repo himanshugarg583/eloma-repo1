@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Facebook, Instagram, Linkedin, Mail, Phone, Twitter, Youtube } from "lucide-react";
 
 import { groupName } from "@/lib/data";
-import logoFull from "@/assset/logo/Eloma Group-01 logo.png";
+import logoFull from "@/assset/logo/eloma_logo-removebg-preview.png";
 
 const linkColumns = [
   {

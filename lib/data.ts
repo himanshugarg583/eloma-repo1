@@ -213,6 +213,35 @@ export const caseStudies = [
     image:
       "https://images.unsplash.com/photo-1494412651409-8963ce7935a7?auto=format&fit=crop&w=1200&q=80"
   }
+  ,
+  {
+    title: "Sustainable Operations",
+    description: "Implementing greener logistics and energy-efficient operations to reduce environmental impact.",
+    category: "Sustainability",
+    image:
+      "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1200&q=80"
+  },
+  {
+    title: "Technology Transformation",
+    description: "Leveraging digital platforms to optimise supply chains and improve customer experiences.",
+    category: "Technology",
+    image:
+      "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=1200&q=80"
+  },
+  {
+    title: "Community Impact",
+    description: "Programs focused on uplifting communities and creating shared economic value.",
+    category: "Impact",
+    image:
+      "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=1200&q=80"
+  },
+  {
+    title: "Operational Excellence",
+    description: "Continuous improvement in processes to deliver reliable, scalable services for clients.",
+    category: "Operations",
+    image:
+      "https://images.unsplash.com/photo-1516455590571-18256e5bb9ff?auto=format&fit=crop&w=1200&q=80"
+  }
 ];
 
 export const blogPosts = [
@@ -223,7 +252,7 @@ export const blogPosts = [
     category: "Motto",
     date: "May 14, 2026",
     image:
-      "https://images.unsplash.com/photo-1586528116493-7e85f5a98a40?auto=format&fit=crop&w=1200&q=80"
+      "https://images.unsplash.com/photo-1494412651409-8963ce7935a7?auto=format&fit=crop&w=1200&q=80"
   },
   {
     title: "Connecting Businesses",

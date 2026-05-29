@@ -60,7 +60,7 @@ export default function SectionHeading({
 
       <h2
         className={cn(
-          "font-display font-bold leading-[1.05] tracking-tight",
+          "font-display font-bold leading-[1.12] tracking-tight pb-1",
           "text-3xl md:text-4xl lg:text-5xl",
           variant === "dark" ? "text-white" : "text-forest"
         )}
@@ -71,7 +71,7 @@ export default function SectionHeading({
           return (
             <span
               key={`${word}-${idx}`}
-              className="relative inline-block overflow-hidden align-baseline"
+              className="relative inline-block overflow-visible align-baseline"
               aria-hidden
             >
               <motion.span

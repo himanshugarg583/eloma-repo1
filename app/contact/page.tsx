@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { Building2, Clock, ExternalLink, Mail, MapPin, Phone } from "lucide-react";
@@ -9,6 +10,15 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { useInView } from "@/hooks/useInView";
 import GlobalPresenceMap from "@/components/GlobalPresenceMap";
+
+const GlobeScene = dynamic(() => import("@/components/GlobeScene"), {
+  ssr: false,
+  loading: () => (
+    <div className="flex h-full w-full items-center justify-center">
+      <span className="h-10 w-10 animate-spin rounded-full border-2 border-white/20 border-t-gold" />
+    </div>
+  )
+});
 
 const enquiryBlocks = [
   {
@@ -193,7 +203,7 @@ export default function ContactPage() {
               ))}
             </div>
           </div>
-          <div className="container-x relative py-24 md:py-28">
+            <div className="container-x hero-bleed relative py-24 md:py-28">
             <div className="max-w-2xl space-y-6">
               <p className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-200/70">
                 Corporate / Contact Us
@@ -245,22 +255,19 @@ export default function ContactPage() {
               </div>
             </div>
 
-            <div className="rounded-2xl border border-slate-200 bg-white p-3 shadow-sm">
+            <div className="rounded-2xl  bg-white p-3 shadow-sm">
               <div className="relative h-[360px] overflow-hidden rounded-xl">
-                <Image
-                  src="https://images.unsplash.com/photo-1502920514313-52581002a659?auto=format&fit=crop&w=1400&q=80"
-                  alt="Office map"
-                  fill
-                  className="object-cover"
-                />
-                <div className="absolute inset-0 bg-slate-900/10" />
-                <div className="absolute left-4 top-4 rounded-full bg-white/90 px-4 py-2 text-xs font-semibold text-slate-700 shadow">
-                  Ballard Estate, Mumbai
+                <div className="relative aspect-[16/12] w-full sm:aspect-[16/11]">
+                  <GlobeScene />
                 </div>
-                <div className="absolute right-4 top-4 flex items-center gap-2 rounded-full bg-white/90 px-3 py-2 text-xs font-semibold text-slate-700 shadow">
+                <div className="absolute inset-0 bg-slate-900/6 pointer-events-none" />
+                {/* <div className="absolute left-4 top-4 rounded-full bg-white/90 px-4 py-2 text-xs font-semibold text-slate-700 shadow">
+                  Ballard Estate, Mumbai
+                </div> */}
+                {/* <div className="absolute right-4 top-4 flex items-center gap-2 rounded-full bg-white/90 px-3 py-2 text-xs font-semibold text-slate-700 shadow">
                   View Map
                   <ExternalLink size={14} />
-                </div>
+                </div> */}
               </div>
             </div>
           </div>

@@ -274,7 +274,7 @@ export default function AboutPage() {
           style={{ backgroundImage: heroBackground, backgroundSize: "cover" }}
         >
           <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/30 to-black/70" />
-          <div className="container-x relative flex min-h-[70vh] flex-col items-center justify-center py-28 text-center text-white">
+          <div className="container-x hero-bleed relative flex min-h-[70vh] flex-col items-center justify-center py-28 text-center text-white">
             <motion.p
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}

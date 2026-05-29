@@ -3,8 +3,8 @@
 @tailwind utilities;
 
 :root {
-  --accent-gold: #c9a557;
-  --accent-forest: #0c2f2a;
+  --accent-gold: #3CB98C;
+  --accent-forest: #08213C;
 }
 
 * {
@@ -45,7 +45,7 @@ body {
   display: inline-block;
   width: 28px;
   height: 1px;
-  background-color: #c9a557;
+  background-color: #3CB98C;
 }
 
 .heading-xl {
@@ -103,19 +103,78 @@ body {
 
 /* Selection */
 ::selection {
-  background-color: rgba(201, 165, 87, 0.25);
-  color: #0c2f2a;
+  background-color: rgba(60, 185, 140, 0.25);
+  color: #08213C;
 }
 
 /* Focus rings */
 :focus-visible {
-  outline: 2px solid #c9a557;
+  outline: 2px solid #3CB98C;
   outline-offset: 2px;
 }
 
 /* Smooth scroll handled by Lenis */
 html.lenis {
   height: auto;
+}
+
+/* Large-screen tweaks for 32" and similar displays */
+@media (min-width: 1920px) {
+  .container-x {
+    max-width: none;
+    width: calc(100% - 60px);
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+
+  .heading-xl {
+    font-size: 3.6rem; /* ~57.6px */
+    line-height: 1.06;
+  }
+
+  .heading-lg {
+    font-size: 2.4rem;
+  }
+}
+
+@media (min-width: 2560px) {
+  .container-x {
+    max-width: none;
+    width: calc(100% - 200px);
+    padding-left: 80px;
+    padding-right: 80px;
+  }
+
+  .heading-xl {
+    font-size: 4.2rem; /* ~67px */
+    line-height: 1.04;
+  }
+
+  .heading-lg {
+    font-size: 2.6rem;
+  }
+
+  /* Make hero and section paddings more generous */
+  .section-padding {
+    padding-top: 4.5rem;
+    padding-bottom: 5.5rem;
+  }
+
+  /* Hero-specific bleed utility for full-width hero text on large displays */
+  .container-x.hero-bleed {
+    width: calc(100% - 100px);
+    padding-left: 40px;
+    padding-right: 40px;
+    max-width: none;
+  }
+}
+
+@media (min-width: 1280px) {
+  .container-x.hero-bleed {
+    width: calc(100% - 120px);
+    padding-left: 32px;
+    padding-right: 32px;
+  }
 }
 
 .lenis.lenis-smooth {
