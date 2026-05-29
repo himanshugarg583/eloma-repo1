@@ -42,15 +42,15 @@ export default function Hero() {
     <section
       id="home"
       ref={sectionRef}
-      className="relative isolate min-h-[100vh] overflow-hidden bg-forest"
+      className="relative isolate min-h-[100vh] overflow-hidden bg-white"
     >
       {/* Parallax video background — glowing global network */}
-      <motion.div className="absolute inset-0 -z-10" style={{ y: videoY }}>
+      <motion.div className="absolute inset-0 z-0" style={{ y: videoY }}>
         <motion.video
           initial={{ opacity: 0, scale: 1.12 }}
           animate={{ opacity: 1, scale: 1.04 }}
           transition={{ opacity: { duration: 1.6, ease: [0.22, 1, 0.36, 1] }, scale: { duration: 6, ease: "easeOut" } }}
-          className="absolute inset-0 h-full w-full object-cover"
+          className="absolute inset-0 h-full w-full object-cover z-0"
           autoPlay
           muted
           loop
@@ -59,25 +59,18 @@ export default function Hero() {
           poster="/videos/hero-globe-poster.jpg"
           aria-hidden
         >
-          <source src="/videos/hero-globe.mp4" type="video/mp4" />
+          <source src="/videos/hero-globe.webm" type="video/webm" />
         </motion.video>
-        <div className="absolute inset-0 bg-gradient-to-r from-forest/90 via-forest/65 to-forest/25" />
-        <div className="absolute inset-0 bg-gradient-to-t from-forest-dark/85 via-transparent to-forest-dark/40" />
-        {/* Decorative orb */}
-        <motion.div
-          aria-hidden
-          className="absolute -right-32 top-1/4 h-[420px] w-[420px] rounded-full bg-gold/20 blur-3xl"
-          animate={{
-            scale: [1, 1.15, 1],
-            opacity: [0.4, 0.6, 0.4]
-          }}
-          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-        />
+        {/* Overlays removed so intro background stays white */}
+        <div className="absolute inset-0 z-10 bg-transparent" />
+        <div className="absolute inset-0 z-10 bg-transparent" />
+        {/* Decorative orb hidden for a clean white intro */}
+        <motion.div aria-hidden className="hidden" />
       </motion.div>
 
       <motion.div
         style={{ y: contentY, opacity }}
-        className="container-x relative flex min-h-[100vh] flex-col justify-end pb-24 pt-32 md:pb-32 md:pt-40"
+        className="container-x relative z-20 flex min-h-[100vh] flex-col justify-end pb-24 pt-32 md:pb-32 md:pt-40"
       >
         {/* Eyebrow */}
         <motion.div
@@ -96,7 +89,7 @@ export default function Hero() {
         </motion.div>
 
         {/* Title — line-by-line word reveal */}
-        <h1 className="max-w-5xl font-display text-[2.6rem] font-bold leading-[1.05] tracking-tight text-white sm:text-5xl md:text-6xl lg:text-[3.2rem] xl:text-[4rem]">
+        <h1 className="max-w-5xl font-display text-[2.6rem] font-bold leading-[1.05] tracking-tight text-forest sm:text-5xl md:text-6xl lg:text-[3.2rem] xl:text-[4rem]">
           {titleLines.map((line, lineIdx) => (
             <span key={lineIdx} className="block overflow-hidden pb-5">
               <motion.span
@@ -132,7 +125,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: INTRO_DELAY + 0.8, duration: 0.8 }}
-          className="mt-8 max-w-xl text-base leading-relaxed text-white/80 md:text-lg"
+          className="mt-8 max-w-xl text-base leading-relaxed text-forest/80 md:text-lg"
         >
           A dynamic business group uniting logistics, digital innovation,
           security, travel, and customer solutions — driven by purpose,
@@ -159,7 +152,7 @@ export default function Hero() {
             <Button
               variant="outline"
               size="lg"
-              className="border-white/30 bg-white/5 text-white backdrop-blur hover:border-white hover:bg-white hover:text-forest"
+              className="border-forest/30 bg-forest/5 text-forest backdrop-blur hover:border-forest hover:bg-forest/10 hover:text-white"
             >
               <span className="flex h-7 w-7 items-center justify-center rounded-full bg-gold text-forest">
                 <Play size={12} className="ml-0.5" />
@@ -174,18 +167,18 @@ export default function Hero() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: INTRO_DELAY + 1.3, duration: 0.8 }}
-          className="mt-16 flex flex-col gap-6 border-t border-white/15 pt-6 md:flex-row md:items-center md:justify-between"
+          className="mt-16 flex flex-col gap-6 border-t border-forest/15 pt-6 md:flex-row md:items-center md:justify-between"
         >
           <div className="flex items-center gap-3">
             <div className="h-px w-12 bg-gold/60" />
-            <p className="text-xs uppercase tracking-[0.28em] text-white/60">
+            <p className="text-xs uppercase tracking-[0.28em] text-forest/60">
               One group · A connected world
             </p>
           </div>
 
           <div className="hidden items-center gap-3 md:flex">
-            <div className="h-px w-12 bg-white/30" />
-            <p className="text-xs uppercase tracking-[0.28em] text-white/60">
+            <div className="h-px w-12 bg-forest/30" />
+            <p className="text-xs uppercase tracking-[0.28em] text-forest/60">
               Scroll to explore
             </p>
             <motion.div

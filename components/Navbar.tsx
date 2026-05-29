@@ -11,7 +11,6 @@ import {
   navBusinesses,
   navCareers,
   navContact,
-  navMedia,
   navSustainability
 } from "@/lib/data";
 import logoMark from "@/assset/logo/eloma_logo-removebg-preview.png";
@@ -19,13 +18,7 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useScrollY } from "@/hooks/useScrollY";
 
-type MenuKey =
-  | "about"
-  | "businesses"
-  | "sustainability"
-  | "careers"
-  | "contact"
-  | null;
+type MenuKey = "about" | "businesses" | "sustainability" | "careers" | "contact" | null;
 
 type MenuItem =
   | string
@@ -38,24 +31,25 @@ const navItems: Array<{ key: Exclude<MenuKey, null>; label: string; href: string
   { key: "about", label: "About Us", href: "/about" },
   { key: "businesses", label: "Our Businesses", href: "#subsidiaries" },
   { key: "sustainability", label: "Sustainability", href: "#services" },
-  // { key: "media", label: "Media", href: "#blogs" },
   { key: "careers", label: "Careers", href: "#career" },
   { key: "contact", label: "Contact Us", href: "/contact" }
 ];
 
 const dropdownMenuKeys: Exclude<MenuKey, null>[] = ["about", "businesses"];
-
 const phoneNumber = "1800 710 388";
 const phoneHref = "tel:1800710388";
 
-const navMenu: Record<Exclude<MenuKey, null>, {
-  eyebrow: string;
-  title: string;
-  description: string;
-  items: MenuItem[];
-  ctaLabel: string;
-  ctaHref: string;
-}> = {
+const navMenu: Record<
+  Exclude<MenuKey, null>,
+  {
+    eyebrow: string;
+    title: string;
+    description: string;
+    items: MenuItem[];
+    ctaLabel: string;
+    ctaHref: string;
+  }
+> = {
   about: {
     eyebrow: "About Us",
     title: "Who we are and how we lead",
@@ -99,15 +93,11 @@ const navMenu: Record<Exclude<MenuKey, null>, {
 };
 
 function MegaMenu({ menuKey }: { menuKey: MenuKey }) {
-  if (!menuKey) {
-    return null;
-  }
+  if (!menuKey) return null;
 
   const menu = navMenu[menuKey];
-  const isHeader = (item: MenuItem) =>
-    typeof item === "object" && item.type === "header";
-  const getLabel = (item: MenuItem) =>
-    typeof item === "string" ? item : item.label;
+  const isHeader = (item: MenuItem) => typeof item === "object" && item.type === "header";
+  const getLabel = (item: MenuItem) => (typeof item === "string" ? item : item.label);
   const itemCount = menu.items.filter((item) => !isHeader(item)).length;
   const useTwoColumns = itemCount > 5;
 
@@ -122,22 +112,14 @@ function MegaMenu({ menuKey }: { menuKey: MenuKey }) {
       <div className="container-x grid gap-10 py-10 lg:grid-cols-[1.4fr_1fr]">
         <div>
           <p className="eyebrow text-slate-500">{menu.eyebrow}</p>
-          <h3 className="mt-4 font-display text-[22px] font-semibold text-slate-900">
-            {menu.title}
-          </h3>
-          <p className="mt-3 max-w-md text-sm leading-relaxed text-slate-600">
-            {menu.description}
-          </p>
+          <h3 className="mt-4 font-display text-[22px] font-semibold text-slate-900">{menu.title}</h3>
+          <p className="mt-3 max-w-md text-sm leading-relaxed text-slate-600">{menu.description}</p>
           <Button asChild className="mt-6" size="sm">
             <Link href={menu.ctaHref}>{menu.ctaLabel}</Link>
           </Button>
         </div>
-        <ul
-          className={cn(
-            "grid gap-x-8 gap-y-3 text-[15px]",
-            useTwoColumns ? "grid-cols-2" : "grid-cols-1"
-          )}
-        >
+
+        <ul className={cn("grid gap-x-8 gap-y-3 text-[15px]", useTwoColumns ? "grid-cols-2" : "grid-cols-1")}>
           {menu.items.map((item) => {
             const label = getLabel(item);
 
@@ -159,12 +141,10 @@ function MegaMenu({ menuKey }: { menuKey: MenuKey }) {
               <li key={label}>
                 <Link
                   href={menu.ctaHref}
-                  className="group flex items-center justify-between border-b border-slate-100 py-2 font-medium text-slate-900 transition-colors hover:text-black"
+                  className="group flex items-center justify-between border-b border-slate-100 py-2 font-medium text-black transition-colors hover:text-black"
                 >
-                  <span className="transition-transform duration-200 group-hover:translate-x-1">
-                    {label}
-                  </span>
-                  <span className="translate-x-0 text-slate-900 opacity-0 transition-all duration-200 group-hover:translate-x-1 group-hover:opacity-100">
+                  <span className="transition-transform duration-200 group-hover:translate-x-1">{label}</span>
+                  <span className="translate-x-0 text-black opacity-0 transition-all duration-200 group-hover:translate-x-1 group-hover:opacity-100">
                     →
                   </span>
                 </Link>
@@ -187,31 +167,19 @@ export default function Navbar() {
     <header
       className={cn(
         "top-0 z-50 w-full transition-all duration-300",
-        isTransparent
-          ? "absolute bg-transparent"
-          : "fixed bg-white shadow-sm"
+        isTransparent ? "absolute bg-transparent" : "fixed bg-white shadow-sm"
       )}
       onMouseLeave={() => setActiveMenu(null)}
     >
-      {/* Top utility bar */}
       {isTransparent ? (
         <div className="hidden bg-white/5 lg:block">
           <div className="container-x flex h-9 items-center justify-between text-xs text-white/80">
             <div className="flex items-center gap-5">
               <span>Global Group Company</span>
               <span className="text-white/30">|</span>
-              {/* <Link href="#" className="transition-colors hover:text-white">
-                Sustainability
-              </Link> */}
-              {/* <Link href="#" className="transition-colors hover:text-white">
-                Partner With Us
-              </Link> */}
             </div>
             <div className="flex items-center gap-5">
-              <Link
-                href={phoneHref}
-                className="flex items-center gap-2 transition-colors hover:text-white"
-              >
+              <Link href={phoneHref} className="flex items-center gap-2 transition-colors hover:text-white">
                 <Phone size={12} />
                 <span>{phoneNumber}</span>
               </Link>
@@ -223,7 +191,6 @@ export default function Navbar() {
         </div>
       ) : null}
 
-      {/* Main navbar */}
       <div className="container-x flex h-16 items-center justify-between md:h-20">
         <Link href="/" className="flex items-center">
           <span
@@ -232,14 +199,7 @@ export default function Navbar() {
               isTransparent ? "bg-white/90 shadow-sm" : "bg-transparent"
             )}
           >
-            <Image
-              src={logoMark}
-              alt="Eloma Group"
-              className="h-10 w-auto md:h-12"
-              // className="h-10 w-15 md:h-12"
-              priority
-              sizes="140px"
-            />
+            <Image src={logoMark} alt="Eloma Group" className="h-10 w-auto md:h-12" priority sizes="140px" />
           </span>
         </Link>
 
@@ -252,12 +212,7 @@ export default function Navbar() {
                 <Link
                   key={item.key}
                   href={item.href}
-                  className={cn(
-                    "relative px-3 py-2 text-[15px] font-medium transition-colors md:text-base",
-                    isTransparent
-                      ? "text-white hover:text-white"
-                      : "text-slate-900 hover:text-black"
-                  )}
+                  className="relative px-3 py-2 text-[15px] font-medium text-black transition-colors hover:text-black md:text-base"
                 >
                   {item.label}
                 </Link>
@@ -268,22 +223,16 @@ export default function Navbar() {
               <button
                 key={item.key}
                 className={cn(
-                  "group relative flex items-center gap-1 px-3 py-2 text-[15px] font-medium transition-colors md:text-base",
-                  isTransparent
-                    ? "text-white hover:text-white"
-                    : "text-slate-900 hover:text-black",
-                  activeMenu === item.key && (isTransparent ? "text-white" : "text-black")
+                  "group relative flex items-center gap-1 px-3 py-2 text-[15px] font-medium text-black transition-colors hover:text-black md:text-base",
+                  activeMenu === item.key && "text-black"
                 )}
                 onMouseEnter={() => setActiveMenu(item.key)}
+                type="button"
               >
                 <span>{item.label}</span>
                 <ChevronDown
                   size={14}
-                  className={cn(
-                    "transition-transform duration-200",
-                    isTransparent ? "text-white/70" : "text-slate-500",
-                    activeMenu === item.key && (isTransparent ? "rotate-180 text-white" : "rotate-180 text-black")
-                  )}
+                  className={cn("text-black transition-transform duration-200", activeMenu === item.key && "rotate-180 text-black")}
                 />
                 <span
                   className={cn(
@@ -300,22 +249,14 @@ export default function Navbar() {
           <button
             className={cn(
               "rounded-md p-2 transition-colors",
-              isTransparent
-                ? "text-white/80 hover:bg-white/10 hover:text-white"
-                : "text-slate-600 hover:bg-slate-100 hover:text-forest"
+              isTransparent ? "text-white/80 hover:bg-white/10 hover:text-white" : "text-slate-600 hover:bg-slate-100 hover:text-forest"
             )}
             aria-label="Search"
+            type="button"
           >
-          
+            <Search size={18} />
           </button>
-          <Button
-            size="sm"
-            className={cn(
-              isTransparent
-                ? "bg-white text-forest hover:bg-white/90"
-                : ""
-            )}
-          >
+          <Button size="sm" className={cn(isTransparent ? "bg-white text-forest hover:bg-white/90" : "bg-forest text-white hover:bg-forest/90")}>
             Request a Quote
           </Button>
         </div>
@@ -323,21 +264,18 @@ export default function Navbar() {
         <button
           className={cn(
             "flex items-center justify-center rounded-md border p-2 lg:hidden",
-            isTransparent
-              ? "border-white/40 text-white"
-              : "border-slate-200 text-forest"
+            isTransparent ? "border-white/40 text-white" : "border-slate-200 text-forest"
           )}
           onClick={() => setMobileOpen((prev) => !prev)}
           aria-label="Toggle navigation"
+          type="button"
         >
           {mobileOpen ? <X size={20} /> : <Menu size={20} />}
         </button>
       </div>
 
       <AnimatePresence>
-        {activeMenu && dropdownMenuKeys.includes(activeMenu) ? (
-          <MegaMenu menuKey={activeMenu} />
-        ) : null}
+        {activeMenu && dropdownMenuKeys.includes(activeMenu) ? <MegaMenu menuKey={activeMenu} /> : null}
       </AnimatePresence>
 
       <AnimatePresence>
@@ -358,7 +296,7 @@ export default function Navbar() {
                     <Link
                       key={item.key}
                       href={item.href}
-                      className="flex items-center justify-between border-b border-slate-100 pb-4 text-sm font-semibold text-forest"
+                      className="flex items-center justify-between border-b border-slate-100 pb-4 text-sm font-semibold text-black"
                     >
                       {item.label}
                     </Link>
@@ -366,16 +304,10 @@ export default function Navbar() {
                 }
 
                 return (
-                  <details
-                    key={item.key}
-                    className="group border-b border-slate-100 pb-4"
-                  >
-                    <summary className="flex cursor-pointer items-center justify-between text-sm font-semibold text-slate-900">
+                  <details key={item.key} className="group border-b border-slate-100 pb-4">
+                    <summary className="flex cursor-pointer items-center justify-between text-sm font-semibold text-black">
                       {item.label}
-                      <ChevronDown
-                        size={16}
-                        className="text-slate-400 transition-transform group-open:rotate-180"
-                      />
+                      <ChevronDown size={16} className="text-slate-400 transition-transform group-open:rotate-180" />
                     </summary>
                     <ul className="mt-3 space-y-2 pl-2 text-sm text-slate-600">
                       {navMenu[item.key].items.map((entry) => {
@@ -383,10 +315,7 @@ export default function Navbar() {
 
                         if (typeof entry === "object" && entry.type === "header") {
                           return (
-                            <li
-                              key={label}
-                              className="pt-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-slate-400"
-                            >
+                            <li key={label} className="pt-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-slate-400">
                               {label}
                             </li>
                           );
@@ -394,10 +323,7 @@ export default function Navbar() {
 
                         return (
                           <li key={label}>
-                            <Link
-                              href={navMenu[item.key].ctaHref}
-                              className="block py-1 text-slate-900 transition-colors hover:text-black"
-                            >
+                            <Link href={navMenu[item.key].ctaHref} className="block py-1 text-black transition-colors hover:text-black">
                               {label}
                             </Link>
                           </li>
@@ -407,6 +333,7 @@ export default function Navbar() {
                   </details>
                 );
               })}
+
               <div className="flex flex-col gap-3 pt-2">
                 <Link
                   href={phoneHref}
@@ -415,7 +342,9 @@ export default function Navbar() {
                   <Phone size={14} />
                   <span>{phoneNumber}</span>
                 </Link>
-                <Button size="lg">Request a Quote</Button>
+                <Button size="lg" className="bg-forest text-white">
+                  Request a Quote
+                </Button>
               </div>
             </div>
           </motion.div>

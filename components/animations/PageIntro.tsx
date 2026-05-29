@@ -27,7 +27,7 @@ export default function PageIntro() {
     <AnimatePresence>
       {visible ? (
         <motion.div
-          className="fixed inset-0 z-[200] flex items-center justify-center bg-forest"
+          className="fixed inset-0 z-[200] flex items-center justify-center bg-white"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{
@@ -46,9 +46,9 @@ export default function PageIntro() {
             >
               <div className="relative flex items-center justify-center">
                 <motion.svg
-                  width="140"
-                  height="140"
-                  viewBox="0 0 140 140"
+                  width="180"
+                  height="180"
+                  viewBox="0 0 180 180"
                   className="absolute"
                   initial={{ rotate: -10, opacity: 0.9 }}
                   animate={{ rotate: 0 }}
@@ -61,23 +61,23 @@ export default function PageIntro() {
                     </linearGradient>
                   </defs>
                   <circle
-                    cx="70"
-                    cy="70"
-                    r="54"
-                    stroke="rgba(255,255,255,0.08)"
+                    cx="90"
+                    cy="90"
+                    r="68"
+                    stroke="rgba(8,33,60,0.06)"
                     strokeWidth="12"
                     fill="none"
                   />
                   <motion.circle
-                    cx="70"
-                    cy="70"
-                    r="54"
+                    cx="90"
+                    cy="90"
+                    r="68"
                     stroke="url(#g1)"
                     strokeWidth="6"
                     strokeLinecap="round"
                     fill="none"
-                    strokeDasharray="339.292"
-                    initial={{ strokeDashoffset: 339.292 }}
+                    strokeDasharray="427.256"
+                    initial={{ strokeDashoffset: 427.256 }}
                     animate={{ strokeDashoffset: 0 }}
                     transition={{ duration: 1.6, ease: [0.76, 0, 0.24, 1] }}
                   />
@@ -89,7 +89,7 @@ export default function PageIntro() {
                   transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
                   className="relative z-10"
                 >
-                  <Image src={introLogo} alt="Eloma" width={96} height={96} />
+                  <Image src={introLogo} alt="Eloma" width={140} height={140} />
                 </motion.div>
               </div>
 
@@ -97,7 +97,7 @@ export default function PageIntro() {
                 initial={{ opacity: 0, y: 6 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4, duration: 0.6 }}
-                className="mt-3 text-[11px] font-semibold uppercase tracking-[0.32em] text-white/75"
+                className="mt-3 text-[11px] font-semibold uppercase tracking-[0.32em] text-forest/75"
               >
                 Powering Businesses
               </motion.p>
