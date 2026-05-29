@@ -31,7 +31,7 @@ const navItems: Array<{ key: Exclude<MenuKey, null>; label: string; href: string
   { key: "about", label: "About Us", href: "/about" },
   { key: "businesses", label: "Our Businesses", href: "#subsidiaries" },
   { key: "sustainability", label: "Sustainability", href: "#services" },
-  { key: "careers", label: "Careers", href: "#career" },
+  { key: "careers", label: "Careers", href: "/careers" },
   { key: "contact", label: "Contact Us", href: "/contact" }
 ];
 
@@ -80,7 +80,7 @@ const navMenu: Record<
     description: "Learn, grow, and build something meaningful with a global team.",
     items: navCareers,
     ctaLabel: "View Openings",
-    ctaHref: "#career"
+    ctaHref: "/careers"
   },
   contact: {
     eyebrow: "Contact Us",
