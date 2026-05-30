@@ -16,7 +16,6 @@ import {
 import logoMark from "@/assset/logo/eloma_logo-removebg-preview.png";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { useScrollY } from "@/hooks/useScrollY";
 
 type MenuKey = "about" | "businesses" | "sustainability" | "careers" | "contact" | null;
 
@@ -120,48 +119,49 @@ function MegaMenu({ menuKey }: { menuKey: MenuKey }) {
         </div>
 
         {/* Render items grouped by header in columns (vertical lists per header) */}
-        {(() => {
-          const groups: Array<{ header: string; items: string[] }> = [];
-          let current: { header: string; items: string[] } | null = null;
+          {(() => {
+            const groups: Array<{ header: string; items: { label: string; href?: string }[] }> = [];
+            let current: { header: string; items: { label: string; href?: string }[] } | null = null;
 
-          menu.items.forEach((it) => {
-            if (typeof it === "object" && it.type === "header") {
-              current = { header: it.label, items: [] };
-              groups.push(current);
-            } else {
-              const label = getLabel(it);
-              if (!current) {
-                current = { header: "", items: [] };
+            menu.items.forEach((it) => {
+              if (typeof it === "object" && it.type === "header") {
+                current = { header: it.label, items: [] };
                 groups.push(current);
+              } else {
+                const label = getLabel(it);
+                const href = typeof it === "object" && (it as any).href ? (it as any).href : undefined;
+                if (!current) {
+                  current = { header: "", items: [] };
+                  groups.push(current);
+                }
+                current.items.push({ label, href });
               }
-              current.items.push(label);
-            }
-          });
+            });
 
-          return (
-            <div className="grid grid-cols-1 gap-8 text-[15px] sm:grid-cols-2 lg:grid-cols-2">
-              {groups.map((g) => (
-                <div key={g.header}>
-                  <div className="pt-3 text-[11px] font-semibold uppercase tracking-[0.2em] text-slate-400">
-                    {g.header}
+            return (
+              <div className="grid grid-cols-1 gap-8 text-[15px] sm:grid-cols-2 lg:grid-cols-2">
+                {groups.map((g) => (
+                  <div key={g.header}>
+                    <div className="pt-3 text-[11px] font-semibold uppercase tracking-[0.2em] text-slate-400">
+                      {g.header}
+                    </div>
+                    <ul className="mt-3 space-y-2">
+                      {g.items.map((it) => (
+                        <li key={it.label}>
+                          <Link
+                            href={it.href ?? menu.ctaHref}
+                            className="block border-b border-slate-100 py-2 font-medium text-black transition-colors hover:text-black"
+                          >
+                            {it.label}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
                   </div>
-                  <ul className="mt-3 space-y-2">
-                    {g.items.map((label) => (
-                      <li key={label}>
-                        <Link
-                          href={menu.ctaHref}
-                          className="block border-b border-slate-100 py-2 font-medium text-black transition-colors hover:text-black"
-                        >
-                          {label}
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
-            </div>
-          );
-        })()}
+                ))}
+              </div>
+            );
+          })()}
       </div>
     </motion.div>
   );
@@ -170,45 +170,35 @@ function MegaMenu({ menuKey }: { menuKey: MenuKey }) {
 export default function Navbar() {
   const [activeMenu, setActiveMenu] = useState<MenuKey>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const isScrolled = useScrollY(20);
-  const isTransparent = !isScrolled;
 
   return (
     <header
       className={cn(
-        "top-0 z-50 w-full transition-all duration-300",
-        isTransparent ? "absolute bg-transparent" : "fixed bg-blue shadow-sm"
+        "fixed top-0 z-50 w-full bg-white shadow-sm transition-all duration-300"
       )}
       onMouseLeave={() => setActiveMenu(null)}
     >
-      {isTransparent ? (
-        <div className="hidden bg-white/5 lg:block">
-          <div className="container-x flex h-9 items-center justify-between text-xs text-white/80">
-            <div className="flex items-center gap-5">
-              <span>Global Group Company</span>
-              <span className="text-white/30">|</span>
-            </div>
-            <div className="flex items-center gap-5">
-              <Link href={phoneHref} className="flex items-center gap-2 transition-colors hover:text-white">
-                <Phone size={12} />
-                <span>{phoneNumber}</span>
-              </Link>
-              <Link href="#" className="transition-colors hover:text-white">
-                EN
-              </Link>
-            </div>
+      {/* <div className="border-b border-slate-200 bg-white lg:block"> */}
+        {/* <div className="container-x flex h-9 items-center justify-between text-xs text-slate-600">
+          <div className="flex items-center gap-5">
+            <span>Global Group Company</span>
+            <span className="text-slate-300">|</span>
           </div>
-        </div>
-      ) : null}
+          <div className="flex items-center gap-5">
+            <Link href={phoneHref} className="flex items-center gap-2 transition-colors hover:text-forest">
+              <Phone size={12} />
+              <span>{phoneNumber}</span>
+            </Link>
+            <Link href="#" className="transition-colors hover:text-forest">
+              EN
+            </Link>
+          </div>
+        </div> */}
+      {/* </div> */}
 
       <div className="container-x flex h-16 items-center justify-between md:h-20">
         <Link href="/" className="flex items-center">
-          <span
-            className={cn(
-              "inline-flex items-center rounded-md px-2 py-1 transition-colors",
-              isTransparent ? "bg-white/90 shadow-sm" : "bg-transparent"
-            )}
-          >
+          <span className="inline-flex items-center rounded-md px-2 py-1 transition-colors">
             <Image src={logoMark} alt="Eloma Group" className="h-10 w-auto md:h-12" priority sizes="140px" />
           </span>
         </Link>
@@ -222,7 +212,7 @@ export default function Navbar() {
                 <Link
                   key={item.key}
                   href={item.href}
-                  className="relative px-3 py-2 text-[15px] font-medium text-black transition-colors hover:text-black md:text-base"
+                  className="relative px-3 py-2 text-[15px] font-medium text-slate-700 transition-colors hover:text-forest md:text-base"
                 >
                   {item.label}
                 </Link>
@@ -233,8 +223,8 @@ export default function Navbar() {
               <button
                 key={item.key}
                 className={cn(
-                  "group relative flex items-center gap-1 px-3 py-2 text-[15px] font-medium text-black transition-colors hover:text-black md:text-base",
-                  activeMenu === item.key && "text-black"
+                  "group relative flex items-center gap-1 px-3 py-2 text-[15px] font-medium text-slate-700 transition-colors hover:text-forest md:text-base",
+                  activeMenu === item.key && "text-forest"
                 )}
                 onMouseEnter={() => setActiveMenu(item.key)}
                 type="button"
@@ -242,7 +232,7 @@ export default function Navbar() {
                 <span>{item.label}</span>
                 <ChevronDown
                   size={14}
-                  className={cn("text-black transition-transform duration-200", activeMenu === item.key && "rotate-180 text-black")}
+                  className={cn("text-slate-500 transition-transform duration-200", activeMenu === item.key && "rotate-180 text-forest")}
                 />
                 <span
                   className={cn(
@@ -259,22 +249,22 @@ export default function Navbar() {
           <button
             className={cn(
               "rounded-md p-2 transition-colors",
-              isTransparent ? "text-white/80 hover:bg-white/10 hover:text-white" : "text-slate-600 hover:bg-slate-100 hover:text-forest"
+              "text-slate-600 hover:bg-slate-100 hover:text-forest"
             )}
             aria-label="Search"
             type="button"
           >
             <Search size={18} />
           </button>
-          <Button size="sm" className={cn(isTransparent ? "bg-white text-forest hover:bg-white/90" : "bg-forest text-white hover:bg-forest/90")}>
-            Request a Quote
+          <Button size="sm" className={cn("bg-forest text-white hover:bg-forest/90")}>
+            1800 054 555
           </Button>
         </div>
 
         <button
           className={cn(
             "flex items-center justify-center rounded-md border p-2 lg:hidden",
-            isTransparent ? "border-white/40 text-white" : "border-slate-200 text-forest"
+            "border-slate-200 text-forest"
           )}
           onClick={() => setMobileOpen((prev) => !prev)}
           aria-label="Toggle navigation"
@@ -321,9 +311,10 @@ export default function Navbar() {
                     </summary>
                     <ul className="mt-3 space-y-2 pl-2 text-sm text-slate-600">
                       {navMenu[item.key].items.map((entry) => {
-                        const label = typeof entry === "string" ? entry : entry.label;
+                        const isObj = typeof entry === "object";
+                        const label = isObj ? (entry as any).label : (entry as any);
 
-                        if (typeof entry === "object" && entry.type === "header") {
+                        if (isObj && (entry as any).type === "header") {
                           return (
                             <li key={label} className="pt-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-slate-400">
                               {label}
@@ -331,9 +322,11 @@ export default function Navbar() {
                           );
                         }
 
+                        const href = isObj && (entry as any).href ? (entry as any).href : navMenu[item.key].ctaHref;
+
                         return (
                           <li key={label}>
-                            <Link href={navMenu[item.key].ctaHref} className="block py-1 text-black transition-colors hover:text-black">
+                            <Link href={href} className="block py-1 text-black transition-colors hover:text-black">
                               {label}
                             </Link>
                           </li>
@@ -353,7 +346,7 @@ export default function Navbar() {
                   <span>{phoneNumber}</span>
                 </Link>
                 <Button size="lg" className="bg-forest text-white">
-                  Request a Quote
+                  1800 054 555
                 </Button>
               </div>
             </div>

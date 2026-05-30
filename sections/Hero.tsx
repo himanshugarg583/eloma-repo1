@@ -150,13 +150,13 @@ export default function Hero() {
           >
             <div className="flex items-center gap-3">
               <div className="h-px w-12 bg-gold/60" />
-              <p className="text-xs uppercase tracking-[0.28em] text-forest/60">
+              <p className="text-xs uppercase tracking-[0.28em] text-black">
                 One group · A connected world
               </p>
             </div>
 
             <div className="hidden items-center gap-3 sm:flex">
-              <p className="text-xs uppercase tracking-[0.28em] text-forest/60">
+              <p className="text-xs uppercase tracking-[0.28em] text-black">
                 Scroll to explore
               </p>
               <motion.div

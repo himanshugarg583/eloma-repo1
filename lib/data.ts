@@ -2,10 +2,10 @@
 export const groupName = "Eloma Group";
 
 export const navAbout = [
-  "About Us",
-  "Blog",
-  "Newsroom",
-  "Partners"
+  { type: "item", label: "About Us", href: "/about" },
+  { type: "item", label: "Blog", href: "/blog" },
+  { type: "item", label: "Newsroom", href: "/newsroom" },
+  { type: "item", label: "Partners", href: "/partners" }
 ];
 
 export const navBusinesses: Array<{ type: "header" | "item"; label: string }> = [

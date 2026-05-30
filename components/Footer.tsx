@@ -106,11 +106,16 @@ export default function Footer() {
       </div>
 
       <div className="border-t border-white/10">
-        <div className="container-x flex flex-col items-start justify-between gap-3 py-6 text-xs text-white/60 md:flex-row md:items-center">
-          <p>
+        <div className="container-x grid grid-cols-1 items-center gap-3 py-6 text-xs text-white/60 md:grid-cols-3">
+          <p className="text-center md:text-left">
             © {new Date().getFullYear()} {groupName}. All rights reserved. ABN: 00 000 000 000
           </p>
-          <div className="flex flex-wrap gap-x-5 gap-y-2">
+
+          <p className="text-center">
+            Made by <a href="https://egdigital.com.au/" target="_blank" rel="noopener noreferrer" className="text-white/80  hover:text-gold">EG Digital</a>
+          </p>
+
+          <div className="flex justify-center md:justify-end flex-wrap gap-x-5 gap-y-2">
             <Link href="#" className="transition-colors hover:text-white">
               Privacy Policy
             </Link>
