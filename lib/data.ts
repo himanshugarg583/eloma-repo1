@@ -1,7 +1,7 @@
 // Placeholder content - replace with official group data.
 export const groupName = "Eloma Group";
 
-export const navAbout = [
+export const navAbout: Array<{ type: "header" | "item"; label: string; href?: string }> = [
   { type: "item", label: "About Us", href: "/about" },
   { type: "item", label: "Blog", href: "/blog" },
   { type: "item", label: "Newsroom", href: "/newsroom" },

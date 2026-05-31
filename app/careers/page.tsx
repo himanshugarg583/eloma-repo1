@@ -2,1232 +2,1203 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useEffect, useMemo, useRef, useState } from "react";
+import {
+  AnimatePresence,
+  motion,
+  useScroll,
+  useTransform,
+  type MotionValue
+} from "framer-motion";
 import {
   ArrowRight,
   ArrowUpRight,
-  Award,
   Briefcase,
-  ChevronLeft,
-  ChevronRight,
-  Clock,
-  Globe2,
-  GraduationCap,
-  HeartHandshake,
-  Mail,
+  Calendar,
+  FileText,
   MapPin,
   Play,
-  Plus,
-  Quote,
-  Scale,
-  Sparkles,
-  Star,
-  Target,
-  Users
+  Search,
+  Star
 } from "lucide-react";
 
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import SectionHeading from "@/components/SectionHeading";
+import GallerySection from "@/components/sections/GallerySection";
 import { cn } from "@/lib/utils";
 
-const rotatingWords = ["Build", "Grow", "Lead", "Create"];
+/* ------------------------------------------------------------------ */
+/* DATA                                                                */
+/* ------------------------------------------------------------------ */
 
-const heroImages = [
-  "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=900&q=80",
-  "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=900&q=80",
-  "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=900&q=80",
-  "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=900&q=80"
-];
-
-const perks = [
+const HERO_VERBS = [
   {
-    icon: Scale,
-    title: "Fair chances for everyone",
-    desc: "Equal opportunity and respect at the heart of how we work."
+    word: "Innovate",
+    color: "#c9a557", // gold
+    image:
+      "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=900&q=80"
   },
   {
-    icon: GraduationCap,
-    title: "Learning by doing",
-    desc: "Try new things, learn new skills, and become better every day."
+    word: "Build",
+    color: "#0c2f2a", // forest
+    image:
+      "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=900&q=80"
   },
   {
-    icon: Users,
-    title: "Grow together as a team",
-    desc: "We support each other and build something meaningful together."
+    word: "Connect",
+    color: "#a8862f", // gold-dark
+    image:
+      "https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&w=900&q=80"
   },
   {
-    icon: HeartHandshake,
-    title: "Healthy work-life balance",
-    desc: "Real opportunities to grow — not just in work, but in life too."
-  },
-  {
-    icon: Globe2,
-    title: "Global exposure",
-    desc: "Work across eight countries and a connected ecosystem of businesses."
-  },
-  {
-    icon: Target,
-    title: "Real ownership & impact",
-    desc: "Own meaningful work from day one and see your ideas ship."
-  },
-  {
-    icon: Award,
-    title: "Recognition & rewards",
-    desc: "Your work matters, your ideas are heard, your efforts are valued."
-  },
-  {
-    icon: Sparkles,
-    title: "A culture you'll love",
-    desc: "Built on simple ideas — respect, trust, and growth."
+    word: "Grow",
+    color: "#1a4a43", // forest-light
+    image:
+      "https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=900&q=80"
   }
 ];
 
-const categories = [
-  "View All",
-  "Logistics",
-  "Digital & Technology",
-  "Security & Risk",
-  "Customer Support",
-  "Travel & Tourism"
+type JobCategory =
+  | "All"
+  | "Engineering"
+  | "Operations"
+  | "Sales"
+  | "Marketing"
+  | "Human Resources"
+  | "Strategy"
+  | "Finance";
+
+const CATEGORIES: JobCategory[] = [
+  "All",
+  "Engineering",
+  "Operations",
+  "Sales",
+  "Marketing",
+  "Human Resources",
+  "Strategy",
+  "Finance"
 ];
 
-const jobs = [
+const JOBS: Array<{
+  title: string;
+  category: Exclude<JobCategory, "All">;
+  type: string;
+  location: string;
+  experience: string;
+  accent: "forest" | "gold" | "blue" | "amber";
+}> = [
   {
-    title: "Fleet Operations Lead",
-    category: "Logistics",
-    location: "Sydney, Australia",
-    type: "Full-time",
-    exp: "5+ yrs",
-    desc: "Lead premium fleet operations and real-time route intelligence across long-haul corridors."
+    title: "Senior Solutions Architect",
+    category: "Engineering",
+    type: "Full-Time",
+    location: "Sydney, AU",
+    experience: "5+ Years",
+    accent: "gold"
   },
   {
-    title: "Supply Chain Analyst",
-    category: "Logistics",
-    location: "Mumbai, India",
-    type: "Full-time",
-    exp: "2+ yrs",
-    desc: "Optimize end-to-end supply chain flows with data-driven insights."
+    title: "Logistics Operations Lead",
+    category: "Operations",
+    type: "Full-Time",
+    location: "Melbourne, AU",
+    experience: "3-5 Years",
+    accent: "forest"
   },
   {
-    title: "Warehouse Operations Manager",
-    category: "Logistics",
-    location: "Melbourne, Australia",
-    type: "Full-time",
-    exp: "4+ yrs",
-    desc: "Run multi-location warehousing with precision inventory governance."
-  },
-  {
-    title: "Full-Stack Engineer",
-    category: "Digital & Technology",
-    location: "Bengaluru, India",
-    type: "Full-time",
-    exp: "3+ yrs",
-    desc: "Build platforms that power smarter operations across the group."
-  },
-  {
-    title: "Cloud Solutions Architect",
-    category: "Digital & Technology",
+    title: "Senior Backend Engineer",
+    category: "Engineering",
+    type: "Full-Time",
     location: "Singapore",
-    type: "Full-time",
-    exp: "6+ yrs",
-    desc: "Design scalable, secure cloud infrastructure for global teams."
+    experience: "4+ Years",
+    accent: "blue"
   },
   {
-    title: "Product Designer",
-    category: "Digital & Technology",
+    title: "Enterprise Sales Director",
+    category: "Sales",
+    type: "Full-Time",
+    location: "Dubai, UAE",
+    experience: "8+ Years",
+    accent: "amber"
+  },
+  {
+    title: "Cloud Infrastructure Engineer",
+    category: "Engineering",
+    type: "Full-Time",
+    location: "Remote/Sydney",
+    experience: "3-5 Years",
+    accent: "blue"
+  },
+  {
+    title: "Brand Marketing Manager",
+    category: "Marketing",
+    type: "Full-Time",
     location: "London, UK",
-    type: "Full-time",
-    exp: "3+ yrs",
-    desc: "Craft intuitive digital experiences for our products and clients."
+    experience: "4-6 Years",
+    accent: "gold"
   },
   {
-    title: "Virtual Security Specialist",
-    category: "Security & Risk",
-    location: "Dubai, UAE",
-    type: "Full-time",
-    exp: "4+ yrs",
-    desc: "Protect operations with proactive virtual security and risk solutions."
+    title: "Security Operations Lead",
+    category: "Operations",
+    type: "Full-Time",
+    location: "Toronto, CA",
+    experience: "5-7 Years",
+    accent: "forest"
   },
   {
-    title: "Risk & Compliance Analyst",
-    category: "Security & Risk",
-    location: "Toronto, Canada",
-    type: "Full-time",
-    exp: "3+ yrs",
-    desc: "Strengthen governance, compliance, and resilience across the group."
+    title: "Customer Support Manager",
+    category: "Operations",
+    type: "Full-Time",
+    location: "Mumbai, IN",
+    experience: "3-5 Years",
+    accent: "amber"
   },
   {
-    title: "Customer Support Lead",
-    category: "Customer Support",
-    location: "Delhi, India",
-    type: "Full-time",
-    exp: "4+ yrs",
-    desc: "Lead call-center teams that strengthen client relationships."
+    title: "Strategy & Planning Analyst",
+    category: "Strategy",
+    type: "Full-Time",
+    location: "New York, US",
+    experience: "2-4 Years",
+    accent: "gold"
   },
   {
-    title: "Customer Experience Associate",
-    category: "Customer Support",
-    location: "Beijing, China",
-    type: "Full-time",
-    exp: "1+ yrs",
-    desc: "Deliver responsive, caring support across every channel."
+    title: "People & Culture Partner",
+    category: "Human Resources",
+    type: "Full-Time",
+    location: "Sydney, AU",
+    experience: "4+ Years",
+    accent: "forest"
   },
   {
-    title: "Travel Operations Coordinator",
-    category: "Travel & Tourism",
-    location: "Dubai, UAE",
-    type: "Full-time",
-    exp: "2+ yrs",
-    desc: "Coordinate seamless travel experiences and trusted support."
-  },
-  {
-    title: "Tourism Partnerships Manager",
-    category: "Travel & Tourism",
+    title: "Financial Planning Analyst",
+    category: "Finance",
+    type: "Full-Time",
     location: "Singapore",
-    type: "Full-time",
-    exp: "5+ yrs",
-    desc: "Build partnerships that create memorable travel journeys."
+    experience: "2-4 Years",
+    accent: "blue"
+  },
+  {
+    title: "Performance Marketing Lead",
+    category: "Marketing",
+    type: "Full-Time",
+    location: "Remote/Global",
+    experience: "5+ Years",
+    accent: "amber"
   }
 ];
 
-const testimonials = [
-  {
-    name: "Priya S.",
-    role: "Supply Chain Analyst · Mumbai",
-    quote: "Eloma gave me room to grow faster than I imagined — and the support to get there.",
-    img: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=400&q=80"
-  },
-  {
-    name: "James W.",
-    role: "Cloud Architect · Singapore",
-    quote: "The teams genuinely support each other here. Ideas turn into real things, fast.",
-    img: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=80"
-  },
-  {
-    name: "Aisha R.",
-    role: "Product Designer · London",
-    quote: "I get to own real projects from day one. That trust means everything.",
-    img: "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=400&q=80"
-  },
-  {
-    name: "Daniel K.",
-    role: "Risk Analyst · Toronto",
-    quote: "Leadership listens, and the work has real impact across the group.",
-    img: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=400&q=80"
-  },
-  {
-    name: "Mei L.",
-    role: "CX Associate · Beijing",
-    quote: "A culture of respect, trust, and learning — every single day.",
-    img: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80"
-  },
-  {
-    name: "Omar F.",
-    role: "Travel Operations · Dubai",
-    quote: "The global exposure here completely changed my career trajectory.",
-    img: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=400&q=80"
-  }
-];
+const accentMap: Record<string, string> = {
+  forest: "#0c2f2a",
+  gold: "#c9a557",
+  blue: "#3b82c4",
+  amber: "#e8a44c"
+};
 
-const galleryImages = [
-  "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1200&q=80",
-  "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=1200&q=80",
-  "https://images.unsplash.com/photo-1531973576160-7125cd663d86?auto=format&fit=crop&w=1200&q=80",
-  "https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1200&q=80",
-  "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=1200&q=80",
-  "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=1200&q=80",
-  "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=1200&q=80"
-];
-
-const videoStories = [
+const STORIES = [
   {
-    name: "A day at the Mumbai hub",
-    role: "Supply Chain",
-    img: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=900&q=80"
-  },
-  {
-    name: "Building with the Cloud team",
-    role: "Digital & Technology",
-    img: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=900&q=80"
-  },
-  {
-    name: "On the road with Logistics",
-    role: "Transportation",
-    img: "https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?auto=format&fit=crop&w=900&q=80"
-  },
-  {
-    name: "Inside Customer Care",
-    role: "Customer Support",
-    img: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=900&q=80"
-  }
-];
-
-const reviews = [
-  {
-    rating: 5,
+    name: "Aanya Sharma",
+    role: "Senior Solutions Architect",
+    image:
+      "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=900&q=80",
     quote:
-      "Supportive leadership and genuine room to grow. The best team I've been part of.",
-    name: "Operations Specialist",
-    meta: "4 years at Eloma"
+      "Eloma opened a world of opportunities. I came in as a junior engineer and grew into a role where I now mentor teams across three countries."
   },
   {
-    rating: 5,
+    name: "James Walker",
+    role: "Operations Director",
+    image:
+      "https://images.unsplash.com/photo-1556157382-97eda2d62296?auto=format&fit=crop&w=900&q=80",
     quote:
-      "Great work-life balance and people who actually care. My ideas are heard here.",
-    name: "Software Engineer",
-    meta: "2 years at Eloma"
+      "It all started in a small regional office. We had a shared vision and the freedom to chase it. A decade later we're operating across eight countries."
   },
   {
-    rating: 4,
+    name: "Priya Nair",
+    role: "Customer Experience Lead",
+    image:
+      "https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=900&q=80",
     quote:
-      "Lots of learning, real ownership from day one, and a clear path to grow.",
-    name: "Customer Experience Lead",
-    meta: "3 years at Eloma"
-  },
-  {
-    rating: 5,
-    quote:
-      "Global exposure and a culture built on respect and trust. Proud to be here.",
-    name: "Risk Analyst",
-    meta: "5 years at Eloma"
+      "Eloma supported not just my professional growth but my personal development — the kind of investment in people that's rare in this industry."
   }
 ];
 
-const steps = [
-  { n: "01", title: "Apply", desc: "Send your application for a role that fits you." },
-  { n: "02", title: "Screening", desc: "A quick chat to understand your goals and story." },
-  { n: "03", title: "Interview", desc: "Meet the team and explore the role together." },
-  { n: "04", title: "Offer", desc: "We move fast on the right fit." },
-  { n: "05", title: "Onboard", desc: "Welcome aboard — start building your future." }
-];
+/* Gallery photo layout — mirrors the reference scatter.
+ *
+ * The title sits at the TOP of the viewport. Photos start stacked at the
+ * vertical centre (already fanned at their target rotation, like a deck
+ * of polaroids) and translate outward to surround the title. The negative
+ * vertical offsets put the top row just below the title; positive offsets
+ * push the bottom row toward the lower edge.
+ *
+ *  - tx/ty (vw/vh): translation from centre at end of scroll
+ *  - rotate: target rotation (also used as the *initial* rotation for the
+ *            fanned-stack look)
+ *  - w (vw): final width on tablet+ (clamped to min 240px / max 540px)
+ *  - hAspect: aspect-ratio
+ *  - z: stacking order in the initial stack
+ */
+// (Gallery photo layout moved to components/sections/GallerySection.tsx
+// so both /careers and /about can share the same animated section.)
 
-const faqs = [
+const REVIEWS = [
   {
-    q: "Where is Eloma Group located?",
-    a: "We operate across Australia, India, US, Canada, China, UK, UAE, and Singapore — with teams connected as one ecosystem."
+    name: "Sakshi Gupta",
+    date: "2025-09-14",
+    stars: 5,
+    text: "Eloma is more than a job — it's a place where you grow professionally and personally. The culture genuinely values its people."
   },
   {
-    q: "Do you offer remote or hybrid roles?",
-    a: "Many roles offer hybrid flexibility depending on the team and location. Each listing notes its working model."
+    name: "Sushil Jangid",
+    date: "2025-08-22",
+    stars: 5,
+    text: "Being part of Eloma is something I'm proud of. The company provides a clear career path and the training process is exceptional."
   },
   {
-    q: "I don't see a role that fits — can I still apply?",
-    a: "Absolutely. Send us your resume and we'll reach out when something matching your strengths opens up."
+    name: "Abhinav Tyagi",
+    date: "2025-07-30",
+    stars: 5,
+    text: "Endless opportunities for career growth in a workplace that respects boundaries. Real work-life balance and a culture you want to belong to."
   },
   {
-    q: "What does the hiring process look like?",
-    a: "Apply, a short screening chat, interviews with the team, then an offer and a warm onboarding."
-  },
-  {
-    q: "Do you support learning and growth?",
-    a: "Yes — we believe in learning by doing and growing together, with real opportunities to take ownership."
-  },
-  {
-    q: "What is the culture like at Eloma?",
-    a: "Respect, trust, fair chances for everyone, and a healthy work-life balance — built around people."
+    name: "Megan O'Connor",
+    date: "2025-07-05",
+    stars: 5,
+    text: "The leadership invests in people across every market. Hybrid policies, mentorship, and a clear vision for where we're headed."
   }
 ];
 
-export default function CareersPage() {
-  const [activeCategory, setActiveCategory] = useState("View All");
-  const [openFaq, setOpenFaq] = useState<number | null>(0);
-  const [wordIdx, setWordIdx] = useState(0);
-  const [imgIdx, setImgIdx] = useState(0);
-  const storyTrackRef = useRef<HTMLDivElement | null>(null);
+/* ------------------------------------------------------------------ */
+/* HERO — Kinetic verb cycle                                           */
+/* ------------------------------------------------------------------ */
 
-  const scrollStories = (dir: number) => {
-    const el = storyTrackRef.current;
-    if (!el) return;
-    const card = el.querySelector<HTMLElement>("[data-story-card]");
-    const amount = card ? card.offsetWidth + 24 : el.clientWidth * 0.8;
-    el.scrollBy({ left: dir * amount, behavior: "smooth" });
-  };
+const HERO_INTERVAL = 2600;
 
-  const filteredJobs =
-    activeCategory === "View All"
-      ? jobs
-      : jobs.filter((job) => job.category === activeCategory);
+function CareersHero() {
+  const [idx, setIdx] = useState(0);
 
   useEffect(() => {
-    const wordId = window.setInterval(() => {
-      setWordIdx((prev) => (prev + 1) % rotatingWords.length);
-    }, 2200);
-    const imgId = window.setInterval(() => {
-      setImgIdx((prev) => (prev + 1) % heroImages.length);
-    }, 2800);
-    return () => {
-      window.clearInterval(wordId);
-      window.clearInterval(imgId);
-    };
+    const id = window.setInterval(() => {
+      setIdx((p) => (p + 1) % HERO_VERBS.length);
+    }, HERO_INTERVAL);
+    return () => window.clearInterval(id);
   }, []);
 
-  useEffect(() => {
-    gsap.registerPlugin(ScrollTrigger);
-
-    gsap.utils.toArray<HTMLElement>("[data-reveal]").forEach((item) => {
-      gsap.fromTo(
-        item,
-        { y: 70, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 0.9,
-          ease: "power2.out",
-          scrollTrigger: { trigger: item, start: "top 88%" }
-        }
-      );
-    });
-
-    gsap.utils.toArray<HTMLElement>("[data-stagger]").forEach((item) => {
-      gsap.fromTo(
-        item.children,
-        { y: 40, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 0.7,
-          stagger: 0.1,
-          ease: "power2.out",
-          scrollTrigger: { trigger: item, start: "top 85%" }
-        }
-      );
-    });
-
-    gsap.utils.toArray<HTMLElement>("[data-count]").forEach((item) => {
-      const target = Number(item.dataset.count ?? 0);
-      const counter = { value: 0 };
-      ScrollTrigger.create({
-        trigger: item,
-        start: "top 90%",
-        onEnter: () => {
-          gsap.to(counter, {
-            value: target,
-            duration: 1.8,
-            ease: "power2.out",
-            onUpdate: () => {
-              item.textContent = Math.floor(counter.value).toString();
-            }
-          });
-        }
-      });
-    });
-
-    return () => {
-      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
-    };
-  }, []);
+  const current = HERO_VERBS[idx];
 
   return (
-    <div className="bg-white text-slate-900">
-      <Navbar />
-      <main>
-        {/* ===== HERO ===== */}
-        <section className="relative isolate overflow-hidden bg-white">
-          <div className="container-x relative grid min-h-[88vh] items-center gap-12 py-24 lg:grid-cols-2">
-            {/* Left: copy */}
-            <div>
-              <motion.h1
-                initial={{ opacity: 0, y: 24 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-                className="font-display text-6xl font-bold leading-[1.02] tracking-tight sm:text-7xl lg:text-[5.5rem]"
-              >
-                <span className="relative block h-[1.05em] overflow-hidden">
-                  <AnimatePresence mode="wait">
-                    <motion.span
-                      key={rotatingWords[wordIdx]}
-                      initial={{ y: "100%" }}
-                      animate={{ y: "0%" }}
-                      exit={{ y: "-100%" }}
-                      transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-                      className="block text-gold"
-                    >
-                      {rotatingWords[wordIdx]}
-                    </motion.span>
-                  </AnimatePresence>
-                </span>
-                <span className="block text-slate-400">your future</span>
-              </motion.h1>
-
-              <motion.p
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.25 }}
-                className="mt-8 max-w-md text-base leading-relaxed text-slate-600 md:text-lg"
-              >
-                At Eloma, work isn&apos;t just a job — it&apos;s a chance to learn,
-                grow, and build your future across logistics, digital, security,
-                travel, and customer solutions.
-              </motion.p>
-
-              <motion.div
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.4 }}
-                className="mt-10 flex flex-col items-start gap-4 sm:flex-row sm:items-center"
-              >
-                <Link
-                  href="#openings"
-                  className="group inline-flex items-center gap-2 rounded-full bg-forest px-7 py-3 text-sm font-semibold text-white transition-transform hover:scale-[1.03]"
-                >
-                  View Open Roles
-                  <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
-                </Link>
-                <Link
-                  href="#why"
-                  className="inline-flex items-center gap-2 rounded-full border border-slate-300 px-7 py-3 text-sm font-semibold text-forest transition-colors hover:border-forest hover:bg-forest hover:text-white"
-                >
-                  Why Eloma
-                </Link>
-              </motion.div>
-            </div>
-
-            {/* Right: circular portrait with ring + orbiting accent */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.92 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 1, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-              className="relative mx-auto flex h-[320px] w-[320px] items-center justify-center sm:h-[420px] sm:w-[420px] lg:h-[500px] lg:w-[500px]"
-            >
-              {/* thin outer ring */}
-              <div aria-hidden className="absolute inset-0 rounded-full border border-slate-200" />
-              {/* slowly orbiting gold accent dot */}
-              <motion.div
-                aria-hidden
-                animate={{ rotate: 360 }}
-                transition={{ duration: 22, repeat: Infinity, ease: "linear" }}
-                className="absolute inset-0"
-              >
-                <span className="absolute left-1/2 top-0 h-7 w-7 -translate-x-1/2 -translate-y-1/2 rounded-full bg-gold" />
-              </motion.div>
-
-              {/* portrait (gentle crossfade carousel) */}
-              <div className="relative h-[82%] w-[82%] overflow-hidden rounded-full shadow-xl">
-                <AnimatePresence mode="popLayout">
-                  <motion.div
-                    key={imgIdx}
-                    initial={{ opacity: 0, scale: 1.08 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
-                    className="absolute inset-0"
-                  >
-                    <Image
-                      src={heroImages[imgIdx]}
-                      alt="Life at Eloma"
-                      fill
-                      sizes="500px"
-                      className="object-cover"
-                      priority
-                    />
-                  </motion.div>
-                </AnimatePresence>
-              </div>
-            </motion.div>
-          </div>
-        </section>
-
-        {/* ===== CULTURE INTRO ===== */}
-        <section className="bg-white py-24">
-          <div className="container-x max-w-3xl text-center" data-reveal>
-            <p className="eyebrow justify-center text-forest">We are Eloma</p>
-            <h2 className="mt-5 font-display text-3xl font-bold leading-tight tracking-tight text-forest md:text-4xl">
-              A culture built on respect, trust, and growth
-            </h2>
-            <p className="mt-6 text-base leading-relaxed text-slate-600 md:text-lg">
-              We are a team of people who support each other. Here, your work
-              matters, your ideas are heard, and your efforts are valued. Every
-              day is a chance to try new things, learn new skills, and become
-              better — together. At Eloma, you don&apos;t just work. You build
-              your future.
+    <section className="relative isolate bg-white pt-28 pb-16 md:pt-36 md:pb-24">
+      <div className="container-x">
+        <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-[1.05fr_1fr] lg:gap-16">
+          {/* Left — Kinetic title */}
+          <div className="relative">
+            <p className="mb-6 inline-flex items-center gap-3">
+              <span className="block h-px w-10 bg-gold-dark" />
+              <span className="text-[11px] font-semibold uppercase tracking-[0.32em] text-gold-dark">
+                Careers at Eloma
+              </span>
             </p>
-          </div>
-        </section>
 
-        {/* ===== WHY ELOMA / PERKS ===== */}
-        <section id="why" className="section-alt py-24">
-          <div className="container-x">
-            <SectionHeading
-              eyebrow="Why Work at Eloma"
-              title="More than a workplace — a place to belong"
-              description="We invest in people first. These are the things that make life at Eloma genuinely different."
-              align="center"
-            />
-            <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-4" data-stagger>
-              {perks.map((perk) => (
-                <div
-                  key={perk.title}
-                  className="group rounded-2xl border border-slate-200 bg-white p-6 transition-all duration-500 hover:-translate-y-1 hover:border-forest hover:shadow-card-hover"
-                >
-                  <div className="mb-5 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-forest/5 text-forest transition-all duration-500 group-hover:rotate-6 group-hover:bg-forest group-hover:text-white">
-                    <perk.icon size={22} strokeWidth={1.8} />
-                  </div>
-                  <h3 className="font-display text-base font-semibold text-forest">
-                    {perk.title}
-                  </h3>
-                  <p className="mt-2 text-sm leading-relaxed text-slate-600">
-                    {perk.desc}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* ===== OPEN POSITIONS ===== */}
-        <section id="openings" className="bg-white py-24">
-          <div className="container-x">
-            <SectionHeading
-              eyebrow="Open Positions"
-              title="Find your role across the group"
-              description="Explore opportunities across our five business verticals and eight countries."
-              align="center"
-            />
-
-            {/* Filter tabs */}
-            <div className="mt-12 flex flex-wrap justify-center gap-2">
-              {categories.map((cat) => (
-                <button
-                  key={cat}
-                  onClick={() => setActiveCategory(cat)}
-                  className={cn(
-                    "rounded-full border px-4 py-2 text-sm font-medium transition-all duration-300",
-                    activeCategory === cat
-                      ? "border-forest bg-forest text-white"
-                      : "border-slate-200 bg-white text-slate-600 hover:border-forest hover:text-forest"
-                  )}
-                >
-                  {cat}
-                </button>
-              ))}
-            </div>
-
-            {/* Job grid */}
-            <motion.div layout className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-              <AnimatePresence mode="popLayout">
-                {filteredJobs.map((job) => (
-                  <motion.div
-                    key={job.title}
-                    layout
-                    initial={{ opacity: 0, scale: 0.94 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.94 }}
-                    transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
-                    className="job-card group"
+            {/* Kinetic verb */}
+            <h1 className="font-display text-5xl font-bold leading-[0.95] tracking-tight md:text-6xl lg:text-[5.5rem] xl:text-[6.5rem]">
+              <span className="block overflow-hidden">
+                <AnimatePresence mode="wait">
+                  <motion.span
+                    key={current.word}
+                    initial={{ y: "100%" }}
+                    animate={{ y: "0%" }}
+                    exit={{ y: "-100%" }}
+                    transition={{
+                      duration: 0.7,
+                      ease: [0.76, 0, 0.24, 1]
+                    }}
+                    style={{ color: current.color }}
+                    className="block"
                   >
-                    <span className="job-accent" />
-                    <span className="inline-flex rounded-full bg-gold/15 px-3 py-1 text-[10px] font-semibold uppercase tracking-wider text-gold-dark">
-                      {job.category}
-                    </span>
-                    <h3 className="mt-4 font-display text-lg font-semibold text-forest transition-colors group-hover:text-gold-dark">
-                      {job.title}
-                    </h3>
-                    <p className="mt-2 text-sm leading-relaxed text-slate-600">
-                      {job.desc}
-                    </p>
-                    <div className="mt-5 flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-slate-500">
-                      <span className="inline-flex items-center gap-1.5">
-                        <MapPin size={13} />
-                        {job.location}
-                      </span>
-                      <span className="inline-flex items-center gap-1.5">
-                        <Briefcase size={13} />
-                        {job.type}
-                      </span>
-                      <span className="inline-flex items-center gap-1.5">
-                        <Clock size={13} />
-                        {job.exp}
-                      </span>
-                    </div>
-                    <Link
-                      href="#"
-                      className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-forest transition-colors group-hover:text-gold-dark"
-                    >
-                      Apply now
-                      <ArrowUpRight
-                        size={15}
-                        className="transition-transform duration-500 group-hover:translate-x-1 group-hover:-translate-y-1"
-                      />
-                    </Link>
-                  </motion.div>
-                ))}
-              </AnimatePresence>
+                    {current.word}
+                  </motion.span>
+                </AnimatePresence>
+              </span>
+              <span className="block text-forest">for people</span>
+            </h1>
+
+            <motion.p
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4, duration: 0.7 }}
+              className="mt-8 max-w-md text-base leading-relaxed text-slate-600 md:text-lg"
+            >
+              Eloma is not just a place where you come and work — it&apos;s a
+              place where you belong. Build your career across eight countries
+              with people who share your values.
+            </motion.p>
+
+            <motion.div
+              initial={{ opacity: 0, y: 14 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.6, duration: 0.7 }}
+              className="mt-10 flex flex-wrap items-center gap-5"
+            >
+              <a
+                href="#jobs"
+                className="group inline-flex h-12 items-center justify-center gap-2 rounded-full bg-forest px-7 text-sm font-semibold text-white transition-all hover:bg-forest-dark"
+              >
+                Explore Open Roles
+                <ArrowRight
+                  size={16}
+                  className="transition-transform group-hover:translate-x-0.5"
+                />
+              </a>
+              <a
+                href="#culture"
+                className="group inline-flex items-center gap-2 text-sm font-semibold text-forest"
+              >
+                <span className="flex h-9 w-9 items-center justify-center rounded-full border border-forest/20 transition-colors group-hover:border-forest group-hover:bg-forest group-hover:text-white">
+                  <Play size={12} className="ml-0.5" />
+                </span>
+                See our culture
+              </a>
             </motion.div>
           </div>
-        </section>
 
-        {/* ===== SPOTLIGHT BANNER ===== */}
-        <section className="bg-white pb-4 pt-2">
-          <div className="container-x">
-            <div
-              className="relative isolate flex flex-col items-start gap-6 overflow-hidden rounded-3xl bg-forest px-8 py-10 md:flex-row md:items-center md:justify-between md:px-12"
-              data-reveal
+          {/* Right — Photo orb */}
+          <div className="relative mx-auto aspect-square w-full max-w-[520px]">
+            {/* Outer thin ring (the path the dot travels along) */}
+            <div className="pointer-events-none absolute inset-0 rounded-full border border-slate-200" />
+
+            {/*
+              Swinging yellow dot — the wrapper rotates back and forth
+              between two angles, with the dot pinned to the top of the
+              wrapper. This makes the dot trace an arc along the upper
+              portion of the ring (right ↔ left ↔ right).
+            */}
+            <motion.div
+              aria-hidden
+              className="pointer-events-none absolute inset-0"
+              style={{ transformOrigin: "50% 50%" }}
+              animate={{ rotate: [-55, 55, -55] }}
+              transition={{
+                duration: 9,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
             >
-              <div
-                aria-hidden
-                className="pointer-events-none absolute -right-16 -top-16 h-56 w-56 rounded-full bg-gold/20 blur-3xl"
+              <motion.span
+                className="absolute left-1/2 top-0 block h-12 w-12 -translate-x-1/2 -translate-y-1/2 rounded-full shadow-[0_8px_24px_rgba(201,165,87,0.35)]"
+                style={{ backgroundColor: current.color }}
+                animate={{ scale: [1, 1.06, 1] }}
+                transition={{
+                  duration: 3.4,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }}
               />
-              <div className="relative">
-                <p className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.28em] text-gold">
-                  <Sparkles size={14} />
-                  We&apos;re hiring
-                </p>
-                <h3 className="mt-3 max-w-xl font-display text-2xl font-bold text-white md:text-3xl">
-                  Our Digital &amp; Technology team is growing fast
-                </h3>
-                <p className="mt-2 max-w-lg text-sm text-white/70">
-                  Engineers, designers, and cloud specialists — help build the
-                  platforms that power a connected world.
-                </p>
-              </div>
-              <Link
-                href="#openings"
-                className="group relative inline-flex flex-shrink-0 items-center gap-2 rounded-full bg-gold px-7 py-3 text-sm font-semibold text-forest transition-transform hover:scale-[1.03]"
-              >
-                See tech roles
-                <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
-              </Link>
-            </div>
-          </div>
-        </section>
+            </motion.div>
 
-        {/* ===== HUMANS OF ELOMA (carousel with arrows) ===== */}
-        <section className="section-alt py-24">
-          <div className="container-x">
-            <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-              <SectionHeading
-                eyebrow="Humans of Eloma"
-                title="Stories from our people"
-                description="Real voices from across the group — on growth, ownership, and the culture they call home."
-              />
-              <div className="flex gap-3">
-                <button
-                  type="button"
-                  aria-label="Previous"
-                  onClick={() => scrollStories(-1)}
-                  className="flex h-11 w-11 items-center justify-center rounded-full border border-slate-300 text-forest transition-colors hover:border-forest hover:bg-forest hover:text-white"
-                >
-                  <ChevronLeft size={18} />
-                </button>
-                <button
-                  type="button"
-                  aria-label="Next"
-                  onClick={() => scrollStories(1)}
-                  className="flex h-11 w-11 items-center justify-center rounded-full border border-slate-300 text-forest transition-colors hover:border-forest hover:bg-forest hover:text-white"
-                >
-                  <ChevronRight size={18} />
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <div className="container-x mt-12">
-            <div
-              ref={storyTrackRef}
-              className="story-track flex snap-x snap-mandatory gap-6 overflow-x-auto pb-4"
-            >
-              {testimonials.map((t, idx) => (
-                <article
-                  key={`${t.name}-${idx}`}
-                  data-story-card
-                  className="flex w-[300px] flex-none snap-start flex-col rounded-2xl border border-slate-200 bg-white p-6 shadow-card sm:w-[360px]"
-                >
-                  <Quote className="text-gold" size={26} />
-                  <p className="mt-4 flex-1 text-sm leading-relaxed text-slate-700">
-                    &ldquo;{t.quote}&rdquo;
-                  </p>
-                  <div className="mt-6 flex items-center gap-3 border-t border-slate-100 pt-5">
-                    <Image
-                      src={t.img}
-                      alt={t.name}
-                      width={48}
-                      height={48}
-                      className="h-12 w-12 rounded-full object-cover"
-                    />
-                    <div>
-                      <p className="text-sm font-semibold text-forest">{t.name}</p>
-                      <p className="text-xs text-slate-500">{t.role}</p>
-                    </div>
-                  </div>
-                </article>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* ===== THE UNTOLD STORIES (video grid) ===== */}
-        <section className="bg-white py-24">
-          <div className="container-x">
-            <SectionHeading
-              eyebrow="The Untold Stories"
-              title="Life at Eloma, in their own words"
-              description="Short stories from teammates across our verticals — the moments behind the work."
-              align="center"
-            />
-            <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4" data-stagger>
-              {videoStories.map((story) => (
-                <button
-                  key={story.name}
-                  type="button"
-                  className="video-card group text-left"
-                >
-                  <div className="video-thumb">
-                    <Image
-                      src={story.img}
-                      alt={story.name}
-                      fill
-                      sizes="(min-width: 1024px) 25vw, 50vw"
-                      className="video-img"
-                    />
-                    <span className="video-overlay" />
-                    <span className="video-play">
-                      <Play size={20} className="ml-0.5" fill="currentColor" />
-                    </span>
-                  </div>
-                  <p className="mt-4 font-display text-base font-semibold text-forest">
-                    {story.name}
-                  </p>
-                  <p className="mt-1 text-xs uppercase tracking-wider text-gold-dark">
-                    {story.role}
-                  </p>
-                </button>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* ===== GALLERY ===== */}
-        <section className="bg-white py-24">
-          <div className="container-x">
-            <SectionHeading
-              eyebrow="Life at Eloma"
-              title="Behind the scenes"
-              description="A glimpse into the everyday moments that make our teams tick."
-              align="center"
-            />
-            <div className="mt-12 grid auto-rows-[220px] grid-cols-2 gap-4 md:grid-cols-4" data-stagger>
-              {galleryImages.map((src, index) => (
-                <div
-                  key={src}
-                  className={cn(
-                    "career-gallery-item",
-                    index === 0 && "md:col-span-2 md:row-span-2",
-                    index === 3 && "md:col-span-2"
-                  )}
+            {/* Cross-fading photo */}
+            <div className="absolute inset-[6%] overflow-hidden rounded-full bg-slate-100 shadow-card-hover">
+              <AnimatePresence>
+                <motion.div
+                  key={current.image}
+                  initial={{ opacity: 0, scale: 1.08 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 1.04 }}
+                  transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+                  className="absolute inset-0"
                 >
                   <Image
-                    src={src}
-                    alt="Life at Eloma"
+                    src={current.image}
+                    alt={current.word}
                     fill
-                    sizes="(min-width: 768px) 25vw, 50vw"
-                    className="career-gallery-img"
+                    sizes="(min-width: 1024px) 40vw, 90vw"
+                    priority
+                    className="object-cover"
                   />
-                  <span className="career-gallery-overlay">
-                    <Plus size={26} />
-                  </span>
-                </div>
-              ))}
+                </motion.div>
+              </AnimatePresence>
             </div>
-          </div>
-        </section>
 
-        {/* ===== REVIEWS / RATINGS ===== */}
-        <section className="bg-forest py-24 text-white">
-          <div className="container-x">
-            <SectionHeading
-              variant="dark"
-              eyebrow="How Our People Feel"
-              title="Rated by the people who matter most"
-              description="We're proud of the culture we've built — here's what our teams say about working at Eloma."
-              align="center"
+            {/* Verb-color dot bottom-left */}
+            <span
+              className="absolute bottom-[8%] left-[6%] block h-5 w-5 rounded-full transition-colors duration-500"
+              style={{ backgroundColor: current.color, opacity: 0.4 }}
+              aria-hidden
             />
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
 
-            <div className="mx-auto mt-10 flex max-w-md items-center justify-center gap-4 rounded-2xl border border-white/10 bg-white/5 px-6 py-4 backdrop-blur">
-              <span className="font-display text-4xl font-bold text-gold">4.8</span>
-              <div className="text-left">
-                <div className="flex gap-0.5 text-gold">
-                  {Array.from({ length: 5 }).map((_, i) => (
-                    <Star key={i} size={15} fill="currentColor" strokeWidth={0} />
-                  ))}
+/* ------------------------------------------------------------------ */
+/* WE ARE ELOMA intro                                                  */
+/* ------------------------------------------------------------------ */
+
+function CareersIntro() {
+  return (
+    <section id="culture" className="bg-white py-16 md:py-24">
+      <div className="container-x">
+        <div className="grid items-center gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:gap-16">
+          {/* Video tile */}
+          <div className="relative overflow-hidden rounded-2xl bg-slate-900 shadow-card-hover">
+            <div className="relative aspect-[4/3] w-full">
+              <Image
+                src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1400&q=80"
+                alt="Inside Eloma Group"
+                fill
+                sizes="(min-width: 1024px) 45vw, 100vw"
+                className="object-cover opacity-80"
+              />
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="text-center">
+                  <button
+                    aria-label="Play introduction video"
+                    className="group inline-flex h-20 w-20 items-center justify-center rounded-full bg-white/90 shadow-lg transition-transform hover:scale-105"
+                  >
+                    <Play
+                      size={26}
+                      className="ml-1 text-forest"
+                      strokeWidth={2}
+                      fill="#0c2f2a"
+                    />
+                  </button>
+                  <p className="mt-6 font-display text-3xl font-semibold text-white drop-shadow-lg md:text-4xl">
+                    We Are <span className="text-gold">Eloma.</span>
+                  </p>
                 </div>
-                <p className="mt-1 text-xs text-white/60">
-                  Average rating across our teams in 8 countries
-                </p>
               </div>
             </div>
-
-            <div
-              className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4"
-              data-stagger
-            >
-              {reviews.map((review) => (
-                <div
-                  key={review.name}
-                  className="flex flex-col rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur transition-colors duration-500 hover:border-gold/40"
-                >
-                  <div className="flex gap-0.5 text-gold">
-                    {Array.from({ length: 5 }).map((_, i) => (
-                      <Star
-                        key={i}
-                        size={14}
-                        fill={i < review.rating ? "currentColor" : "none"}
-                        className={i < review.rating ? "" : "text-white/25"}
-                        strokeWidth={i < review.rating ? 0 : 1.5}
-                      />
-                    ))}
-                  </div>
-                  <p className="mt-4 flex-1 text-sm leading-relaxed text-white/80">
-                    &ldquo;{review.quote}&rdquo;
-                  </p>
-                  <div className="mt-5 border-t border-white/10 pt-4">
-                    <p className="text-sm font-semibold text-white">{review.name}</p>
-                    <p className="text-xs text-white/55">{review.meta}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
           </div>
-        </section>
 
-        {/* ===== HIRING PROCESS ===== */}
-        <section className="section-alt py-24">
-          <div className="container-x">
-            <SectionHeading
-              eyebrow="How Hiring Works"
-              title="A simple, human process"
-              description="No endless rounds. Just a clear path from hello to welcome aboard."
-              align="center"
+          {/* Copy */}
+          <div className="space-y-4 text-base leading-relaxed text-slate-600 md:text-lg">
+            <p>
+              Eloma is not just a place where you come and work — it&apos;s a
+              place to belong. We are a team of like-minded individuals who
+              share the same values yet are each uniquely shaped by our own
+              backgrounds and ways of working.
+            </p>
+            <p>
+              A culture of forward motion, where our people continuously evolve
+              and reach toward a better self. We stand united through every
+              challenge, becoming each other&apos;s strength through every high
+              and every low.
+            </p>
+            <p>
+              Eloma is a creative space that fosters a culture of freedom,
+              growth, and making an impact that matters. Our people pour their
+              hearts into everything they do.
+            </p>
+            <p className="font-display text-xl font-semibold text-forest md:text-2xl">
+              We are innovators. We are champions. We are incredible.
+            </p>
+            <p className="font-display text-xl font-semibold text-gold-dark md:text-2xl">
+              We are Eloma!
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/* JOB OPPORTUNITIES                                                   */
+/* ------------------------------------------------------------------ */
+
+function CareersJobs() {
+  const [active, setActive] = useState<JobCategory>("All");
+  const [query, setQuery] = useState("");
+
+  const filtered = useMemo(() => {
+    let list = JOBS.slice();
+    if (active !== "All") list = list.filter((j) => j.category === active);
+    if (query.trim()) {
+      const q = query.toLowerCase();
+      list = list.filter(
+        (j) =>
+          j.title.toLowerCase().includes(q) ||
+          j.location.toLowerCase().includes(q)
+      );
+    }
+    return list;
+  }, [active, query]);
+
+  return (
+    <section id="jobs" className="bg-white py-16 md:py-24">
+      <div className="container-x">
+        <div className="grid gap-6 lg:grid-cols-[1.4fr_1fr] lg:items-end">
+          <div>
+            <h2 className="font-display text-3xl font-semibold text-forest md:text-4xl lg:text-5xl">
+              Job Opportunities
+            </h2>
+            <p className="mt-5 max-w-xl text-base leading-relaxed text-slate-600 md:text-lg">
+              Uncover the perfect role that aligns with your unique abilities,
+              and grab countless opportunities to take your career to new
+              heights.
+            </p>
+          </div>
+          {/* Search */}
+          <div className="relative w-full lg:max-w-md lg:justify-self-end">
+            <Search
+              size={16}
+              className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"
             />
-            <div className="relative mt-16">
-              <div className="career-step-line" aria-hidden />
-              <div className="grid gap-8 md:grid-cols-5" data-stagger>
-                {steps.map((step) => (
-                  <div key={step.n} className="relative text-center">
-                    <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full border-2 border-gold bg-white font-display text-sm font-bold text-forest shadow-sm">
-                      {step.n}
-                    </div>
-                    <h3 className="mt-5 font-display text-base font-semibold text-forest">
-                      {step.title}
-                    </h3>
-                    <p className="mt-2 text-sm leading-relaxed text-slate-600">
-                      {step.desc}
+            <input
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              type="search"
+              placeholder="Job Search"
+              className="h-12 w-full rounded-full border border-slate-200 bg-white pl-11 pr-5 text-sm text-forest placeholder:text-slate-400 focus:border-forest focus:outline-none focus:ring-2 focus:ring-forest/10"
+            />
+          </div>
+        </div>
+
+        {/* Category tabs */}
+        <div className="mt-10 overflow-x-auto border-b border-slate-200">
+          <div className="flex min-w-max items-center gap-8 pb-1">
+            {CATEGORIES.map((cat) => {
+              const isActive = active === cat;
+              return (
+                <button
+                  key={cat}
+                  onClick={() => setActive(cat)}
+                  className={cn(
+                    "relative whitespace-nowrap pb-3 text-sm transition-colors",
+                    isActive
+                      ? "font-semibold text-forest"
+                      : "text-slate-500 hover:text-forest"
+                  )}
+                >
+                  {cat === "All" ? "View All" : cat}
+                  {isActive ? (
+                    <motion.span
+                      layoutId="job-tab-underline"
+                      className="absolute -bottom-px left-0 right-0 h-[3px] rounded-full bg-gradient-to-r from-gold to-gold-dark"
+                      transition={{
+                        type: "spring",
+                        stiffness: 280,
+                        damping: 28
+                      }}
+                    />
+                  ) : null}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Job cards */}
+        <motion.div
+          layout
+          className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-2"
+        >
+          <AnimatePresence mode="popLayout">
+            {filtered.map((job, i) => (
+              <motion.div
+                key={`${job.title}-${job.location}`}
+                layout
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{
+                  duration: 0.5,
+                  delay: (i % 6) * 0.04,
+                  ease: [0.22, 1, 0.36, 1]
+                }}
+              >
+                <JobCard job={job} />
+              </motion.div>
+            ))}
+          </AnimatePresence>
+        </motion.div>
+
+        {filtered.length === 0 ? (
+          <p className="mt-12 text-center text-sm text-slate-500">
+            No roles match your search right now — try a different category.
+          </p>
+        ) : null}
+      </div>
+    </section>
+  );
+}
+
+function JobCard({ job }: { job: (typeof JOBS)[number] }) {
+  return (
+    <Link
+      href="#"
+      className="group relative flex h-full overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-card transition-all duration-500 hover:-translate-y-1 hover:shadow-card-hover"
+    >
+      {/* Left vertical accent bar */}
+      <span
+        className="block w-1.5 flex-shrink-0 rounded-l-2xl"
+        style={{ backgroundColor: accentMap[job.accent] }}
+        aria-hidden
+      />
+
+      <div className="flex flex-1 flex-col p-7 md:p-8">
+        <h3 className="text-center font-display text-lg font-semibold text-forest md:text-xl">
+          {job.title}
+        </h3>
+
+        <div className="mt-6 grid grid-cols-3 gap-3 border-t border-slate-100 pt-5 text-xs">
+          <Pill icon={Briefcase} label={job.type} />
+          <Pill icon={MapPin} label={job.location} />
+          <Pill icon={FileText} label={job.experience} />
+        </div>
+
+        {/* Hover footer */}
+        <div className="mt-5 flex items-center justify-between border-t border-slate-100 pt-4 text-xs">
+          <span className="font-semibold uppercase tracking-wider text-slate-400">
+            {job.category}
+          </span>
+          <span className="inline-flex items-center gap-1 text-xs font-semibold text-forest opacity-0 transition-opacity duration-500 group-hover:opacity-100">
+            View Role
+            <ArrowUpRight
+              size={13}
+              className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+            />
+          </span>
+        </div>
+      </div>
+    </Link>
+  );
+}
+
+function Pill({
+  icon: Icon,
+  label
+}: {
+  icon: typeof Briefcase;
+  label: string;
+}) {
+  return (
+    <div className="flex items-center gap-1.5 text-slate-500">
+      <Icon size={13} className="flex-shrink-0 text-slate-400" />
+      <span className="truncate text-[12px]">{label}</span>
+    </div>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/* HIRING 2025 GRADUATES                                               */
+/* ------------------------------------------------------------------ */
+
+const GRAD_ORBS = [
+  { x: 8, y: 64, size: 110, src: "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&w=400&q=80", gradient: "from-pink-300 via-orange-300 to-amber-200" },
+  { x: 32, y: 18, size: 92, src: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=400&q=80" },
+  { x: 60, y: 38, size: 100, src: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80" },
+  { x: 84, y: 14, size: 80, src: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=80" }
+];
+
+function CareersGraduates() {
+  return (
+    <section className="bg-white py-16 md:py-24">
+      <div className="container-x">
+        <div className="relative grid items-center gap-10 overflow-hidden rounded-3xl border border-slate-200 bg-gradient-to-br from-slate-50 to-white p-8 md:p-14 lg:grid-cols-[1fr_1.2fr]">
+          {/* Left content */}
+          <div>
+            <p className="inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.28em] text-gold-dark">
+              <span className="block h-px w-8 bg-gold-dark" />
+              Begin Your Journey
+            </p>
+            <h2 className="mt-5 font-display text-3xl font-bold leading-tight text-forest md:text-4xl lg:text-5xl">
+              Hiring{" "}
+              <span className="italic text-gold-dark">2026 Graduates</span>
+            </h2>
+            <p className="mt-5 max-w-md text-base leading-relaxed text-slate-600">
+              Join an early-career programme designed to grow leaders across our
+              eight markets. Real responsibility from week one, direct mentorship
+              from senior leaders.
+            </p>
+            <Link
+              href="#"
+              className="mt-8 inline-flex h-12 items-center gap-2 rounded-full bg-forest px-7 text-sm font-semibold text-white transition-all hover:bg-forest-dark"
+            >
+              Begin Your Journey
+              <ArrowRight size={16} />
+            </Link>
+          </div>
+
+          {/* Right — Connected orbs */}
+          <div className="relative h-[300px] md:h-[360px]">
+            {/* Connecting curve */}
+            <svg
+              viewBox="0 0 600 360"
+              className="absolute inset-0 h-full w-full"
+              preserveAspectRatio="none"
+            >
+              <path
+                d="M 60 240 C 180 80, 320 260, 540 100"
+                fill="none"
+                stroke="#0c2f2a"
+                strokeOpacity="0.18"
+                strokeWidth="1.4"
+                strokeDasharray="4 5"
+              />
+            </svg>
+
+            {GRAD_ORBS.map((orb, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, scale: 0.85, y: 20 }}
+                whileInView={{ opacity: 1, scale: 1, y: 0 }}
+                viewport={{ once: true, margin: "-15% 0px" }}
+                transition={{
+                  duration: 0.7,
+                  delay: i * 0.12,
+                  ease: [0.22, 1, 0.36, 1]
+                }}
+                className={cn(
+                  "absolute overflow-hidden rounded-full shadow-card-hover",
+                  orb.gradient && "bg-gradient-to-br p-1.5",
+                  orb.gradient
+                )}
+                style={{
+                  left: `${orb.x}%`,
+                  top: `${orb.y}%`,
+                  width: orb.size,
+                  height: orb.size
+                }}
+              >
+                <div className="relative h-full w-full overflow-hidden rounded-full">
+                  <Image
+                    src={orb.src}
+                    alt="Graduate"
+                    fill
+                    sizes={`${orb.size}px`}
+                    className="object-cover"
+                  />
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/* THE UNTOLD STORIES                                                  */
+/* ------------------------------------------------------------------ */
+
+function CareersStories() {
+  return (
+    <section className="bg-white py-16 md:py-24">
+      <div className="container-x">
+        <h2 className="font-display text-3xl font-bold tracking-tight text-forest md:text-4xl lg:text-5xl">
+          The Untold Stories
+        </h2>
+        <p className="mt-5 max-w-2xl text-base leading-relaxed text-slate-600 md:text-lg">
+          Journey through the lives of our people — rich with untold stories,
+          hurdles overcome, and victories achieved.
+        </p>
+
+        <div className="mt-12 grid gap-8 md:grid-cols-3">
+          {STORIES.map((story, i) => (
+            <motion.article
+              key={story.name}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-15% 0px" }}
+              transition={{
+                duration: 0.8,
+                delay: i * 0.12,
+                ease: [0.22, 1, 0.36, 1]
+              }}
+              className="group flex flex-col"
+            >
+              <div className="relative aspect-[4/5] overflow-hidden rounded-t-2xl">
+                <Image
+                  src={story.image}
+                  alt={story.name}
+                  fill
+                  sizes="(min-width: 768px) 33vw, 100vw"
+                  className="object-cover transition-transform duration-[1.2s] ease-out group-hover:scale-105"
+                />
+              </div>
+              <div
+                className="relative -mt-6 mx-3 rounded-2xl p-6 text-white shadow-card-hover"
+                style={{
+                  background:
+                    "linear-gradient(135deg, #0c2f2a 0%, #1a4a43 80%, #0c2f2a 100%)"
+                }}
+              >
+                <p className="text-sm leading-relaxed">
+                  {story.quote}
+                </p>
+                <div className="mt-6 flex items-center justify-between">
+                  <div>
+                    <p className="font-display text-sm font-semibold">
+                      {story.name}
+                    </p>
+                    <p className="text-[11px] uppercase tracking-wider text-gold">
+                      {story.role}
                     </p>
                   </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* ===== FAQ ===== */}
-        <section className="bg-white py-24">
-          <div className="container-x max-w-3xl">
-            <SectionHeading
-              eyebrow="Frequently Asked Questions"
-              title="Good to know before you apply"
-              align="center"
-            />
-            <div className="mt-10 space-y-3">
-              {faqs.map((faq, index) => (
-                <button
-                  key={faq.q}
-                  type="button"
-                  onClick={() => setOpenFaq(openFaq === index ? null : index)}
-                  className="w-full rounded-2xl border border-slate-200 bg-white px-5 py-4 text-left transition-colors hover:border-forest/40"
-                >
-                  <div className="flex items-center justify-between gap-4">
-                    <span className="font-display text-base font-semibold text-forest">
-                      {faq.q}
-                    </span>
-                    <span
-                      className={cn(
-                        "flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full bg-forest/5 text-forest transition-transform duration-300",
-                        openFaq === index && "rotate-45 bg-forest text-white"
-                      )}
-                    >
-                      <Plus size={15} />
-                    </span>
-                  </div>
-                  <div
-                    className={cn(
-                      "career-faq-answer text-sm leading-relaxed text-slate-600",
-                      openFaq === index && "career-faq-answer-open"
-                    )}
+                  <Link
+                    href="#"
+                    className="group/cta flex items-center gap-2 text-sm font-medium"
                   >
-                    {faq.a}
-                  </div>
-                </button>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* ===== NEWSLETTER ===== */}
-        <section className="bg-white py-20">
-          <div className="container-x">
-            <div className="flex flex-col items-center gap-6 rounded-3xl border border-slate-200 bg-slate-50 px-8 py-12 text-center md:px-14" data-reveal>
-              <div>
-                <p className="eyebrow justify-center text-forest">Stay in the loop</p>
-                <h3 className="mt-4 font-display text-2xl font-bold text-forest md:text-3xl">
-                  Get new roles in your inbox
-                </h3>
-                <p className="mx-auto mt-3 max-w-md text-sm text-slate-600">
-                  Be the first to hear about openings across our five verticals
-                  and eight countries.
-                </p>
-              </div>
-              <form
-                onSubmit={(e) => e.preventDefault()}
-                className="flex w-full max-w-md flex-col gap-3 sm:flex-row"
-              >
-                <div className="relative flex-1">
-                  <Mail
-                    size={16}
-                    className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"
-                  />
-                  <input
-                    type="email"
-                    required
-                    placeholder="you@email.com"
-                    className="h-12 w-full rounded-full border border-slate-300 bg-white pl-11 pr-4 text-sm text-forest outline-none transition-colors focus:border-forest focus:ring-2 focus:ring-forest/15"
-                  />
+                    Read Story
+                    <span className="flex h-7 w-7 items-center justify-center rounded-full border border-gold/60 text-gold transition-all group-hover/cta:translate-x-0.5 group-hover/cta:bg-gold group-hover/cta:text-forest">
+                      <ArrowRight size={12} />
+                    </span>
+                  </Link>
                 </div>
-                <button
-                  type="submit"
-                  className="inline-flex h-12 flex-shrink-0 items-center justify-center gap-2 rounded-full bg-forest px-7 text-sm font-semibold text-white transition-transform hover:scale-[1.03]"
-                >
-                  Subscribe
-                  <ArrowRight size={16} />
-                </button>
-              </form>
-            </div>
-          </div>
-        </section>
+              </div>
+            </motion.article>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
 
-        {/* ===== CTA ===== */}
-        <section className="bg-white pb-24">
-          <div className="container-x">
-            <div
-              className="relative isolate overflow-hidden rounded-3xl bg-forest-gradient px-8 py-16 text-center md:px-14"
-              data-reveal
+/* ------------------------------------------------------------------ */
+/* GALLERY — shared component (also used on /about)                    */
+/* ------------------------------------------------------------------ */
+
+/**
+ * Thin wrapper that delegates to the reusable `GallerySection` in
+ * `components/sections/GallerySection.tsx`. Title/description default
+ * to the "Life at Eloma" copy used here. The about page imports the
+ * shared component directly with its own copy override.
+ */
+function CareersGallery() {
+  return <GallerySection />;
+}
+
+/* ------------------------------------------------------------------ */
+/* EXPERIENCE ELOMA — Image-textured letters                           */
+/* ------------------------------------------------------------------ */
+
+/**
+ * Experience — video-filled "eloma." that reveals as the user scrolls
+ * into the section. The video plays inside the letters via CSS mask:
+ * the SVG text shape is the mask, the looping video is the fill.
+ *
+ * Two-stage reveal:
+ *  1) A horizontal clip-path wipe uncovers the letters left → right
+ *  2) Letters subtly scale-up (1.02 → 1) as the wipe lands
+ */
+function CareersExperience() {
+  // Inline SVG mask of the word "eloma." — used as a CSS mask-image so
+  // the underlying <video> fills only the letter shapes.
+  // Note: must be URL-encoded so it works in a data: URL.
+  const maskSvg = `
+    <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 320' preserveAspectRatio='xMidYMid meet'>
+      <text x='600' y='240' text-anchor='middle'
+        font-family='Georgia, "Playfair Display", serif'
+        font-weight='900' font-size='300' letter-spacing='-10' fill='black'>
+        eloma.
+      </text>
+    </svg>`;
+  const maskUrl = `url("data:image/svg+xml;utf8,${encodeURIComponent(maskSvg)}")`;
+  const maskStyle: React.CSSProperties = {
+    maskImage: maskUrl,
+    WebkitMaskImage: maskUrl,
+    maskSize: "100% 100%",
+    WebkitMaskSize: "100% 100%",
+    maskRepeat: "no-repeat",
+    WebkitMaskRepeat: "no-repeat",
+    maskPosition: "center",
+    WebkitMaskPosition: "center"
+  };
+
+  return (
+    <section className="relative bg-white py-20 md:py-28">
+      <div className="container-x">
+        <div className="mx-auto max-w-6xl text-center">
+          {/* Eyebrow */}
+          <motion.p
+            initial={{ opacity: 0, y: 12 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-15% 0px" }}
+            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+            className="text-sm font-medium uppercase tracking-[0.32em] text-slate-500 md:text-base"
+          >
+            Experience
+          </motion.p>
+
+          {/* Wipe wrapper — uncovers the video-filled letters left → right */}
+          <motion.div
+            initial={{ clipPath: "inset(0 100% 0 0)" }}
+            whileInView={{ clipPath: "inset(0 0% 0 0)" }}
+            viewport={{ once: true, margin: "-10% 0px" }}
+            transition={{ duration: 1.8, ease: [0.76, 0, 0.24, 1] }}
+            className="relative mx-auto mt-4 w-full"
+            style={{ aspectRatio: "1200 / 320" }}
+          >
+            {/* Subtle scale-in for premium feel */}
+            <motion.div
+              initial={{ scale: 1.04 }}
+              whileInView={{ scale: 1 }}
+              viewport={{ once: true, margin: "-10% 0px" }}
+              transition={{ duration: 2.2, ease: [0.22, 1, 0.36, 1] }}
+              className="relative h-full w-full"
             >
-              <div
+              {/* Looping background video, masked into the "eloma." text shape */}
+              <video
+                src="/videos/eloma-experience.mp4"
+                autoPlay
+                loop
+                muted
+                playsInline
                 aria-hidden
-                className="pointer-events-none absolute -right-20 -top-20 h-64 w-64 rounded-full bg-gold/20 blur-3xl"
+                className="absolute inset-0 h-full w-full object-cover"
+                style={maskStyle}
               />
-              <h2 className="mx-auto max-w-2xl font-display text-3xl font-bold tracking-tight text-white md:text-4xl">
-                Don&apos;t see the right role?
-              </h2>
-              <p className="mx-auto mt-4 max-w-xl text-base leading-relaxed text-white/75">
-                We&apos;re always looking for great people. Send us your resume
-                and we&apos;ll reach out when something matches your strengths.
-              </p>
-              <Link
-                href="/contact"
-                className="group mt-8 inline-flex items-center gap-2 rounded-full bg-gold px-8 py-3 text-sm font-semibold text-forest transition-transform hover:scale-[1.03]"
+              {/* Faint forest text behind the video, in case the mask
+                  is unsupported — also keeps the word readable for SEO */}
+              <span
+                aria-hidden
+                className="absolute inset-0 -z-10 flex items-center justify-center font-display text-[18vw] font-black leading-none tracking-tighter text-forest/[0.04] md:text-[15vw]"
+                style={{ letterSpacing: "-0.04em" }}
               >
-                Send Your Resume
-                <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
-              </Link>
-            </div>
-          </div>
-        </section>
+                eloma.
+              </span>
+            </motion.div>
 
-        <Footer />
+            {/* Visually-hidden text for accessibility */}
+            <span className="sr-only">Experience eloma.</span>
+          </motion.div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/* HOW OUR PEOPLE FEEL                                                 */
+/* ------------------------------------------------------------------ */
+
+function CareersReviews() {
+  return (
+    <section className="bg-slate-50 py-16 md:py-24">
+      <div className="container-x">
+        <div className="mx-auto max-w-3xl text-center">
+          <h2 className="font-display text-3xl font-bold tracking-tight text-forest md:text-4xl lg:text-5xl">
+            How Our People Feel About Us
+          </h2>
+          <p className="mt-5 text-base leading-relaxed text-slate-600 md:text-lg">
+            Don&apos;t just take our word for it. Hear directly from the people
+            who build Eloma every day.
+          </p>
+        </div>
+
+        {/* Logos / score row */}
+        <div className="mt-12 grid items-center gap-6 md:grid-cols-3">
+          <RatingBlock
+            brand="Google"
+            score="4.6"
+            reviews="500+ reviews"
+            colorClass="text-[#4285F4]"
+          />
+          <RatingBlock
+            brand="Glassdoor"
+            score="4.1"
+            reviews="180+ reviews"
+            colorClass="text-[#0caa41]"
+          />
+          <RatingBlock
+            brand="AmbitionBox"
+            score="4.9"
+            reviews="Rated by employees"
+            colorClass="text-forest"
+          />
+        </div>
+
+        {/* Reviews */}
+        <div className="mt-12 grid gap-6 md:grid-cols-2">
+          {REVIEWS.map((r, i) => (
+            <motion.article
+              key={r.name}
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-10% 0px" }}
+              transition={{
+                duration: 0.7,
+                delay: i * 0.1,
+                ease: [0.22, 1, 0.36, 1]
+              }}
+              className="group flex flex-col gap-5 rounded-2xl border border-slate-200 bg-white p-7 shadow-card transition-all duration-500 hover:-translate-y-0.5 hover:shadow-card-hover"
+            >
+              <div className="flex items-start justify-between gap-4">
+                <div className="flex items-center gap-4">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-forest text-base font-semibold uppercase text-white">
+                    {r.name
+                      .split(" ")
+                      .map((n) => n[0])
+                      .join("")
+                      .slice(0, 2)}
+                  </div>
+                  <div>
+                    <p className="font-display text-base font-semibold text-forest">
+                      {r.name}
+                    </p>
+                    <p className="flex items-center gap-1.5 text-xs text-slate-500">
+                      <Calendar size={11} />
+                      {r.date}
+                    </p>
+                  </div>
+                </div>
+                <div className="flex gap-0.5">
+                  {Array.from({ length: r.stars }).map((_, idx) => (
+                    <Star
+                      key={idx}
+                      size={14}
+                      className="fill-gold text-gold"
+                    />
+                  ))}
+                </div>
+              </div>
+              <p className="text-sm leading-relaxed text-slate-600">
+                &ldquo;{r.text}&rdquo;
+              </p>
+            </motion.article>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function RatingBlock({
+  brand,
+  score,
+  reviews,
+  colorClass
+}: {
+  brand: string;
+  score: string;
+  reviews: string;
+  colorClass: string;
+}) {
+  return (
+    <div className="rounded-2xl border border-slate-200 bg-white p-7 text-center shadow-card">
+      <p
+        className={cn(
+          "font-display text-2xl font-bold tracking-tight md:text-3xl",
+          colorClass
+        )}
+      >
+        {brand}
+      </p>
+      <div className="mt-3 flex items-center justify-center gap-2">
+        <span className="font-display text-3xl font-bold text-forest">
+          {score}
+        </span>
+        <div className="flex gap-0.5">
+          {Array.from({ length: 5 }).map((_, idx) => (
+            <Star
+              key={idx}
+              size={14}
+              className={cn(
+                "fill-gold text-gold",
+                idx >= Math.floor(parseFloat(score)) && "fill-slate-200 text-slate-200"
+              )}
+            />
+          ))}
+        </div>
+      </div>
+      <p className="mt-2 text-xs text-slate-500">{reviews}</p>
+    </div>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/* LET'S BUILD WITH ELOMA — gradient banner                             */
+/* ------------------------------------------------------------------ */
+
+function CareersBanner() {
+  const wrapRef = useRef<HTMLDivElement | null>(null);
+
+  return (
+    <section className="bg-white py-16 md:py-24">
+      <div className="container-x">
+        <div
+          ref={wrapRef}
+          className="relative isolate overflow-hidden rounded-3xl py-20 text-center md:py-28"
+          style={{
+            background:
+              "linear-gradient(115deg, #f7c873 0%, #f5a85f 30%, #f08a73 65%, #ef7a98 100%)"
+          }}
+        >
+          {/* Subtle pattern overlay */}
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-0 opacity-20"
+            style={{
+              backgroundImage:
+                "radial-gradient(circle at 1px 1px, rgba(255,255,255,0.5) 1px, transparent 0)",
+              backgroundSize: "22px 22px"
+            }}
+          />
+
+          {/* Decorative orbs */}
+          <motion.span
+            aria-hidden
+            className="absolute -left-12 top-10 block h-32 w-32 rounded-full bg-white/15 blur-2xl"
+            animate={{ scale: [1, 1.2, 1] }}
+            transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+          />
+          <motion.span
+            aria-hidden
+            className="absolute -right-12 bottom-10 block h-40 w-40 rounded-full bg-white/15 blur-2xl"
+            animate={{ scale: [1.2, 1, 1.2] }}
+            transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
+          />
+
+          <motion.h2
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+            className="relative px-4 font-display text-3xl font-bold leading-tight tracking-tight text-white drop-shadow-md md:text-5xl lg:text-6xl"
+          >
+            Let&apos;s Build With Eloma!
+          </motion.h2>
+
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.3 }}
+            className="relative mt-8 flex justify-center"
+          >
+            <Link
+              href="#jobs"
+              className="inline-flex h-12 items-center gap-2 rounded-full bg-white px-7 text-sm font-semibold text-forest transition-all hover:bg-forest hover:text-white"
+            >
+              Explore Open Roles
+              <ArrowRight size={16} />
+            </Link>
+          </motion.div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/* PAGE                                                                */
+/* ------------------------------------------------------------------ */
+
+export default function CareersPage() {
+  return (
+    <div className="relative bg-white">
+      <Navbar />
+      <main>
+        <CareersHero />
+        <CareersIntro />
+        <CareersJobs />
+        <CareersGraduates />
+        <CareersStories />
+        <CareersGallery />
+        <CareersExperience />
+        <CareersReviews />
+        <CareersBanner />
       </main>
-
-      <style jsx global>{`
-        .story-track {
-          scrollbar-width: none;
-          -ms-overflow-style: none;
-        }
-        .story-track::-webkit-scrollbar {
-          display: none;
-        }
-
-        .video-card {
-          background: transparent;
-          border: none;
-          cursor: pointer;
-        }
-
-        .video-thumb {
-          position: relative;
-          height: 240px;
-          overflow: hidden;
-          border-radius: 18px;
-          background: #08213c;
-        }
-
-        .video-img {
-          object-fit: cover;
-          transition: transform 0.6s ease;
-        }
-
-        .video-overlay {
-          position: absolute;
-          inset: 0;
-          background: linear-gradient(
-            180deg,
-            rgba(8, 33, 60, 0) 40%,
-            rgba(8, 33, 60, 0.55) 100%
-          );
-          transition: background 0.4s ease;
-        }
-
-        .video-play {
-          position: absolute;
-          left: 50%;
-          top: 50%;
-          display: grid;
-          height: 56px;
-          width: 56px;
-          translate: -50% -50%;
-          place-items: center;
-          border-radius: 9999px;
-          background: rgba(255, 255, 255, 0.92);
-          color: #08213c;
-          box-shadow: 0 10px 30px rgba(8, 33, 60, 0.25);
-          transition: transform 0.4s ease, background 0.4s ease;
-        }
-
-        .video-card:hover .video-img {
-          transform: scale(1.07);
-        }
-
-        .video-card:hover .video-overlay {
-          background: linear-gradient(
-            180deg,
-            rgba(8, 33, 60, 0.1) 0%,
-            rgba(8, 33, 60, 0.6) 100%
-          );
-        }
-
-        .video-card:hover .video-play {
-          transform: translate(-50%, -50%) scale(1.12);
-          background: #3cb98c;
-          color: #ffffff;
-        }
-
-        .careers-hero-grid {
-          position: absolute;
-          inset: 0;
-          background-image: linear-gradient(
-              rgba(255, 255, 255, 0.04) 1px,
-              transparent 1px
-            ),
-            linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
-          background-size: 48px 48px;
-          mask-image: radial-gradient(circle at 50% 40%, #000 0%, transparent 75%);
-          -webkit-mask-image: radial-gradient(
-            circle at 50% 40%,
-            #000 0%,
-            transparent 75%
-          );
-        }
-
-        .job-card {
-          position: relative;
-          overflow: hidden;
-          border-radius: 18px;
-          border: 1px solid #e2e8f0;
-          background: #fff;
-          padding: 24px;
-          transition: transform 0.4s ease, box-shadow 0.4s ease,
-            border-color 0.4s ease;
-        }
-
-        .job-card:hover {
-          transform: translateY(-4px);
-          border-color: #0c2f2a;
-          box-shadow: 0 18px 40px rgba(12, 47, 42, 0.1);
-        }
-
-        .job-accent {
-          position: absolute;
-          left: 0;
-          top: 0;
-          height: 100%;
-          width: 3px;
-          background: linear-gradient(180deg, #c9a557, rgba(201, 165, 87, 0));
-          transform: scaleY(0);
-          transform-origin: top;
-          transition: transform 0.45s ease;
-        }
-
-        .job-card:hover .job-accent {
-          transform: scaleY(1);
-        }
-
-        .career-gallery-item {
-          position: relative;
-          overflow: hidden;
-          border-radius: 18px;
-          background: #0c2f2a;
-        }
-
-        .career-gallery-img {
-          object-fit: cover;
-          transition: transform 0.6s ease, filter 0.6s ease;
-        }
-
-        .career-gallery-overlay {
-          position: absolute;
-          inset: 0;
-          display: grid;
-          place-items: center;
-          color: #fff;
-          background: rgba(12, 47, 42, 0.45);
-          opacity: 0;
-          transition: opacity 0.4s ease;
-        }
-
-        .career-gallery-item:hover .career-gallery-img {
-          transform: scale(1.08);
-        }
-
-        .career-gallery-item:hover .career-gallery-overlay {
-          opacity: 1;
-        }
-
-        .career-step-line {
-          position: absolute;
-          top: 28px;
-          left: 10%;
-          right: 10%;
-          height: 2px;
-          background: repeating-linear-gradient(
-            90deg,
-            #c9a557 0,
-            #c9a557 6px,
-            transparent 6px,
-            transparent 14px
-          );
-          opacity: 0.5;
-          display: none;
-        }
-
-        @media (min-width: 768px) {
-          .career-step-line {
-            display: block;
-          }
-        }
-
-        .career-faq-answer {
-          max-height: 0;
-          overflow: hidden;
-          transition: max-height 0.4s ease, margin-top 0.4s ease;
-        }
-
-        .career-faq-answer-open {
-          max-height: 200px;
-          margin-top: 12px;
-        }
-      `}</style>
+      <Footer />
     </div>
   );
 }
