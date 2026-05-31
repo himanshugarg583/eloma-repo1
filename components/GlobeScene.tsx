@@ -6,7 +6,7 @@ import { Canvas } from "@react-three/fiber";
 import { OrbitControls, Html, QuadraticBezierLine } from "@react-three/drei";
 import * as THREE from "three";
 
-const GLOBE_RADIUS = 1.6;
+const GLOBE_RADIUS = 1.8;
 
 export type Destination = {
   name: string;
@@ -16,18 +16,18 @@ export type Destination = {
 };
 
 const destinations: Destination[] = [
-  { name: "Toronto", country: "Canada", lat: 43.65, lon: -79.38 },
-  { name: "New York", country: "USA", lat: 40.71, lon: -74.01 },
-  { name: "London", country: "UK", lat: 51.51, lon: -0.13 },
-  { name: "Dubai", country: "UAE", lat: 25.2, lon: 55.27 },
-  { name: "Mumbai", country: "India", lat: 19.08, lon: 72.88 },
-  { name: "Singapore", country: "Singapore", lat: 1.35, lon: 103.82 },
-  { name: "Beijing", country: "China", lat: 39.9, lon: 116.4 },
-  { name: "Sydney", country: "Australia", lat: -33.87, lon: 151.21 }
+  { name: "Melbourne", country: "Australia", lat: -37.8136, lon: 144.9631 },
+  { name: "Washington", country: "United States", lat: 38.9072, lon: -77.0369 },
+  { name: "Toronto", country: "Canada", lat: 43.6532, lon: -79.3832 },
+  { name: "London", country: "United Kingdom", lat: 51.5074, lon: -0.1278 },
+  { name: "Dubai", country: "United Arab Emirates", lat: 25.2048, lon: 55.2708 },
+  { name: "Gurugram", country: "India", lat: 28.4595, lon: 77.0266 },
+  { name: "Singapore", country: "Singapore", lat: 1.3521, lon: 103.8198 },
+  { name: "Hong Kong", country: "China", lat: 22.3193, lon: 114.1694 }
 ];
 
 // The hub that connection arcs radiate from.
-const HUB = "Dubai";
+const HUB = "Melbourne";
 
 function latLonToVec3(lat: number, lon: number, r: number) {
   const phi = (90 - lat) * (Math.PI / 180);
@@ -58,7 +58,7 @@ function ParticleShell() {
   }, []);
 
   return (
-    <points>
+    <points renderOrder={100} frustumCulled={false}>
       <bufferGeometry>
         <bufferAttribute attach="attributes-position" args={[positions, 3]} />
       </bufferGeometry>
@@ -69,6 +69,7 @@ function ParticleShell() {
         transparent
         opacity={0.9}
         depthWrite={false}
+        depthTest={false}
       />
     </points>
   );
@@ -118,10 +119,10 @@ function Pin({
               active ? "scale-105 text-white" : "text-white/90"
             }`}
           >
-            {dest.name}
+            {dest.country}
             {active ? (
               <span className="ml-1.5 text-[9px] font-medium uppercase tracking-wider text-gold/80">
-                {dest.country}
+                {dest.name}
               </span>
             ) : null}
           </span>
@@ -145,12 +146,9 @@ function GlobeGroup() {
       .filter((d) => d.name !== HUB)
       .map((d) => {
         const end = latLonToVec3(d.lat, d.lon, GLOBE_RADIUS * 1.01);
-        const mid = hubPos
-          .clone()
-          .add(end)
-          .multiplyScalar(0.5)
-          .normalize()
-          .multiplyScalar(GLOBE_RADIUS * 1.45);
+        const mid = hubPos.clone().add(end).multiplyScalar(0.5).normalize();
+        mid.multiplyScalar(GLOBE_RADIUS * 1.2);
+        mid.y += GLOBE_RADIUS * 0.95;
         return { name: d.name, start: hubPos, end, mid };
       });
   }, [hubPos]);
@@ -160,14 +158,26 @@ function GlobeGroup() {
       {/* Solid core — occludes back-facing particles, arcs and pins */}
       <mesh ref={globeRef}>
         <sphereGeometry args={[GLOBE_RADIUS * 0.985, 64, 64]} />
-        <meshBasicMaterial color="#05231d" transparent opacity={0.95} />
+        <meshBasicMaterial color="#05231d" />
       </mesh>
 
-      {/* Graticule wireframe for a globe structure */}
-      <mesh>
-        <sphereGeometry args={[GLOBE_RADIUS * 0.992, 36, 24]} />
-        <meshBasicMaterial color="#0d3a5e" wireframe transparent opacity={0.35} />
+      {/* Graticule wireframe temporarily removed per request
+      <mesh renderOrder={0}>
+        <sphereGeometry args={[GLOBE_RADIUS * 0.99, 36, 24]} />
+        <meshBasicMaterial
+          color="#0d3a5e"
+          wireframe
+          transparent
+          opacity={0.06}
+          depthWrite={false}
+          depthTest={true}
+          polygonOffset={true}
+          polygonOffsetFactor={-1}
+          polygonOffsetUnits={1}
+          side={THREE.FrontSide}
+        />
       </mesh>
+      */}
 
       {/* Glowing particle shell */}
       <ParticleShell />
@@ -180,10 +190,11 @@ function GlobeGroup() {
           end={arc.end}
           mid={arc.mid}
           color="#3CB98C"
-          lineWidth={1}
+          lineWidth={1.2}
           transparent
-          opacity={hovered === arc.name || hovered === HUB ? 0.9 : 0.35}
+          opacity={hovered === arc.name || hovered === HUB ? 0.95 : 0.72}
           dashed={false}
+          depthTest={false}
         />
       ))}
 
@@ -218,7 +229,7 @@ export default function GlobeScene() {
         enableZoom={false}
         autoRotate
         autoRotateSpeed={0.55}
-        rotateSpeed={0.45}
+        rotateSpeed={0.95}
         enableDamping
         dampingFactor={0.08}
         minPolarAngle={Math.PI * 0.2}

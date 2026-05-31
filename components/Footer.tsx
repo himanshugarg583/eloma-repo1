@@ -31,12 +31,28 @@ const linkColumns = [
 ];
 
 const socials = [
-  { icon: Linkedin, href: "#", label: "LinkedIn" },
-  { icon: Twitter, href: "#", label: "Twitter" },
-  { icon: Instagram, href: "#", label: "Instagram" },
-  { icon: Facebook, href: "#", label: "Facebook" },
-  { icon: Youtube, href: "#", label: "YouTube" }
+  { icon: Linkedin, href: "https://www.linkedin.com/company/elomagroup/", label: "LinkedIn" },
+  { icon: Twitter, href: "https://x.com/elomagroup2026", label: "X" },
+  { icon: Instagram, href: "https://www.instagram.com/eloma_group/", label: "Instagram" },
+  { icon: Facebook, href: "https://www.facebook.com/61572138328088/", label: "Facebook" },
+  { icon: Youtube, href: "https://www.youtube.com/@elomagroup", label: "YouTube" }
 ];
+
+function ThreadsIcon({ size = 15 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M12 2.5c-4.136 0-7.5 3.364-7.5 7.5 0 4.136 3.364 7.5 7.5 7.5 4.136 0 7.5-3.364 7.5-7.5V9.25s-1.75.75-3 1.25v.5c0 2.485-2.015 4.5-4.5 4.5-2.485 0-4.5-2.015-4.5-4.5 0-2.485 2.015-4.5 4.5-4.5.25 0 .5.02.75.06V3.5c-.24-.02-.49-.03-.75-.03z" fill="currentColor" />
+    </svg>
+  );
+}
+
+function TiktokIcon({ size = 15 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M17.5 6.5a4.5 4.5 0 0 1-4.5-4.5v8.5c0 2.485-2.015 4.5-4.5 4.5-1.24 0-2.36-.49-3.18-1.28v2.03A6.5 6.5 0 0 0 12 21.5c3.59 0 6.5-2.91 6.5-6.5V6.5h-1z" fill="currentColor" />
+    </svg>
+  );
+}
 
 export default function Footer() {
   return (
@@ -57,26 +73,46 @@ export default function Footer() {
               Powering businesses across logistics, digital innovation, security, travel, and customer solutions - driven by purpose and sustainability.
             </p>
             <div className="space-y-2 text-sm text-white/70">
-              <a href="tel:1800710388" className="flex items-center gap-2 transition-colors hover:text-gold">
+              <a href="tel:1800 054 555" className="flex items-center gap-2 transition-colors hover:text-gold">
                 <Phone size={14} />
                 <span>1800 710 388</span>
               </a>
-              <a href="mailto:contact@elomagroup.com" className="flex items-center gap-2 transition-colors hover:text-gold">
+              <a href="mailto:contact@elomagroup.com.au" className="flex items-center gap-2 transition-colors hover:text-gold">
                 <Mail size={14} />
-                <span>contact@elomagroup.com</span>
+                <span>contact@elomagroup.com.au</span>
               </a>
             </div>
             <div className="flex gap-2 pt-2">
-              {socials.map((social) => (
-                <Link
-                  key={social.label}
-                  href={social.href}
-                  aria-label={social.label}
+                {socials.map((social) => (
+                  <a
+                    key={social.label}
+                    href={social.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={social.label}
+                    className="flex h-9 w-9 items-center justify-center rounded-md border border-white/15 text-white/80 transition-all hover:border-gold hover:bg-gold hover:text-forest"
+                  >
+                    <social.icon size={15} />
+                  </a>
+                ))}
+                <a
+                  href="https://www.threads.com/@eloma_group"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Threads"
                   className="flex h-9 w-9 items-center justify-center rounded-md border border-white/15 text-white/80 transition-all hover:border-gold hover:bg-gold hover:text-forest"
                 >
-                  <social.icon size={15} />
-                </Link>
-              ))}
+                  <ThreadsIcon />
+                </a>
+                <a
+                  href="https://www.tiktok.com/@eloma_group_6?is_from_webapp=1&sender_device=pc"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="TikTok"
+                  className="flex h-9 w-9 items-center justify-center rounded-md border border-white/15 text-white/80 transition-all hover:border-gold hover:bg-gold hover:text-forest ml-2"
+                >
+                  <TiktokIcon />
+                </a>
             </div>
           </div>
 

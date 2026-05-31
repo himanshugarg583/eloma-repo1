@@ -5,6 +5,7 @@
 :root {
   --accent-gold: #3CB98C;
   --accent-forest: #08213C;
+  --accent-green: #0F766E;
 }
 
 * {
@@ -18,8 +19,16 @@ body {
 }
 
 body {
-  @apply font-sans antialiased;
+  font-family: "Gill Sans", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   font-feature-settings: "cv11", "ss01";
+}
+
+/* Headings should use a neutral sans-serif for legibility */
+h1, h2, h3, h4, h5, h6,
+.heading-xl, .heading-lg, .heading-md {
+  font-family: sans-serif;
 }
 
 /* Layout utilities */
@@ -101,6 +110,20 @@ body {
   will-change: transform;
 }
 
+.partners-logo-swiper .swiper-wrapper {
+  transition-timing-function: linear !important;
+  align-items: center;
+}
+
+.partners-logo-swiper .swiper-slide {
+  width: auto !important;
+}
+
+.partners-logo-swiper {
+  padding-left: 12px;
+  padding-right: 12px;
+}
+
 /* Selection */
 ::selection {
   background-color: rgba(60, 185, 140, 0.25);
@@ -135,6 +158,59 @@ html.lenis {
   .heading-lg {
     font-size: 2.4rem;
   }
+
+  .company-detail-page .container-x,
+  .business-detail-page .container-x {
+    width: calc(100% - 140px);
+    max-width: 1720px;
+  }
+
+  .company-hero-section,
+  .business-hero-section {
+    padding-top: 4rem;
+    padding-bottom: 4.5rem;
+  }
+
+  .company-hero-section h1,
+  .business-hero-section h1 {
+    font-size: 4.8rem;
+    line-height: 1.03;
+    max-width: 15ch;
+  }
+
+  .company-hero-section p,
+  .business-hero-section p {
+    font-size: 1.1rem;
+  }
+
+  .company-hero-section .rounded-\[28px\],
+  .business-hero-section .rounded-\[28px\] {
+    border-radius: 32px;
+  }
+
+  .company-detail-page section:not(.company-hero-section),
+  .business-detail-page section:not(.business-hero-section) {
+    scroll-margin-top: 120px;
+  }
+
+  /* Partners hero tuning for very large screens */
+  .partners-hero h1 {
+    font-size: 4.8rem; /* ~77px */
+    line-height: 1.03;
+  }
+
+  .partners-hero p {
+    font-size: 1.25rem;
+  }
+
+  .partners-hero .rounded-xl {
+    padding: 2.25rem;
+  }
+
+  .partners-hero .container-x {
+    width: calc(100% - 120px);
+    max-width: 1600px;
+  }
 }
 
 @media (min-width: 2560px) {
@@ -152,6 +228,54 @@ html.lenis {
 
   .heading-lg {
     font-size: 2.6rem;
+  }
+
+  .company-detail-page .container-x,
+  .business-detail-page .container-x {
+    width: calc(100% - 220px);
+    max-width: 2200px;
+  }
+
+  .company-hero-section,
+  .business-hero-section {
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+  }
+
+  .company-hero-section h1,
+  .business-hero-section h1 {
+    font-size: 5.8rem;
+    line-height: 1.02;
+    max-width: 14ch;
+  }
+
+  .company-hero-section p,
+  .business-hero-section p {
+    font-size: 1.2rem;
+  }
+
+  .company-detail-page section,
+  .business-detail-page section {
+    scroll-margin-top: 140px;
+  }
+
+  /* Extra-large (32"+ UHD) partners hero scaling */
+  .partners-hero h1 {
+    font-size: 6.4rem; /* ~102px */
+    line-height: 1.02;
+  }
+
+  .partners-hero p {
+    font-size: 1.35rem;
+  }
+
+  .partners-hero .rounded-xl {
+    padding: 2.75rem;
+  }
+
+  .partners-hero .container-x {
+    width: calc(100% - 240px);
+    max-width: 2200px;
   }
 
   /* Make hero and section paddings more generous */

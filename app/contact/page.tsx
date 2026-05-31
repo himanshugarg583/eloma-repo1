@@ -22,25 +22,25 @@ const GlobeScene = dynamic(() => import("@/components/GlobeScene"), {
 
 const enquiryBlocks = [
   {
-    title: "Infodesk",
+    title: "Australia",
     lines: [
-      "Toll Free(India): 1800 209 4545",
-      "Available from: 8 am to 8 pm IST",
-      "International: +91 22 6752 5899",
-      "Available from: 2:30 am to 2:30 pm GMT",
-      "Send us a mail: infodesk@larsentoubro.com",
-      "(Mails to this Email ID will be forwarded to the concerned department.",
-      "This ID does not respond to mails or send out mails on behalf of L&T.)"
+      "Melbourne - 71, Gipps Street, Collingwood, Melbourne, VIC 3066",
+      "Sydney - 60 Martin Place, Levels 1, 2, & 3, Sydney 2000",
+      "Brisbane - 71 Eagle Street Brisbane QLD 4000",
+      "Adelaide - 2-3 Greenhill Road, Wayville, Adelaide 5034",
+      "Perth - 300 Murray Street, Level 2 East, The Wentworth Building, Perth 6000"
     ]
   },
   {
-    title: "Investor Enquiry",
+    title: "International Offices",
     lines: [
-      "Please contact",
-      "Investor Services: 1-800-3094-001 (Toll Free No.)",
-      "(Time: 10 am to 6.00 pm IST)",
-      "E-mail: igrc@larsentoubro.com",
-      "Visit our Investor Relations site"
+      "US - 20 F St NW, Washington, DC 20001, USA",
+      "Canada - First Canadian Place, 100 King St W #5600, Toronto, ON M5X 1C9, Canada",
+      "UK - 107-111, Fleet St, London EC4A 2AB, United Kingdom",
+      "United Arab Emirates - Level 9 Sheikh Mohammed bin Rashid Blvd - Burj Khalifa - Downtown Dubai - Dubai - United Arab Emirates",
+      "India - Tower A, Spaze iTech Park, 5th Floor, Sohna - Gurgaon Rd, Gurugram - 122018",
+      "Singapore - 1 Raffles Pl, #19-20 One Raffles Place Tower 2, Singapore 048616",
+      "China - 18, 35/F Harbour Rd, Wan Chai, Hong Kong"
     ]
   }
 ];
@@ -50,46 +50,46 @@ const presenceBlocks = {
     title: "Global Presence",
     cards: [
       {
-        name: "Mumbai Office",
-        location: "Mumbai 400 001, India",
-        phone: "+91 22 6752 5899",
-        email: "mumbai@elomagroup.com"
+        name: "US",
+        location: "20 F St NW, Washington, DC 20001, USA",
+        phone: "+1 202 555 0100",
+        email: "washington@elomagroup.com"
       },
       {
-        name: "Delhi Office",
-        location: "New Delhi 110 001, India",
-        phone: "+91 11 4123 4567",
-        email: "delhi@elomagroup.com"
+        name: "Canada",
+        location: "First Canadian Place, 100 King St W #5600, Toronto, ON M5X 1C9, Canada",
+        phone: "+1 416 555 0100",
+        email: "toronto@elomagroup.com"
       },
       {
-        name: "Bengaluru Office",
-        location: "Bengaluru 560 001, India",
-        phone: "+91 80 4123 4567",
-        email: "bengaluru@elomagroup.com"
+        name: "UK",
+        location: "107-111, Fleet St, London EC4A 2AB, United Kingdom",
+        phone: "+44 20 5555 0100",
+        email: "london@elomagroup.com"
       },
       {
-        name: "Dubai Office",
-        location: "Business Bay, Dubai, UAE",
-        phone: "+971 4 555 0123",
+        name: "United Arab Emirates",
+        location: "Level 9 Sheikh Mohammed bin Rashid Blvd - Burj Khalifa - Downtown Dubai - Dubai - United Arab Emirates",
+        phone: "+971 4 555 0100",
         email: "dubai@elomagroup.com"
       },
       {
-        name: "Singapore Office",
-        location: "Raffles Place, Singapore",
+        name: "India",
+        location: "Tower A, Spaze iTech Park, 5th Floor, Sohna - Gurgaon Rd, Gurugram - 122018",
+        phone: "+91 124 555 0100",
+        email: "gurugram@elomagroup.com"
+      },
+      {
+        name: "Singapore",
+        location: "1 Raffles Pl, #19-20 One Raffles Place Tower 2, Singapore 048616",
         phone: "+65 6123 4567",
         email: "singapore@elomagroup.com"
       },
       {
-        name: "London Office",
-        location: "Canary Wharf, London, UK",
-        phone: "+44 20 7123 4567",
-        email: "london@elomagroup.com"
-      },
-      {
-        name: "New York Office",
-        location: "Midtown, New York, USA",
-        phone: "+1 212 555 0199",
-        email: "newyork@elomagroup.com"
+        name: "China",
+        location: "18, 35/F Harbour Rd, Wan Chai, Hong Kong",
+        phone: "+852 5555 0100",
+        email: "hongkong@elomagroup.com"
       }
     ]
   },
@@ -97,34 +97,34 @@ const presenceBlocks = {
     title: "Office in Australia",
     cards: [
       {
-        name: "Sydney Office",
-        location: "Sydney NSW 2000, Australia",
-        phone: "+61 2 5550 1234",
-        email: "sydney@elomagroup.com"
-      },
-      {
-        name: "Melbourne Office",
-        location: "Melbourne VIC 3000, Australia",
-        phone: "+61 3 5550 2234",
+        name: "Melbourne",
+        location: "71, Gipps Street, Collingwood, Melbourne, VIC 3066",
+        phone: "+61 3 5550 1200",
         email: "melbourne@elomagroup.com"
       },
       {
-        name: "Perth Office",
-        location: "Perth WA 6000, Australia",
-        phone: "+61 8 5550 3234",
-        email: "perth@elomagroup.com"
+        name: "Sydney",
+        location: "60 Martin Place, Levels 1, 2, & 3, Sydney 2000",
+        phone: "+61 2 5550 1300",
+        email: "sydney@elomagroup.com"
       },
       {
-        name: "Brisbane Office",
-        location: "Brisbane QLD 4000, Australia",
-        phone: "+61 7 5550 4234",
+        name: "Brisbane",
+        location: "71 Eagle Street Brisbane QLD 4000",
+        phone: "+61 7 5550 1400",
         email: "brisbane@elomagroup.com"
       },
       {
-        name: "Adelaide Office",
-        location: "Adelaide SA 5000, Australia",
-        phone: "+61 8 5550 5234",
+        name: "Adelaide",
+        location: "2-3 Greenhill Road, Wayville, Adelaide 5034",
+        phone: "+61 8 5550 1500",
         email: "adelaide@elomagroup.com"
+      },
+      {
+        name: "Perth",
+        location: "300 Murray Street, Level 2 East, The Wentworth Building, Perth 6000",
+        phone: "+61 8 5550 1600",
+        email: "perth@elomagroup.com"
       }
     ]
   }
@@ -209,9 +209,7 @@ export default function ContactPage() {
                 Corporate / Contact Us
               </p>
               <h1 className="text-3xl font-semibold md:text-5xl">Contact Us</h1>
-              <p className="text-base text-slate-200 md:text-lg">
-                Reach the right team quickly with our direct office contacts and enquiry channels.
-              </p>
+              <p className="text-base text-slate-200 md:text-lg">Find our office locations and addresses across Australia, North America, Europe, the Middle East, India, Singapore, and Hong Kong.</p>
             </div>
           </div>
         </section>
@@ -221,35 +219,27 @@ export default function ContactPage() {
             <div className="space-y-6">
               <div className="flex items-center gap-3 text-4xs font-semibold uppercase tracking-[0.2em] text-slate-500">
                 <span className="h-px w-10 bg-slate-300 " />
-                Registered Office & Head Office
+                Head Office
               </div>
               <div className="space-y-4 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-                <h2 className="text-2xl font-semibold text-black md:text-3xl">Eloma Group Limited</h2>
+                <h2 className="text-2xl font-semibold text-black md:text-3xl">Melbourne</h2>
                 <p className="text-base text-black">
-                  L&amp;T House, Ballard Estate, P.O. Box: 278,
+                  71, Gipps Street, Collingwood,
                   <br />
-                  Mumbai 400 001, India.
+                  Melbourne, VIC 3066
                 </p>
                 <div className="grid gap-3 text-base text-black">
                   <div className="flex items-center gap-2">
                     <Phone size={16} className="text-slate-400" />
-                    Toll Free (India): 1800 710 388
+                    1800 054 555
                   </div>
                   <div className="flex items-center gap-2">
                     <Clock size={16} className="text-slate-400" />
-                    Available: 8 am to 8 pm IST
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Phone size={16} className="text-slate-400" />
-                    International: +91 22 6752 5899
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Clock size={16} className="text-slate-400" />
-                    Available: 2:30 am to 2:30 pm GMT
+                    Available: 9 am to 6 pm EST
                   </div>
                   <div className="flex items-center gap-2">
                     <Mail size={16} className="text-slate-400" />
-                    contact@elomagroup.com
+                    connect@elomagroup.com.au
                   </div>
                 </div>
               </div>
@@ -273,7 +263,7 @@ export default function ContactPage() {
           </div>
         </section>
 
-        <section className="bg-slate-50 py-16">
+        {/* <section className="bg-slate-50 py-16">
           <div className="container-x grid gap-12 lg:grid-cols-2">
             {enquiryBlocks.map((block) => (
               <div key={block.title} className="space-y-5">
@@ -287,7 +277,7 @@ export default function ContactPage() {
               </div>
             ))}
           </div>
-        </section>
+        </section> */}
 
 
 
@@ -362,12 +352,9 @@ export default function ContactPage() {
           <div className="container-x grid gap-8 lg:grid-cols-[1fr_1.1fr]">
             <div className="contact-side-card">
               <div className="contact-side-content">
-                <h3 className="text-2xl font-semibold text-slate-900">
-                  Contact Form
-                </h3>
+                <h3 className="text-2xl font-semibold text-slate-900">Contact Form</h3>
                 <p className="mt-3 text-sm text-slate-600">
-                  We tailor unique scalable solutions leveraging the power of next-gen technologies for elevated
-                  customer experience.
+                  Use this form to get in touch with the relevant office or team for your region.
                 </p>
               </div>
               <div className="mt-6 support-illustration">

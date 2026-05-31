@@ -1,32 +1,33 @@
 // Placeholder content - replace with official group data.
 export const groupName = "Eloma Group";
 
-export const navAbout = [
+export const navAbout: Array<{ type: "header" | "item"; label: string; href?: string }> = [
   { type: "item", label: "About Us", href: "/about" },
   { type: "item", label: "Blog", href: "/blog" },
   { type: "item", label: "Newsroom", href: "/newsroom" },
   { type: "item", label: "Partners", href: "/partners" }
 ];
 
-export const navBusinesses: Array<{ type: "header" | "item"; label: string }> = [
+export const navBusinesses: Array<{ type: "header" | "item"; label: string; href?: string }> = [
   { type: "header", label: "Business" },
-  { type: "item", label: "Supply Chain" },
-  { type: "item", label: "IT Infrastructure" },
-  { type: "item", label: "Call Centre" },
-  { type: "item", label: "Travel" },
-  { type: "item", label: "Imports" },
+  { type: "item", label: "Call Centre", href: "/business/call-centre" },
+  { type: "item", label: "Imports", href: "/business/imports" },
+  { type: "item", label: "IT Infrastructure", href: "/business/it-infrastructure" },
+  { type: "item", label: "Supply Chain", href: "/business/supply-chain" },
+  { type: "item", label: "Travel", href: "/business/travel" },
   { type: "header", label: "Companies" },
-  { type: "item", label: "EG Transport" },
-  { type: "item", label: "EG Digital Australia" },
-  { type: "item", label: "EG Travels" },
-  { type: "item", label: "EG Imports" },
-  { type: "item", label: "EG Foundations" }
+  { type: "item", label: "EG Digital Australia", href: "/company/eg-digital-australia" },
+  { type: "item", label: "EG Foundations", href: "/company/eg-foundations" },
+  { type: "item", label: "EG Imports", href: "/company/eg-imports" },
+  { type: "item", label: "EG Transport", href: "/company/eg-transport" },
+  { type: "item", label: "EG Travels", href: "/company/eg-travels" }
 ];
 
-export const navSustainability = [
-  "Bivry",
-  "Weeseeyou",
-  "EG Digital"
+export const navSustainability: Array<{ type: "header" | "item"; label: string; href?: string }> = [
+  { type: "header", label: "Sustainability" },
+  { type: "item", label: "Environmental Responsibility", href: "/sustainability#environment" },
+  { type: "item", label: "Sustainability Initiatives", href: "/sustainability#initiatives" },
+  { type: "item", label: "Reports & Updates", href: "/sustainability#reports" }
 ];
 
 export const navMedia = [
