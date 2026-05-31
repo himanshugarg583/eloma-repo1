@@ -30,6 +30,23 @@ const linkColumns = [
   }
 ];
 
+// Additional company names provided by the design/content team
+const companies = [
+  "EG Digital Australia",
+  "EG Foundations",
+  "EG Imports",
+  "EG Transport",
+  "EG Travels"
+];
+
+// Build a combined, alphabetically sorted set of columns and links
+const footerColumns = [
+  ...linkColumns,
+  { title: "Companies", links: companies }
+]
+  .map((col) => ({ ...col, links: (col.links || []).slice().sort((a, b) => a.localeCompare(b)) }))
+  .sort((a, b) => a.title.localeCompare(b.title));
+
 const socials = [
   { icon: Linkedin, href: "https://www.linkedin.com/company/elomagroup/", label: "LinkedIn" },
   { icon: Twitter, href: "https://x.com/elomagroup2026", label: "X" },
@@ -117,8 +134,8 @@ export default function Footer() {
           </div>
 
           {/* Link columns */}
-          <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
-            {linkColumns.map((column) => (
+          <div className="grid grid-cols-2 gap-8 md:grid-cols-5">
+            {footerColumns.map((column) => (
               <div key={column.title} className="space-y-4">
                 <p className="text-xs font-semibold uppercase tracking-[0.18em] text-gold">
                   {column.title}
