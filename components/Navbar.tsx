@@ -29,14 +29,14 @@ type MenuItem =
 const navItems: Array<{ key: Exclude<MenuKey, null>; label: string; href: string }> = [
   { key: "about", label: "About Us", href: "/about" },
   { key: "businesses", label: "Our Businesses", href: "#subsidiaries" },
-  { key: "sustainability", label: "Sustainability", href: "#services" },
+  { key: "sustainability", label: "Sustainability", href: "/sustainability" },
   { key: "careers", label: "Careers", href: "/careers" },
   { key: "contact", label: "Contact Us", href: "/contact" }
 ];
 
-const dropdownMenuKeys: Exclude<MenuKey, null>[] = ["about", "businesses"];
-const phoneNumber = "1800 710 388";
-const phoneHref = "tel:1800710388";
+const dropdownMenuKeys: Exclude<MenuKey, null>[] = ["about", "businesses", "sustainability"];
+const phoneNumber = "1800 054 555";
+const phoneHref = "tel:1800 054 555";
 
 const navMenu: Record<
   Exclude<MenuKey, null>,
@@ -71,7 +71,7 @@ const navMenu: Record<
     description: "Eco-conscious operations, ethical practices, and long-term impact.",
     items: navSustainability,
     ctaLabel: "Our ESG Focus",
-    ctaHref: "#services"
+    ctaHref: "/sustainability"
   },
   careers: {
     eyebrow: "Careers",
@@ -256,6 +256,9 @@ export default function Navbar() {
           >
             <Search size={18} />
           </button>
+          <Button asChild size="sm" className="bg-transparent border border-slate-200 text-slate-700 hover:bg-slate-100">
+            <Link href="/login">Login</Link>
+          </Button>
           <Button size="sm" className={cn("bg-forest text-white hover:bg-forest/90")}>
             1800 054 555
           </Button>
@@ -338,6 +341,9 @@ export default function Navbar() {
               })}
 
               <div className="flex flex-col gap-3 pt-2">
+                  <Link href="/login" className="flex items-center justify-center gap-2 rounded-md border border-slate-200 px-4 py-3 text-sm font-medium text-black">
+                    Login
+                  </Link>
                 <Link
                   href={phoneHref}
                   className="flex items-center justify-center gap-2 rounded-md border border-slate-200 px-4 py-3 text-sm font-medium text-forest"

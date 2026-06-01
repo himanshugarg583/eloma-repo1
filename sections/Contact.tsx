@@ -14,8 +14,8 @@ const contactItems = [
     label: "Corporate Headquarters",
     value: "100 Premium Avenue, Sydney NSW 2000, Australia"
   },
-  { icon: Phone, label: "Phone", value: "+61 1800 710 388" },
-  { icon: Mail, label: "Email", value: "contact@elomagroup.com" },
+  { icon: Phone, label: "Phone", value: "1800 054 555" },
+  { icon: Mail, label: "Email", value: "contact@elomagroup.com.au" },
   {
     icon: MapPin,
     label: "Regional Offices",

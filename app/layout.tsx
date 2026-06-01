@@ -1,4 +1,5 @@
 import "./globals.css";
+import "swiper/css";
 
 import type { Metadata } from "next";
 import { Playfair_Display, Source_Sans_3 } from "next/font/google";

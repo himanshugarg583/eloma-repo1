@@ -7,22 +7,26 @@ import { Mail, Phone } from "lucide-react";
 import pinImage from "@/assset/pin.png";
 const mapSrc = "/map-images.svg";
 
+// Natural SVG map size (used to convert lon/lat -> pixels)
+const MAP_W = 1170;
+const MAP_H = 780;
+
 const offices = {
 	global: [
-		{ name: "Mumbai Office", location: "Mumbai 400 001, India", phone: "+91 22 6752 5899", email: "mumbai@elomagroup.com", cx: 630, cy: 248 },
-		{ name: "Delhi Office", location: "New Delhi 110 001, India", phone: "+91 11 4123 4567", email: "delhi@elomagroup.com", cx: 624, cy: 225 },
-		{ name: "Bengaluru Office", location: "Bengaluru 560 001, India", phone: "+91 80 4123 4567", email: "bengaluru@elomagroup.com", cx: 632, cy: 262 },
-		{ name: "Dubai Office", location: "Business Bay, Dubai, UAE", phone: "+971 4 555 0123", email: "dubai@elomagroup.com", cx: 585, cy: 233 },
-		{ name: "Singapore Office", location: "Raffles Place, Singapore", phone: "+65 6123 4567", email: "singapore@elomagroup.com", cx: 710, cy: 278 },
-		{ name: "London Office", location: "Canary Wharf, London, UK", phone: "+44 20 7123 4567", email: "london@elomagroup.com", cx: 468, cy: 145 },
-		{ name: "New York Office", location: "Midtown, New York, USA", phone: "+1 212 555 0199", email: "newyork@elomagroup.com", cx: 235, cy: 178 }
+		{ name: "Gurugram Office", location: "Gurugram, Haryana, India", phone: "+91 124 555 0100", email: "gurugram@elomagroup.com", lat: 28.4595, lon: 77.0266 },
+		{ name: "Dubai Office", location: "Business Bay, Dubai, UAE", phone: "+971 4 555 0123", email: "dubai@elomagroup.com", lat: 25.2048, lon: 55.2708 },
+		{ name: "Singapore Office", location: "Raffles Place, Singapore", phone: "+65 6123 4567", email: "singapore@elomagroup.com", lat: 1.3521, lon: 103.8198 },
+		{ name: "Hong Kong Office", location: "Central, Hong Kong", phone: "+852 5550 1234", email: "hongkong@elomagroup.com", lat: 22.3193, lon: 114.1694 },
+		{ name: "London Office", location: "Canary Wharf, London, UK", phone: "+44 20 7123 4567", email: "london@elomagroup.com", lat: 51.5072, lon: -0.1276 },
+		{ name: "Toronto Office", location: "Toronto, Ontario, Canada", phone: "+1 416 555 0123", email: "toronto@elomagroup.com", lat: 43.6532, lon: -79.3832 },
+		{ name: "Washington Office", location: "Washington, D.C., USA", phone: "+1 202 555 0123", email: "washington@elomagroup.com", lat: 38.9072, lon: -77.0369 }
 	],
 	australia: [
-		{ name: "Sydney Office", location: "Sydney NSW 2000, Australia", phone: "+61 2 5550 1234", email: "sydney@elomagroup.com", cx: 778, cy: 358 },
-		{ name: "Melbourne Office", location: "Melbourne VIC 3000, Australia", phone: "+61 3 5550 2234", email: "melbourne@elomagroup.com", cx: 768, cy: 375 },
-		{ name: "Perth Office", location: "Perth WA 6000, Australia", phone: "+61 8 5550 3234", email: "perth@elomagroup.com", cx: 722, cy: 355 },
-		{ name: "Brisbane Office", location: "Brisbane QLD 4000, Australia", phone: "+61 7 5550 4234", email: "brisbane@elomagroup.com", cx: 790, cy: 340 },
-		{ name: "Adelaide Office", location: "Adelaide SA 5000, Australia", phone: "+61 8 5550 5234", email: "adelaide@elomagroup.com", cx: 750, cy: 365 }
+		{ name: "Sydney Office", location: "Sydney NSW 2000, Australia", phone: "+61 2 5550 1234", email: "sydney@elomagroup.com", lat: -33.8688, lon: 151.2093 },
+		{ name: "Melbourne Office", location: "Melbourne VIC 3000, Australia", phone: "+61 3 5550 2234", email: "melbourne@elomagroup.com", lat: -37.8136, lon: 144.9631 },
+		{ name: "Perth Office", location: "Perth WA 6000, Australia", phone: "+61 8 5550 3234", email: "perth@elomagroup.com", lat: -31.9505, lon: 115.8605 },
+		{ name: "Brisbane Office", location: "Brisbane QLD 4000, Australia", phone: "+61 7 5550 4234", email: "brisbane@elomagroup.com", lat: -27.4698, lon: 153.0251 },
+		{ name: "Adelaide Office", location: "Adelaide SA 5000, Australia", phone: "+61 8 5550 5234", email: "adelaide@elomagroup.com", lat: -34.9285, lon: 138.6007 }
 	]
 } as const;
 
@@ -122,11 +126,14 @@ export default function GlobalPresenceMap() {
 
 						<div className="gpm-map-svg-wrap">
 							<div className="gpm-map-image">
-											<Image src={mapSrc} alt="World map" width={1170} height={780} unoptimized priority />
+										<Image src={mapSrc} alt="World map" width={1170} height={780} unoptimized priority />
 								<div className="gpm-map-overlay">
-									{currentOffices.map((office) => {
-										const left = `${(office.cx / 960) * 100}%`;
-										const top = `${(office.cy / 500) * 100}%`;
+										{currentOffices.map((office) => {
+											// project lat/lon to the SVG pixel space (equirectangular)
+											const x = ((office.lon + 180) / 360) * MAP_W;
+											const y = ((90 - office.lat) / 180) * MAP_H;
+											const left = `${(x / MAP_W) * 100}%`;
+											const top = `${(y / MAP_H) * 100}%`;
 										return (
 											<div
 												key={office.name}
