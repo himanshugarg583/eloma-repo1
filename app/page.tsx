@@ -84,7 +84,7 @@ function Hero() {
   return (
     <section
       ref={ref}
-      className="relative isolate flex min-h-screen flex-col overflow-hidden bg-forest-dark text-white"
+      className="relative isolate flex min-h-screen flex-col overflow-hidden bg-[#021726] text-white"
     >
       {/* Layered atmospheric background ----------------------- */}
       {/* Gradient base */}
@@ -92,8 +92,8 @@ function Hero() {
         aria-hidden
         className="absolute inset-0 -z-30"
         style={{
-          background:
-            "radial-gradient(80% 60% at 50% 30%, rgba(26,74,67,1) 0%, rgba(12,47,42,1) 60%, rgba(6,32,28,1) 100%)"
+            background:
+              "radial-gradient(80% 60% at 50% 30%, rgba(2,85,130,1) 0%, rgba(1,48,80,1) 60%, rgba(0,20,34,1) 100%)"
         }}
       />
       {/* Slow-floating gold orb */}
@@ -702,7 +702,7 @@ function WorldFootprint() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-15% 0px" }}
           transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
-          className="mt-14 overflow-hidden rounded-3xl border border-slate-200 bg-slate-50 p-6 md:p-10"
+          className="mt-14 overflow-visible rounded-3xl border border-slate-200 bg-slate-50 p-6 md:p-10"
         >
           <div className="relative aspect-[1000/480] w-full">
             <DotWorldMap origin="AU" useScrollTrigger variant="light" />
