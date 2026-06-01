@@ -19,7 +19,6 @@ uploads/media/*
 Thumbs.db
 
 # IDE
-.vscode/
 .idea/
 
 # Build
@@ -33,7 +32,6 @@ coverage/
 tmp/
 temp/
 config.bat
-.env
 .next
 # Baileys auth session (contains private keys for WhatsApp pairing)
 auth_session/
