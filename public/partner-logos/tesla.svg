@@ -1,0 +1,7 @@
+<svg width="320" height="180" viewBox="0 0 320 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="320" height="180" rx="20" fill="white"/>
+  <path d="M122 36c14-9 34-14 38-14s24 5 38 14l-6 14c-7-5-19-8-32-8s-25 3-32 8l-6-14Z" fill="#E82127"/>
+  <path d="M146 50c4 1 10 2 14 2s10-1 14-2c-2 22-6 56-14 94-8-38-12-72-14-94Z" fill="#E82127"/>
+  <text x="34" y="110" fill="#111111" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="700" letter-spacing="4">TESLA</text>
+  <text x="34" y="140" fill="#5B5B5B" font-family="Arial, Helvetica, sans-serif" font-size="16">Innovation • Sustainability • Engineering</text>
+</svg>

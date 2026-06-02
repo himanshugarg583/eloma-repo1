@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python3 -)",
+      "Bash(dir \"c:\\\\Users\\\\Dell\\\\Desktop\\\\eloma-repo1-main\\\\public\\\\videos\\\\\")",
+      "PowerShell(Get-ChildItem \"c:\\\\Users\\\\Dell\\\\Desktop\\\\eloma-repo1-main\\\\public\\\\videos\\\\\" -ErrorAction SilentlyContinue | Select-Object Name, @{N='MB';E={[math]::Round\\($_.Length/1MB,2\\)}} | Format-Table -AutoSize)",
+      "Bash(findstr /R \"\\\\[[0-9]*px\\\\]\" sections\\\\GlobalPresence.tsx sections\\\\Investors.tsx app\\\\page.tsx)",
+      "Bash(npm run *)",
+      "Bash(Start-Sleep -Seconds 5)",
+      "Bash(Write-Host \"Server ready for testing\")"
+    ]
+  }
+}

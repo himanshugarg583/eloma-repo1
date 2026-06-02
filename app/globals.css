@@ -1,0 +1,1355 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --accent-gold: #3CB98C;
+  --accent-forest: #08213C;
+  --accent-green: #0F766E;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  background-color: #ffffff;
+  color: #0f172a;
+}
+
+body {
+  font-family: "Gill Sans", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: "cv11", "ss01";
+}
+
+/* Headings should use a neutral sans-serif for legibility */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.heading-xl,
+.heading-lg,
+.heading-md {
+  font-family: sans-serif;
+}
+
+/* Layout utilities */
+.container-x {
+  @apply mx-auto w-full max-w-7xl px-6 lg:px-8;
+}
+
+.section-padding {
+  @apply py-16 md:py-24;
+}
+
+.section-alt {
+  background-color: #f8fafc;
+}
+
+/* Typography utilities */
+.eyebrow {
+  @apply inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-forest;
+}
+
+.eyebrow::before {
+  content: "";
+  display: inline-block;
+  width: 28px;
+  height: 1px;
+  background-color: #3CB98C;
+}
+
+.heading-xl {
+  @apply font-display text-3xl font-bold leading-[1.1] tracking-tight text-forest md:text-4xl lg:text-5xl;
+}
+
+.heading-lg {
+  @apply font-display text-2xl font-bold leading-tight tracking-tight text-forest md:text-3xl lg:text-4xl;
+}
+
+.heading-md {
+  @apply font-display text-xl font-semibold leading-snug tracking-tight text-forest md:text-2xl;
+}
+
+.body-lg {
+  @apply text-base leading-relaxed text-slate-600 md:text-lg;
+}
+
+.body-base {
+  @apply text-sm leading-relaxed text-slate-600 md:text-base;
+}
+
+/* Cards */
+.card-base {
+  @apply rounded-xl border border-slate-200 bg-white shadow-card transition-all duration-300;
+}
+
+.card-base:hover {
+  @apply border-slate-300 shadow-card-hover;
+}
+
+.card-image {
+  @apply overflow-hidden;
+}
+
+.card-image img {
+  @apply transition-transform duration-700 ease-out;
+}
+
+.card-base:hover .card-image img {
+  transform: scale(1.05);
+}
+
+/* Reveal */
+[data-reveal] {
+  opacity: 0;
+  will-change: transform, opacity;
+}
+
+/* Marquee pause helpers */
+.animate-marquee-left,
+.animate-marquee-right {
+  will-change: transform;
+}
+
+.partners-logo-swiper .swiper-wrapper {
+  transition-timing-function: linear !important;
+  align-items: center;
+}
+
+.partners-logo-swiper .swiper-slide {
+  width: auto !important;
+}
+
+.partners-logo-swiper {
+  padding-left: 12px;
+  padding-right: 12px;
+}
+
+/* Selection */
+::selection {
+  background-color: rgba(60, 185, 140, 0.25);
+  color: #08213C;
+}
+
+/* Focus rings */
+:focus-visible {
+  outline: 2px solid #3CB98C;
+  outline-offset: 2px;
+}
+
+/* Smooth scroll handled by Lenis */
+html.lenis {
+  height: auto;
+}
+
+/* Large-screen tweaks for 32" and similar displays */
+@media (min-width: 1920px) {
+  /* Scale the root rem up so every rem-based Tailwind text + spacing utility
+     grows proportionally — otherwise content stays 16px-small inside the very
+     wide layout on a 32" monitor. (px/vh/% based GSAP pins are unaffected.) */
+  html {
+    font-size: 18px;
+  }
+
+  .container-x {
+    max-width: none;
+    width: calc(100% - 60px);
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+
+  /* Widen the large content columns so sections that use an inline max-width
+     (not .container-x) don't sit small + centered on ultra-wide monitors.
+     Narrow reading widths (max-w-3xl / max-w-2xl / prose) are left untouched. */
+  .max-w-7xl {
+    max-width: 1640px;
+  }
+  .max-w-6xl {
+    max-width: 1460px;
+  }
+  .max-w-5xl {
+    max-width: 1320px;
+  }
+  .max-w-\[1400px\] {
+    max-width: 1700px;
+  }
+
+  .heading-xl {
+    font-size: 3.6rem;
+    /* ~57.6px */
+    line-height: 1.06;
+  }
+
+  .heading-lg {
+    font-size: 2.4rem;
+  }
+
+  .company-detail-page .container-x,
+  .business-detail-page .container-x {
+    width: calc(100% - 140px);
+    max-width: 1720px;
+  }
+
+  .company-hero-section,
+  .business-hero-section {
+    padding-top: 4rem;
+    padding-bottom: 4.5rem;
+  }
+
+  .company-hero-section h1,
+  .business-hero-section h1 {
+    font-size: 4.8rem;
+    line-height: 1.03;
+    max-width: 15ch;
+  }
+
+  .company-hero-section p,
+  .business-hero-section p {
+    font-size: 1.1rem;
+  }
+
+  .company-hero-section .rounded-\[28px\],
+  .business-hero-section .rounded-\[28px\] {
+    border-radius: 32px;
+  }
+
+  .company-detail-page section:not(.company-hero-section),
+  .business-detail-page section:not(.business-hero-section) {
+    scroll-margin-top: 120px;
+  }
+
+  /* Partners hero tuning for very large screens */
+  .partners-hero h1 {
+    font-size: 4.8rem;
+    /* ~77px */
+    line-height: 1.03;
+  }
+
+  .partners-hero p {
+    font-size: 1.25rem;
+  }
+
+  .partners-hero .rounded-xl {
+    padding: 2.25rem;
+  }
+
+  .partners-hero .container-x {
+    width: calc(100% - 120px);
+    max-width: 1600px;
+  }
+}
+
+@media (min-width: 2560px) {
+  html {
+    font-size: 20px;
+  }
+
+  .container-x {
+    max-width: none;
+    width: calc(100% - 200px);
+    padding-left: 80px;
+    padding-right: 80px;
+  }
+
+  .max-w-7xl {
+    max-width: 2040px;
+  }
+  .max-w-6xl {
+    max-width: 1840px;
+  }
+  .max-w-5xl {
+    max-width: 1640px;
+  }
+  .max-w-\[1400px\] {
+    max-width: 2000px;
+  }
+
+  .heading-xl {
+    font-size: 4.2rem;
+    /* ~67px */
+    line-height: 1.04;
+  }
+
+  .heading-lg {
+    font-size: 2.6rem;
+  }
+
+  .company-detail-page .container-x,
+  .business-detail-page .container-x {
+    width: calc(100% - 220px);
+    max-width: 2200px;
+  }
+
+  .company-hero-section,
+  .business-hero-section {
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+  }
+
+  .company-hero-section h1,
+  .business-hero-section h1 {
+    font-size: 5.8rem;
+    line-height: 1.02;
+    max-width: 14ch;
+  }
+
+  .company-hero-section p,
+  .business-hero-section p {
+    font-size: 1.2rem;
+  }
+
+  .company-detail-page section,
+  .business-detail-page section {
+    scroll-margin-top: 140px;
+  }
+
+  /* Extra-large (32"+ UHD) partners hero scaling */
+  .partners-hero h1 {
+    font-size: 6.4rem;
+    /* ~102px */
+    line-height: 1.02;
+  }
+
+  .partners-hero p {
+    font-size: 1.35rem;
+  }
+
+  .partners-hero .rounded-xl {
+    padding: 2.75rem;
+  }
+
+  .partners-hero .container-x {
+    width: calc(100% - 240px);
+    max-width: 2200px;
+  }
+
+  /* Make hero and section paddings more generous */
+  .section-padding {
+    padding-top: 4.5rem;
+    padding-bottom: 5.5rem;
+  }
+
+  /* Hero-specific bleed utility for full-width hero text on large displays */
+  .container-x.hero-bleed {
+    width: calc(100% - 100px);
+    padding-left: 40px;
+    padding-right: 40px;
+    max-width: none;
+  }
+}
+
+@media (min-width: 3840px) {
+  html {
+    font-size: 24px;
+  }
+
+  .max-w-7xl {
+    max-width: 2800px;
+  }
+  .max-w-6xl {
+    max-width: 2500px;
+  }
+  .max-w-5xl {
+    max-width: 2200px;
+  }
+  .max-w-\[1400px\] {
+    max-width: 2600px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .container-x.hero-bleed {
+    width: calc(100% - 120px);
+    padding-left: 32px;
+    padding-right: 32px;
+  }
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto;
+}
+
+/* ── Custom dot + ring cursor ─────────────────────────────────────────────
+   The dot tracks the pointer exactly; the ring follows with a soft lag and
+   grows over interactive elements. mix-blend-mode keeps it visible over both
+   light and dark sections. Mouse (fine-pointer) devices only — touch keeps the
+   native behaviour. Logic lives in components/CustomCursor.tsx. */
+@media (pointer: fine) {
+  * {
+    cursor: none !important;
+  }
+}
+
+.custom-cursor {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+}
+
+.cursor-dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 18px;
+  height: 18px;
+  margin: -4px 0 0 -4px; /* centre on the pointer (JS sets the top-left) */
+  border-radius: 99999px;
+  background: green;
+  mix-blend-mode: difference;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  will-change: transform;
+}
+
+.cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 68px;
+  height: 68px;
+  border-radius: 9999px;
+  border: 2.5px solid green;
+  mix-blend-mode: difference;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  will-change: transform;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.cosmic-toggle-wrapper {
+  display: inline-flex;
+}
+
+.cosmic-toggle {
+  position: relative;
+  width: 320px;
+  height: 64px;
+  transform-style: preserve-3d;
+  perspective: 500px;
+}
+
+.cosmic-toggle .toggle {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.cosmic-toggle .slider {
+  position: absolute;
+  cursor: pointer;
+  inset: 0;
+  background: linear-gradient(45deg, #1a1a2e, #16213e);
+  border-radius: 999px;
+  transition: 0.5s;
+  transform-style: preserve-3d;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.35), inset 0 0 15px rgba(255, 255, 255, 0.05);
+  overflow: hidden;
+  border: 4px solid #0b4a7c;
+}
+
+.cosmic-toggle .cosmos {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(1px 1px at 10% 10%, #fff 100%, transparent),
+    radial-gradient(1px 1px at 20% 20%, #fff 100%, transparent),
+    radial-gradient(2px 2px at 30% 30%, #fff 100%, transparent),
+    radial-gradient(1px 1px at 40% 40%, #fff 100%, transparent),
+    radial-gradient(2px 2px at 50% 50%, #fff 100%, transparent),
+    radial-gradient(1px 1px at 60% 60%, #fff 100%, transparent),
+    radial-gradient(2px 2px at 70% 70%, #fff 100%, transparent),
+    radial-gradient(1px 1px at 80% 80%, #fff 100%, transparent),
+    radial-gradient(1px 1px at 90% 90%, #fff 100%, transparent);
+  background-size: 200% 200%;
+  opacity: 0.1;
+  transition: 0.5s;
+}
+
+.cosmic-toggle .toggle-orb {
+  position: absolute;
+  height: 54px;
+  width: 54px;
+  left: 5px;
+  bottom: 5px;
+  background: linear-gradient(145deg, #ffffff, #e7eff8);
+  border-radius: 50%;
+  transition: 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  transform-style: preserve-3d;
+  z-index: 2;
+}
+
+.cosmic-toggle .inner-orb {
+  position: absolute;
+  inset: 5px;
+  border-radius: 50%;
+  background: linear-gradient(145deg, #ffffff, #e6e6e6);
+  transition: 0.5s;
+  overflow: hidden;
+}
+
+.cosmic-toggle .inner-orb::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-conic-gradient(from 0deg,
+      transparent 0deg,
+      rgba(0, 0, 0, 0.1) 10deg,
+      transparent 20deg);
+  animation: patternRotate 10s linear infinite;
+}
+
+.cosmic-toggle .ring {
+  position: absolute;
+  inset: -3px;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  transition: 0.5s;
+}
+
+.cosmic-toggle .toggle:checked+.slider {
+  background: linear-gradient(45deg, #16213e, #1a1a2e);
+}
+
+.cosmic-toggle .toggle:checked+.slider .toggle-orb {
+  transform: translateX(256px) rotate(360deg);
+  background: linear-gradient(145deg, #ffffff, #dbe9f5);
+}
+
+.cosmic-toggle .toggle:checked+.slider .inner-orb {
+  background: linear-gradient(145deg, #dbe9f5, #c8ddf0);
+  transform: scale(0.95);
+}
+
+.cosmic-toggle .toggle:checked+.slider .ring {
+  border-color: rgba(78, 205, 196, 0.3);
+  animation: ringPulse 2s infinite;
+}
+
+.cosmic-toggle .energy-line {
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(78, 205, 196, 0.5), transparent);
+  transform-origin: left;
+  opacity: 0;
+  transition: 0.5s;
+}
+
+.cosmic-toggle .energy-line:nth-child(2) {
+  top: 20%;
+  transform: rotate(15deg);
+}
+
+.cosmic-toggle .energy-line:nth-child(3) {
+  top: 50%;
+  transform: rotate(0deg);
+}
+
+.cosmic-toggle .energy-line:nth-child(4) {
+  top: 80%;
+  transform: rotate(-15deg);
+}
+
+.cosmic-toggle .toggle:checked+.slider .energy-line {
+  opacity: 1;
+  animation: energyFlow 2s linear infinite;
+}
+
+.cosmic-toggle .particles {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.cosmic-toggle .particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: #4ecdc4;
+  border-radius: 50%;
+  opacity: 0;
+}
+
+.cosmic-toggle .toggle:checked+.slider .particle {
+  animation: particleBurst 1s ease-out infinite;
+}
+
+.cosmic-toggle .particle:nth-child(1) {
+  left: 20%;
+  animation-delay: 0s;
+}
+
+.cosmic-toggle .particle:nth-child(2) {
+  left: 40%;
+  animation-delay: 0.2s;
+}
+
+.cosmic-toggle .particle:nth-child(3) {
+  left: 60%;
+  animation-delay: 0.4s;
+}
+
+.cosmic-toggle .particle:nth-child(4) {
+  left: 80%;
+  animation-delay: 0.6s;
+}
+
+.cosmic-toggle .particle:nth-child(5) {
+  left: 30%;
+  animation-delay: 0.8s;
+}
+
+.cosmic-toggle .particle:nth-child(6) {
+  left: 70%;
+  animation-delay: 1s;
+}
+
+.cosmic-toggle .toggle-text {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 22px;
+  font-size: 14px;
+  font-weight: 600;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.cosmic-toggle .toggle-text-left,
+.cosmic-toggle .toggle-text-right {
+  transition: color 0.4s ease, opacity 0.4s ease;
+}
+
+.cosmic-toggle .toggle-text-left {
+  color: #0b4a7c;
+}
+
+.cosmic-toggle .toggle-text-right {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.cosmic-toggle .toggle:checked+.slider .toggle-text-left {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.cosmic-toggle .toggle:checked+.slider .toggle-text-right {
+  color: #ffffff;
+}
+
+.cosmic-toggle .slider:hover .toggle-orb {
+  filter: brightness(1.05);
+  box-shadow: 0 0 14px rgba(78, 205, 196, 0.35), 0 0 28px rgba(78, 205, 196, 0.2);
+}
+
+.cosmic-toggle .slider:hover .cosmos {
+  opacity: 0.2;
+  animation: cosmosPan 20s linear infinite;
+}
+
+.cosmic-toggle .toggle:active+.slider .toggle-orb {
+  transform: scale(0.98);
+}
+
+.cosmic-toggle:hover .slider {
+  transform: rotateX(10deg) rotateY(10deg);
+}
+
+.cosmic-toggle:hover .toggle-orb {
+  transform: translateZ(10px);
+}
+
+.cosmic-toggle .toggle:checked+.slider::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at var(--x) var(--y), rgba(78, 205, 196, 0.2), transparent 50%);
+  opacity: 0.2;
+  animation: glowFollow 2s linear infinite;
+}
+
+@keyframes ringPulse {
+
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.3;
+  }
+
+  50% {
+    transform: scale(1.1);
+    opacity: 0.6;
+  }
+}
+
+@keyframes patternRotate {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes energyFlow {
+  0% {
+    transform: scaleX(0) translateX(0);
+    opacity: 0;
+  }
+
+  50% {
+    transform: scaleX(1) translateX(50%);
+    opacity: 1;
+  }
+
+  100% {
+    transform: scaleX(0) translateX(100%);
+    opacity: 0;
+  }
+}
+
+@keyframes particleBurst {
+  0% {
+    transform: translate(0, 0) scale(1);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translate(calc(cos(var(--angle)) * 50px), calc(sin(var(--angle)) * 50px)) scale(0);
+    opacity: 0;
+  }
+}
+
+@keyframes cosmosPan {
+  0% {
+    background-position: 0% 0%;
+  }
+
+  100% {
+    background-position: 200% 200%;
+  }
+}
+
+@keyframes glowFollow {
+
+  0%,
+  100% {
+    opacity: 0.2;
+  }
+
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.office-card {
+  border-radius: 16px;
+  border: 1px solid #dbe3ee;
+  background: linear-gradient(135deg, #ffffff 0%, #f8fbff 100%);
+  padding: 20px;
+  color: #0f172a;
+  min-height: 168px;
+  opacity: 0;
+  transform: translateY(24px);
+  transition: box-shadow 0.4s ease;
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.08);
+}
+
+.office-card.is-visible {
+  animation: cardRise 0.55s ease forwards;
+}
+
+.office-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 32px rgba(15, 23, 42, 0.12);
+}
+
+@keyframes cardRise {
+  0% {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.contact-card {
+  border-radius: 20px;
+  border: 1px solid #e2e8f0;
+  background: #ffffff;
+  padding: 24px;
+  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+}
+
+.contact-side-card {
+  border-radius: 22px;
+  border: 1px solid #e6d7ee;
+  background: #ffffff;
+  padding: 28px;
+  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.contact-side-content {
+  border-radius: 16px;
+  border: 1px solid #eadcf2;
+  padding: 18px;
+  background: #ffffff;
+}
+
+.contact-side-cta {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-card {
+  border-radius: 22px;
+  border: 1px solid #e2e8f0;
+  background: #ffffff;
+  padding: 28px 30px;
+  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.1);
+}
+
+.contact-form {
+  display: grid;
+  gap: 18px;
+}
+
+.form-field {
+  display: grid;
+  gap: 6px;
+}
+
+.form-field label {
+  font-size: 13px;
+  font-weight: 500;
+  color: #334155;
+}
+
+.form-field .required {
+  color: #ef4444;
+}
+
+.form-input {
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid #cbd5f5;
+  padding: 10px 6px 10px 0;
+  font-size: 14px;
+  color: #0f172a;
+  background: transparent;
+  outline: none;
+}
+
+.form-input:focus {
+  border-bottom-color: #6b21a8;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  gap: 14px;
+  align-items: center;
+}
+
+.form-submit {
+  justify-self: end;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 28px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #ffffff;
+  background: linear-gradient(135deg, #ff6aa2, #f5a623);
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-submit:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 20px rgba(245, 166, 35, 0.25);
+}
+
+.support-illustration {
+  position: relative;
+  height: 360px;
+  border-radius: 24px;
+  background: radial-gradient(circle at 20% 20%, #f0f7ff 0%, #ffffff 55%, #f7fbff 100%);
+  border: 1px solid #e2e8f0;
+  overflow: hidden;
+}
+
+.support-orbit {
+  position: absolute;
+  inset: 60px;
+  border: 1px dashed rgba(15, 74, 124, 0.25);
+  border-radius: 50%;
+  animation: orbitSpin 18s linear infinite;
+}
+
+.support-orbit-alt {
+  inset: 95px;
+  animation-duration: 26s;
+  border-color: rgba(15, 74, 124, 0.15);
+}
+
+.support-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #0b4a7c, #0f2544);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 20px 40px rgba(15, 23, 42, 0.2);
+}
+
+.support-pulse {
+  position: absolute;
+  inset: -18px;
+  border-radius: 50%;
+  border: 2px solid rgba(11, 74, 124, 0.2);
+  animation: pulseRing 3s ease-out infinite;
+}
+
+.support-chat {
+  width: 54px;
+  height: 40px;
+  border-radius: 12px;
+  background: #ffffff;
+  position: relative;
+}
+
+.support-chat::before {
+  content: "";
+  position: absolute;
+  left: 12px;
+  bottom: -10px;
+  width: 14px;
+  height: 14px;
+  background: #ffffff;
+  border-radius: 0 0 6px 0;
+  transform: rotate(45deg);
+}
+
+.support-chat::after {
+  content: "";
+  position: absolute;
+  top: 12px;
+  left: 10px;
+  right: 10px;
+  height: 4px;
+  border-radius: 4px;
+  background: linear-gradient(90deg, #0b4a7c, #60a5fa);
+  box-shadow: 0 10px 0 rgba(11, 74, 124, 0.25);
+}
+
+.support-dot {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #0b4a7c;
+  opacity: 0.8;
+  animation: floatDot 4s ease-in-out infinite;
+}
+
+.support-dot-1 {
+  top: 70px;
+  left: 60px;
+}
+
+.support-dot-2 {
+  bottom: 80px;
+  right: 90px;
+  animation-delay: 1.2s;
+}
+
+.support-dot-3 {
+  top: 120px;
+  right: 140px;
+  animation-delay: 2s;
+}
+
+@keyframes orbitSpin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes pulseRing {
+  0% {
+    transform: scale(0.85);
+    opacity: 0.6;
+  }
+
+  70% {
+    transform: scale(1.1);
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes floatDot {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* ──────────────────────────────────────────────────────────────
+   Imported animated showcase
+   (HeroSection + GlobalArtDeck + EcommerceSection)
+   Scoped to #home-animated so it never leaks into other sections.
+   Mirrors the working setup on /our-business.
+   ────────────────────────────────────────────────────────────── */
+#home-animated {
+  position: relative;
+  /* Clip the deck's pre-pin "fanned" cards to this section so they never
+     bleed up onto the first <Hero />. While GSAP pins the deck it becomes
+     position:fixed, which escapes this clip and shows over <HeroSection />. */
+  overflow: hidden;
+}
+
+#home-animated .global-art-deck {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 50;
+}
+
+#home-animated .global-card {
+  position: absolute;
+  left: 50%;
+  top: 60%;
+  width: 220px;
+  height: 280px;
+  border-radius: 28px;
+  transform-style: preserve-3d;
+  will-change: transform;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08), 0 40px 80px rgba(0, 0, 0, 0.08);
+}
+
+#home-animated .global-card.c1 { background: linear-gradient(135deg, #f44336, #d32f2f); }
+#home-animated .global-card.c2 { background: linear-gradient(135deg, #2196f3, #0d47a1); }
+#home-animated .global-card.c3 { background: linear-gradient(135deg, #ff9800, #ef6c00); }
+#home-animated .global-card.c4 { background: linear-gradient(135deg, #9c27b0, #512da8); }
+#home-animated .global-card.c5 { background: linear-gradient(135deg, #4caf50, #1b5e20); }
+#home-animated .global-card.c6 { background: linear-gradient(135deg, #00bcd4, #006064); }
+#home-animated .global-card.c7 { background: linear-gradient(135deg, #ffc107, #ff6f00); }
+
+#home-animated .ecommerce-scroll-container {
+  position: relative;
+}
+
+/* ──────────────────────────────────────────────────────────────
+   CommunitySection ("Global Presence & Hubs") — copied from the
+   pallet_rose reference. Scoped under #home-community so the generic
+   class names (.letter, .word, .section-card, .company-logo …) and the
+   #community id never leak onto the rest of the site. CSS vars are
+   defined locally so the copied rules work unchanged. Keyframes are
+   prefixed to avoid any global @keyframes name clash.
+   NOTE: pallet_rose's index.css has an older `#community { display:flex }`
+   rule left over from a removed centered design — intentionally omitted
+   here so the heading + marquee stack correctly (the marquee layout).
+   ────────────────────────────────────────────────────────────── */
+#home-community {
+  --card-bg: #f4f4f4;
+  --text: #111111;
+}
+
+#home-community .section-card {
+  margin: 0 14px 14px;
+  background: var(--card-bg);
+  border-radius: 26px;
+  overflow: hidden;
+  position: relative;
+}
+
+#home-community #community {
+  position: relative;
+  padding: 48px 0;
+  background: var(--card-bg);
+  overflow: hidden;
+}
+@media (min-width: 768px) {
+  #home-community #community { padding: 64px 0; }
+}
+
+#home-community .trusted-content {
+  padding: 0 24px;
+  margin-bottom: 50px;
+}
+@media (min-width: 768px) {
+  #home-community .trusted-content {
+    padding: 0 48px;
+    margin-bottom: 70px;
+  }
+}
+
+#home-community .trusted-title {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  font-size: clamp(34px, 4vw, 58px);
+  font-weight: 700;
+  letter-spacing: -2px;
+  line-height: 1.1;
+  margin-bottom: 18px;
+}
+
+#home-community .letter {
+  display: inline-block;
+  color: var(--text);
+  opacity: 0;
+  transform: translateY(100%);
+  animation: homeCommunityLetterReveal 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+#home-community .best {
+  color: #b0b0b0;
+  margin-left: 8px;
+  opacity: 0;
+  transform: translateY(100%);
+  animation: homeCommunityLetterReveal 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation-delay: 0.8s;
+}
+
+@keyframes homeCommunityLetterReveal {
+  from { opacity: 0; transform: translateY(100%); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+#home-community .trusted-subtitle {
+  max-width: 650px;
+  font-size: 15px;
+  line-height: 1.6;
+  color: #555;
+}
+@media (min-width: 768px) {
+  #home-community .trusted-subtitle {
+    font-size: 18px;
+    max-width: 700px;
+  }
+}
+
+#home-community .word {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(15px);
+  filter: blur(4px);
+  animation: homeCommunityWordReveal 0.55s ease forwards;
+}
+
+@keyframes homeCommunityWordReveal {
+  from { opacity: 0; transform: translateY(15px); filter: blur(4px); }
+  to   { opacity: 1; transform: translateY(0); filter: blur(0); }
+}
+
+#home-community .logo-marquee {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+#home-community .logo-track {
+  display: flex;
+  align-items: center;
+  gap: 50px;
+  width: max-content;
+  animation: homeCommunityLogoMarquee 25s linear infinite;
+}
+#home-community .logo-track:hover {
+  animation-play-state: paused;
+}
+@media (min-width: 768px) {
+  #home-community .logo-track { gap: 90px; }
+}
+
+#home-community .company-logo {
+  flex-shrink: 0;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: #c2c2c2;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+}
+@media (min-width: 768px) {
+  #home-community .company-logo { font-size: 34px; }
+}
+#home-community .company-logo:hover {
+  color: var(--text);
+  transform: translateY(-2px);
+}
+
+@keyframes homeCommunityLogoMarquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+#home-community .logo-marquee::before,
+#home-community .logo-marquee::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  width: 120px;
+  height: 100%;
+  z-index: 2;
+  pointer-events: none;
+}
+#home-community .logo-marquee::before {
+  left: 0;
+  background: linear-gradient(to right, #f4f4f4, transparent);
+}
+#home-community .logo-marquee::after {
+  right: 0;
+  background: linear-gradient(to left, #f4f4f4, transparent);
+}
+
+/* ──────────────────────────────────────────────────────────────
+   "Why Choose Eloma" hover-expand image accordion.
+   Pure-CSS flexbox accordion (cyntexa-style): cards sit collapsed and
+   the hovered one grows its flex while the others shrink; the first card
+   is expanded by default and resets as soon as the row is hovered.
+   Scoped under #why-choose so the generic .wc-* classes never leak.
+   The desktop accordion is gated to lg+ in the component (hidden lg:flex).
+   ────────────────────────────────────────────────────────────── */
+#why-choose .wc-accordion {
+  display: flex;
+  gap: 12px;
+  height: 460px;
+}
+
+#why-choose .wc-card {
+  flex: 1 1 0%;
+  min-width: 0;
+  transition: flex 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  cursor: pointer;
+}
+#why-choose .wc-card:first-child {
+  flex: 4 1 0%;
+}
+#why-choose .wc-accordion:hover .wc-card:first-child {
+  flex: 1 1 0%;
+}
+#why-choose .wc-accordion .wc-card:hover {
+  flex: 4 1 0%;
+}
+
+/* Tint: heavier brand colour when collapsed, lighter to reveal image when open */
+#why-choose .wc-tint {
+  background: linear-gradient(180deg, rgba(8, 33, 60, 0.35), rgba(42, 138, 107, 0.85));
+  opacity: 1;
+  transition: opacity 0.5s ease;
+}
+#why-choose .wc-card:first-child .wc-tint,
+#why-choose .wc-card:hover .wc-tint {
+  opacity: 0.55;
+}
+#why-choose .wc-accordion:hover .wc-card:first-child .wc-tint {
+  opacity: 1;
+}
+
+/* Label: vertical while collapsed, rotates to horizontal when expanded */
+#why-choose .wc-label {
+  transform-origin: left bottom;
+  transform: rotate(-90deg) translateY(-6px);
+  white-space: nowrap;
+  color: #ffffff;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+#why-choose .wc-card:first-child .wc-label,
+#why-choose .wc-card:hover .wc-label {
+  transform: rotate(0deg) translateY(0);
+}
+#why-choose .wc-accordion:hover .wc-card:first-child .wc-label {
+  transform: rotate(-90deg) translateY(-6px);
+}
+
+/* Description: only on the expanded card */
+#why-choose .wc-desc {
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.45s ease, transform 0.45s ease;
+}
+#why-choose .wc-card:first-child .wc-desc,
+#why-choose .wc-card:hover .wc-desc {
+  opacity: 1;
+  transform: translateY(0);
+}
+#why-choose .wc-accordion:hover .wc-card:first-child .wc-desc {
+  opacity: 0;
+}
+
+/* ── 32" / ultra-wide overrides for the scoped sections ──────────────────────
+   CommunitySection (#home-community) and WhyChoose (#why-choose) use raw px
+   font-sizes / heights that do NOT grow with the global rem scaling, so they
+   look small on a 32" monitor. Bumped explicitly here; placed last in the file
+   so they win the cascade over the base rules above. */
+@media (min-width: 1920px) {
+  #home-community .trusted-title { font-size: 66px; }
+  #home-community .trusted-subtitle { font-size: 21px; max-width: 760px; }
+  #home-community .trusted-content { padding: 0 60px; }
+  #home-community .company-logo { font-size: 40px; }
+  #home-community .logo-track { gap: 110px; }
+
+  #why-choose .wc-accordion { height: 540px; }
+  #why-choose .wc-label { font-size: 20px; }
+  #why-choose .wc-desc { font-size: 16px; }
+}
+
+@media (min-width: 2560px) {
+  #home-community .trusted-title { font-size: 78px; }
+  #home-community .trusted-subtitle { font-size: 24px; max-width: 880px; }
+  #home-community .trusted-content { padding: 0 80px; }
+  #home-community .company-logo { font-size: 48px; }
+  #home-community .logo-track { gap: 130px; }
+
+  #why-choose .wc-accordion { height: 620px; }
+  #why-choose .wc-label { font-size: 23px; }
+  #why-choose .wc-desc { font-size: 18px; }
+}

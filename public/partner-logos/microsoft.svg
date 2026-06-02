@@ -1,0 +1,9 @@
+<svg width="320" height="180" viewBox="0 0 320 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="320" height="180" rx="20" fill="white"/>
+  <rect x="34" y="36" width="34" height="34" fill="#F25022"/>
+  <rect x="72" y="36" width="34" height="34" fill="#7FBA00"/>
+  <rect x="34" y="74" width="34" height="34" fill="#00A4EF"/>
+  <rect x="72" y="74" width="34" height="34" fill="#FFB900"/>
+  <text x="128" y="86" fill="#1F1F1F" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="700">Microsoft</text>
+  <text x="128" y="116" fill="#5B5B5B" font-family="Arial, Helvetica, sans-serif" font-size="16">Cloud • Software • Productivity</text>
+</svg>
