@@ -45,9 +45,17 @@ const capabilities = [
 
 export default function GlobalPresence() {
   return (
-    <section id="global" className="section-padding relative overflow-hidden bg-white">
-      <div className="container-x relative">
-        <SectionHeading
+    <>
+      {/* Full width background */}
+      <div className="w-screen relative -ml-[50vw] left-[50%] bg-gradient-to-br from-[#0a2342] via-[#1a3a52] to-[#0d1f35]">
+        {/* Cinematic gradient background with lighting effects */}
+        <div className="absolute inset-0 bg-gradient-to-br from-[#1e4d6d]/50 via-[#0a2342] to-[#051520] pointer-events-none"></div>
+        <div className="absolute top-1/4 right-1/3 w-[500px] h-[500px] bg-[#1a56ff]/15 rounded-full blur-[100px] pointer-events-none"></div>
+        <div className="absolute bottom-0 left-1/4 w-[400px] h-[400px] bg-[#3dbf9e]/10 rounded-full blur-[80px] pointer-events-none"></div>
+
+        <section id="global" className="section-padding relative overflow-hidden">
+          <div className="container-x relative">
+            <SectionHeading
           eyebrow="Global Presence"
           title="A growing presence across key global regions"
           description="We operate across multiple countries, connecting businesses and communities through trusted, scalable solutions."
@@ -110,13 +118,13 @@ export default function GlobalPresence() {
                   }}
                 >
                   <TiltCard maxTilt={5}>
-                    <div className="group flex gap-4 rounded-2xl border border-slate-200 bg-white p-5 transition-all duration-500 hover:-translate-y-0.5 hover:border-forest hover:shadow-card-hover">
-                      <div className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-xl bg-slate-50 text-forest transition-all duration-500 group-hover:rotate-6 group-hover:bg-forest group-hover:text-white">
+                    <div className="group flex gap-4 rounded-2xl border border-white/20 bg-white/10 backdrop-blur-md p-5 transition-all duration-500 hover:-translate-y-0.5 hover:border-[#3dbf9e]/50 hover:shadow-[0_20px_40px_rgba(61,191,158,0.15)]">
+                      <div className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-xl bg-white/15 text-white transition-all duration-500 group-hover:rotate-6 group-hover:bg-[#3dbf9e] group-hover:text-[#0a2342]">
                         <item.icon size={20} strokeWidth={1.8} />
                       </div>
                       <div>
-                        <h3 className="font-semibold text-forest">{item.title}</h3>
-                        <p className="mt-1 text-sm leading-relaxed text-slate-600">
+                        <h3 className="font-semibold text-white">{item.title}</h3>
+                        <p className="mt-1 text-sm leading-relaxed text-white/70">
                           {item.description}
                         </p>
                       </div>
@@ -145,7 +153,9 @@ export default function GlobalPresence() {
             </div>
           ))}
         </div> */}
+          </div>
+        </section>
       </div>
-    </section>
+    </>
   );
 }
