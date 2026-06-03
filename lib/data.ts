@@ -1,6 +1,111 @@
 // Placeholder content - replace with official group data.
 export const groupName = "Eloma Group";
 
+export interface Division {
+  id: string;
+  index: string;
+  name: string;
+  tagline: string;
+  description: string;
+  video: string;
+  poster: string;
+  capabilities: string[];
+  metric: { value: string; label: string };
+  accent: string;
+}
+
+export const DIVISIONS: Division[] = [
+  {
+    id: 'callcenter',
+    index: '01',
+    name: 'Eloma Call Centre',
+    tagline: 'Real People. Real Connections. Real Results.',
+    description:
+      'A people-first BPO division building relationships, not just answering calls — multi-channel customer experience engineered around trust and growth.',
+    video: 'https://videos.pexels.com/video-files/3379503/3379503-sd_640_360_25fps.mp4',
+    poster: 'https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=800&q=80',
+    capabilities: ['24/7 Support', 'Omnichannel CX', 'Customer Success', 'Inside Sales'],
+    metric: { value: '', label: 'Always-on service' },
+    accent: '#22b98c',
+  },
+  {
+    id: 'imports',
+    index: '02',
+    name: 'Eloma Imports',
+    tagline: 'Global Sourcing. Reliable Supply.',
+    description:
+      'Global sourcing and trade — connecting markets with dependable supply, customs expertise and end-to-end distribution across borders.',
+    video: 'https://videos.pexels.com/video-files/4480993/4480993-sd_640_360_25fps.mp4',
+    poster: 'https://images.unsplash.com/photo-1605902711622-cfb43c4437b5?auto=format&fit=crop&w=800&q=80',
+    capabilities: ['Global Sourcing', 'Customs & Trade', 'Quality Assurance', 'Distribution'],
+    metric: { value: '', label: 'Markets connected' },
+    accent: '#2fc79b',
+  },
+  {
+    id: 'it',
+    index: '03',
+    name: 'Eloma IT Infrastructure',
+    tagline: 'Powering Performance. Building the Future.',
+    description:
+      'Robust, secure-by-design infrastructure that drives efficiency and innovation — the digital backbone powering every company in the group and beyond.',
+    video: 'https://videos.pexels.com/video-files/7974/7974-sd_640_360_25fps.mp4',
+    poster: 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800&q=80',
+    capabilities: ['Cloud & DevOps', 'Cybersecurity', 'High Availability', 'Managed Services'],
+    metric: { value: '', label: 'Uptime delivered' },
+    accent: '#37d6a6',
+  },
+  {
+    id: 'supplychain',
+    index: '04',
+    name: 'Eloma Supply Chain',
+    tagline: 'Smarter. Stronger. More Sustainable.',
+    description:
+      'Resilient, technology-led logistics — freight, warehousing and distribution built on collaboration and sustainability for a moving world.',
+    video: 'https://videos.pexels.com/video-files/3380803/3380803-sd_640_360_25fps.mp4',
+    poster: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=800&q=80',
+    capabilities: ['Freight & Logistics', 'Warehousing', 'Distribution', 'Sustainable Ops'],
+    metric: { value: '', label: 'Logistics hubs' },
+    accent: '#19a47c',
+  },
+  {
+    id: 'travel',
+    index: '05',
+    name: 'Eloma Travel',
+    tagline: 'Explore. Experience. Enjoy.',
+    description:
+      'A global travel division crafting seamless journeys — from corporate mobility to bespoke leisure — connecting people to places and unforgettable moments.',
+    video: 'https://videos.pexels.com/video-files/3191381/3191381-sd_640_360_30fps.mp4',
+    poster: 'https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&w=800&q=80',
+    capabilities: ['Corporate Mobility', 'Leisure & Luxury', 'Worldwide Network', 'Concierge Support'],
+    metric: { value: '', label: 'Destinations served' },
+    accent: '#16a079',
+  },
+];
+
+// "Why We Exist" timeline stages (Section 06)
+export const TIMELINE = [
+  {
+    year: 'The Root',
+    title: 'A single vision',
+    body: 'Eloma began with a conviction: that businesses grow strongest when they share roots — common values, shared infrastructure, and a long-term horizon.',
+  },
+  {
+    year: 'The Branches',
+    title: 'Four pillars, one trunk',
+    body: 'Travel, technology, customer experience and logistics grew as branches of one organism — independent in craft, united in standard.',
+  },
+  {
+    year: 'The Canopy',
+    title: 'A global ecosystem',
+    body: 'Today the group spans markets and continents, an interconnected canopy where each company makes the others stronger.',
+  },
+  {
+    year: 'The Horizon',
+    title: 'Built for generations',
+    body: "We don't build for the quarter. We build for the decade — investing in people, sustainability and ventures that outlast us.",
+  },
+];
+
 export const navAbout: Array<{ type: "header" | "item"; label: string; href?: string }> = [
   { type: "item", label: "About Us", href: "/about" },
   { type: "item", label: "Blog", href: "/blog" },

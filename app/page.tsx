@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import {
   motion,
   useScroll,
@@ -48,6 +48,10 @@ import { HeroSection } from "@/sections/HeroSection";
 import { CommunitySection } from "@/sections/CommunitySection";
 import { GlobalArtDeck } from "@/sections/GlobalArtDeck";
 import { EcommerceSection } from "@/sections/EcommerceSection";
+import Hero from '@/components/sections/Hero';
+import BusinessUniverse from '@/sections/BusinessUniverse';
+import WhyWeExist from '@/sections/WhyWeExist';
+import FutureVision from '@/sections/FutureVision';
 
 
 /* ============================================================== */
@@ -55,20 +59,34 @@ import { EcommerceSection } from "@/sections/EcommerceSection";
 /* ============================================================== */
 
 export default function Home() {
+  const [ready, setReady] = useState(false);
+
+  useEffect(() => {
+    // Give the 3D scene time to initialize before triggering animations
+    const timer = setTimeout(() => setReady(true), 300);
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <div className="relative bg-white">
       <Navbar />
       <main className="overflow-clip">
         {/* <Hero /> */}
+        <Hero ready={ready} />
         <ExperienceEloma />
-          <RevealSection/>
-          {/* <NewVisionSection /> */}
+        <BusinessUniverse />
+          <FutureVision />
           <Insights/>
-          <InsightsCarousel />
+          <WhyWeExist />
           <GlobalPresence />
-          {/* <NewEcommerceSection /> */}
-          <Investors />
+          {/* <Investors /> */}
           <Contact />
+
+
+          {/* <RevealSection/> */}
+          {/* <NewVisionSection /> */}
+          {/* <InsightsCarousel /> */}
+          {/* <NewEcommerceSection /> */}
        
         <div id="home-animated" className="relative">
           {/* <HeroSection />
@@ -116,139 +134,139 @@ const HERO_LINES: Array<{ text: string; italic?: boolean }> = [
 
 const HERO_DELAY = 0.4;
 
-function Hero() {
-  const ref = useRef<HTMLDivElement | null>(null);
+// function Hero() {
+//   const ref = useRef<HTMLDivElement | null>(null);
 
-  // Parallax + soft fade on scroll-out
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start start", "end start"]
-  });
-  const contentY = useTransform(scrollYProgress, [0, 1], ["0%", "-12%"]);
-  const fade = useTransform(scrollYProgress, [0, 0.9], [1, 0]);
+//   // Parallax + soft fade on scroll-out
+//   const { scrollYProgress } = useScroll({
+//     target: ref,
+//     offset: ["start start", "end start"]
+//   });
+//   const contentY = useTransform(scrollYProgress, [0, 1], ["0%", "-12%"]);
+//   const fade = useTransform(scrollYProgress, [0, 0.9], [1, 0]);
 
-  return (
-    <section
-      ref={ref}
-      className="relative isolate flex min-h-screen flex-col overflow-hidden bg-white text-[#0b1e2e]"
-    >
-      {/* Layered atmospheric background ----------------------- */}
-      {/* Gradient base (disabled for plain white hero) */}
-      <div aria-hidden className="absolute inset-0 -z-30" style={{ background: "transparent" }} />
-      {/* Decorative orbs hidden for white background */}
-      <motion.div aria-hidden className="hidden" />
-      <motion.div aria-hidden className="hidden" />
+//   return (
+//     <section
+//       ref={ref}
+//       className="relative isolate flex min-h-screen flex-col overflow-hidden bg-white text-[#0b1e2e]"
+//     >
+//       {/* Layered atmospheric background ----------------------- */}
+//       {/* Gradient base (disabled for plain white hero) */}
+//       <div aria-hidden className="absolute inset-0 -z-30" style={{ background: "transparent" }} />
+//       {/* Decorative orbs hidden for white background */}
+//       <motion.div aria-hidden className="hidden" />
+//       <motion.div aria-hidden className="hidden" />
 
-      {/* SVG noise grain disabled */}
-      <div aria-hidden className="hidden" />
+//       {/* SVG noise grain disabled */}
+//       <div aria-hidden className="hidden" />
 
-      {/* Right-side interactive globe (visible on lg screens) */}
-      <div className="absolute right-12 3xl:right-28 4xl:right-52 top-1/2 z-10 hidden -translate-y-1/2 lg:block">
-        <div className="relative h-[440px] w-[440px] lg:h-[560px] lg:w-[560px] 3xl:h-[700px] 3xl:w-[700px] 4xl:h-[820px] 4xl:w-[820px] cursor-grab active:cursor-grabbing pointer-events-auto translate-x-6 lg:translate-x-12 3xl:translate-x-0 4xl:-translate-x-12">
-          <HeroGlobe />
-        </div>
-      </div>
+//       {/* Right-side interactive globe (visible on lg screens) */}
+//       <div className="absolute right-12 3xl:right-28 4xl:right-52 top-1/2 z-10 hidden -translate-y-1/2 lg:block">
+//         <div className="relative h-[440px] w-[440px] lg:h-[560px] lg:w-[560px] 3xl:h-[700px] 3xl:w-[700px] 4xl:h-[820px] 4xl:w-[820px] cursor-grab active:cursor-grabbing pointer-events-auto translate-x-6 lg:translate-x-12 3xl:translate-x-0 4xl:-translate-x-12">
+//           <HeroGlobe />
+//         </div>
+//       </div>
 
-      <motion.div
-        style={{ y: contentY, opacity: fade }}
-        className="container-x relative flex flex-1 flex-col justify-center pb-28 pt-32 md:pt-40"
-      >
-        {/* Eyebrow ------------------------------------------------ */}
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: HERO_DELAY, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-          className="mb-10 inline-flex items-center gap-3"
-        >
-          <span className="relative flex h-2 w-2">
-            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-500 opacity-70" />
-            <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
-          </span>
-          <span className="text-[10px] 3xl:text-[11px] 4xl:text-[12.5px] font-semibold uppercase tracking-[0.36em] text-emerald-600">
-            Eloma Group · Established Across 8 Countries
-          </span>
-        </motion.div>
+//       <motion.div
+//         style={{ y: contentY, opacity: fade }}
+//         className="container-x relative flex flex-1 flex-col justify-center pb-28 pt-32 md:pt-40"
+//       >
+//         {/* Eyebrow ------------------------------------------------ */}
+//         <motion.div
+//           initial={{ opacity: 0, y: 16 }}
+//           animate={{ opacity: 1, y: 0 }}
+//           transition={{ delay: HERO_DELAY, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+//           className="mb-10 inline-flex items-center gap-3"
+//         >
+//           <span className="relative flex h-2 w-2">
+//             <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-500 opacity-70" />
+//             <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
+//           </span>
+//           <span className="text-[10px] 3xl:text-[11px] 4xl:text-[12.5px] font-semibold uppercase tracking-[0.36em] text-emerald-600">
+//             Eloma Group · Established Across 8 Countries
+//           </span>
+//         </motion.div>
 
-        {/* Headline — character split, mask reveal -------------- */}
-        <h1 className="max-w-5xl font-display text-[1.8rem] font-bold leading-[1.06] tracking-tight md:text-[3rem] lg:text-[3.2rem] xl:text-[4.2rem] 3xl:text-[4.8rem] 4xl:text-[5.6rem]">
-          {HERO_LINES.map((line, lineIdx) => (
-            <span key={lineIdx} className="block overflow-hidden pb-3 md:pb-4">
-              <motion.span
-                initial={{ y: "110%" }}
-                animate={{ y: "0%" }}
-                transition={{
-                  delay: HERO_DELAY + 0.2 + lineIdx * 0.15,
-                  duration: 1.05,
-                  ease: [0.22, 1, 0.36, 1]
-                }}
-                className={cn(
-                  "block",
-                  line.italic && "italic text-gold/95"
-                )}
-              >
-                {line.text}
-              </motion.span>
-            </span>
-          ))}
-        </h1>
+//         {/* Headline — character split, mask reveal -------------- */}
+//         <h1 className="max-w-5xl font-display text-[1.8rem] font-bold leading-[1.06] tracking-tight md:text-[3rem] lg:text-[3.2rem] xl:text-[4.2rem] 3xl:text-[4.8rem] 4xl:text-[5.6rem]">
+//           {HERO_LINES.map((line, lineIdx) => (
+//             <span key={lineIdx} className="block overflow-hidden pb-3 md:pb-4">
+//               <motion.span
+//                 initial={{ y: "110%" }}
+//                 animate={{ y: "0%" }}
+//                 transition={{
+//                   delay: HERO_DELAY + 0.2 + lineIdx * 0.15,
+//                   duration: 1.05,
+//                   ease: [0.22, 1, 0.36, 1]
+//                 }}
+//                 className={cn(
+//                   "block",
+//                   line.italic && "italic text-gold/95"
+//                 )}
+//               >
+//                 {line.text}
+//               </motion.span>
+//             </span>
+//           ))}
+//         </h1>
 
-        {/* Subtitle ------------------------------------------ */}
-        <motion.p
-          initial={{ opacity: 0, y: 14 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: HERO_DELAY + 0.95, duration: 0.8 }}
-          className="mt-9 max-w-xl text-base leading-relaxed text-slate-600 md:text-lg 3xl:text-xl 4xl:text-2xl 3xl:max-w-2xl"
-        >
-          A dynamic business group uniting logistics, digital innovation,
-          security, travel and customer solutions - driven by purpose,
-          performance, and sustainability.
-        </motion.p>
+//         {/* Subtitle ------------------------------------------ */}
+//         <motion.p
+//           initial={{ opacity: 0, y: 14 }}
+//           animate={{ opacity: 1, y: 0 }}
+//           transition={{ delay: HERO_DELAY + 0.95, duration: 0.8 }}
+//           className="mt-9 max-w-xl text-base leading-relaxed text-slate-600 md:text-lg 3xl:text-xl 4xl:text-2xl 3xl:max-w-2xl"
+//         >
+//           A dynamic business group uniting logistics, digital innovation,
+//           security, travel and customer solutions - driven by purpose,
+//           performance, and sustainability.
+//         </motion.p>
 
-        {/* CTAs ----------------------------------------------- */}
-        <motion.div
-          initial={{ opacity: 0, y: 14 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: HERO_DELAY + 1.15, duration: 0.8 }}
-          className="mt-12 flex flex-col items-start gap-4 sm:flex-row sm:items-center"
-        >
-          <MagneticButton strength={12}>
-            <Link
-              href="#manifesto"
-              className="group inline-flex h-12 items-center justify-center gap-2 rounded-full bg-emerald-500 px-7 text-sm font-semibold text-[#0b1e2e] transition-colors hover:bg-emerald-600"
-            >
-              Discover the Group
-              <ArrowRight
-                size={16}
-                className="transition-transform group-hover:translate-x-1"
-              />
-            </Link>
-          </MagneticButton>
-          <MagneticButton strength={10}>
-            <button
-              type="button"
-              className="group inline-flex h-12 items-center justify-center gap-3 rounded-full border border-[#0b1e2e]/20 bg-[#0b1e2e]/5 px-6 text-sm font-semibold text-[#0b1e2e] backdrop-blur transition-colors hover:border-[#0b1e2e] hover:bg-[#0b1e2e] hover:text-white"
-            >
-              <span className="flex h-7 w-7 items-center justify-center rounded-full bg-emerald-500 text-[#0b1e2e]">
-                <Play size={11} className="ml-0.5" />
-              </span>
-              Watch our story
-            </button>
-          </MagneticButton>
-        </motion.div>
+//         {/* CTAs ----------------------------------------------- */}
+//         <motion.div
+//           initial={{ opacity: 0, y: 14 }}
+//           animate={{ opacity: 1, y: 0 }}
+//           transition={{ delay: HERO_DELAY + 1.15, duration: 0.8 }}
+//           className="mt-12 flex flex-col items-start gap-4 sm:flex-row sm:items-center"
+//         >
+//           <MagneticButton strength={12}>
+//             <Link
+//               href="#manifesto"
+//               className="group inline-flex h-12 items-center justify-center gap-2 rounded-full bg-emerald-500 px-7 text-sm font-semibold text-[#0b1e2e] transition-colors hover:bg-emerald-600"
+//             >
+//               Discover the Group
+//               <ArrowRight
+//                 size={16}
+//                 className="transition-transform group-hover:translate-x-1"
+//               />
+//             </Link>
+//           </MagneticButton>
+//           <MagneticButton strength={10}>
+//             <button
+//               type="button"
+//               className="group inline-flex h-12 items-center justify-center gap-3 rounded-full border border-[#0b1e2e]/20 bg-[#0b1e2e]/5 px-6 text-sm font-semibold text-[#0b1e2e] backdrop-blur transition-colors hover:border-[#0b1e2e] hover:bg-[#0b1e2e] hover:text-white"
+//             >
+//               <span className="flex h-7 w-7 items-center justify-center rounded-full bg-emerald-500 text-[#0b1e2e]">
+//                 <Play size={11} className="ml-0.5" />
+//               </span>
+//               Watch our story
+//             </button>
+//           </MagneticButton>
+//         </motion.div>
 
-        {/* Bottom meta row --------------------------- */}
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: HERO_DELAY + 1.4, duration: 0.8 }}
-          className="absolute bottom-12 left-0 right-0"
-        >
+//         {/* Bottom meta row --------------------------- */}
+//         <motion.div
+//           initial={{ opacity: 0, y: 16 }}
+//           animate={{ opacity: 1, y: 0 }}
+//           transition={{ delay: HERO_DELAY + 1.4, duration: 0.8 }}
+//           className="absolute bottom-12 left-0 right-0"
+//         >
 
-        </motion.div>
-      </motion.div>
-    </section>
-  );
-}
+//         </motion.div>
+//       </motion.div>
+//     </section>
+//   );
+// }
 
 /* ============================================================== */
 /* 2. COUNTRIES MARQUEE — Constant motion, ties hero to manifesto  */
@@ -798,7 +816,7 @@ const WHY_WORK = [
 
 function Insights() {
   return (
-    <section className="bg-slate-50 py-16 md:py-24">
+    <section className="bg-slate-50 py-10 md:py-14">
       <div className="container-x space-y-16">
         <div className="grid gap-2 lg:grid-cols-[1.1fr_0.9fr] lg:items-start">
           <motion.div
@@ -881,105 +899,7 @@ function Insights() {
           </motion.div>
         </div>
 
-        <div className="grid gap-8 lg:grid-cols-2">
-          <motion.div
-            initial="initial"
-            whileHover="hover"
-            variants={{
-              initial: { y: 0 },
-              hover: { y: -6 }
-            }}
-            transition={{ duration: 0.3, ease: "easeOut" }}
-            className="relative overflow-hidden rounded-3xl border border-slate-200 bg-white p-8 md:p-12 transition-all duration-300 hover:shadow-card-hover"
-          >
-            <h3 className="font-display text-2xl font-semibold text-forest">
-              Life at Eloma
-            </h3>
-            <p className="mt-4 text-sm leading-relaxed text-slate-600 md:text-base">
-              At Eloma, work is not just about a job. It is about learning,
-              growing, and building something meaningful. We are a team of
-              people who support each other. We believe in simple ideas -
-              respect, trust, and growth. Every day, you get a chance to try new
-              things, learn new skills, and become better.
-            </p>
-            {/* Animated border trace */}
-            <svg className="absolute inset-0 h-full w-full pointer-events-none rounded-3xl" fill="none">
-              <motion.rect
-                x="1"
-                y="1"
-                width="calc(100% - 2px)"
-                height="calc(100% - 2px)"
-                rx="23"
-                stroke="#2a8a6b"
-                strokeWidth="2"
-                strokeLinecap="round"
-                variants={{
-                  initial: { pathLength: 0, opacity: 0 },
-                  hover: {
-                    pathLength: 1,
-                    opacity: 1,
-                    transition: {
-                      pathLength: { type: "spring", duration: 1.2, bounce: 0 },
-                      opacity: { duration: 0.2 }
-                    }
-                  }
-                }}
-              />
-            </svg>
-          </motion.div>
-          <motion.div
-            initial="initial"
-            whileHover="hover"
-            variants={{
-              initial: { y: 0 },
-              hover: { y: -6 }
-            }}
-            transition={{ duration: 0.3, ease: "easeOut" }}
-            className="relative overflow-hidden rounded-3xl border border-slate-200 bg-white p-8 md:p-12 transition-all duration-300 hover:shadow-card-hover"
-          >
-            <h3 className="font-display text-2xl font-semibold text-forest">
-              Why Work at Eloma?
-            </h3>
-            <p className="mt-4 text-sm leading-relaxed text-slate-600 md:text-base">
-              Eloma Group is a growing company based in Australia, India, US,
-              Canada, China, UK, UAE and Singapore. We work across different
-              industries and build strong businesses. We give people real
-              opportunities to grow, not just in work but in life too.
-            </p>
-            <ul className="mt-6 space-y-2 text-sm font-medium text-forest">
-              {WHY_WORK.map((item) => (
-                <li key={item} className="flex items-center gap-3">
-                  <span className="block h-1.5 w-1.5 rounded-full bg-gold-dark" />
-                  {item}
-                </li>
-              ))}
-            </ul>
-            {/* Animated border trace */}
-            <svg className="absolute inset-0 h-full w-full pointer-events-none rounded-3xl" fill="none">
-              <motion.rect
-                x="1"
-                y="1"
-                width="calc(100% - 2px)"
-                height="calc(100% - 2px)"
-                rx="23"
-                stroke="#2a8a6b"
-                strokeWidth="2"
-                strokeLinecap="round"
-                variants={{
-                  initial: { pathLength: 0, opacity: 0 },
-                  hover: {
-                    pathLength: 1,
-                    opacity: 1,
-                    transition: {
-                      pathLength: { type: "spring", duration: 1.2, bounce: 0 },
-                      opacity: { duration: 0.2 }
-                    }
-                  }
-                }}
-              />
-            </svg>
-          </motion.div>
-        </div>
+        
 
         {/* <motion.div
           initial="initial"

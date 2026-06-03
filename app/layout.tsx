@@ -2,19 +2,15 @@ import "./globals.css";
 import "swiper/css";
 
 import type { Metadata } from "next";
-import { Playfair_Display, Source_Sans_3 } from "next/font/google";
+import { Inter } from "next/font/google";
 
 import { Providers } from "./providers";
 import { groupName } from "@/lib/data";
 
-const display = Playfair_Display({
-  subsets: ["latin"],
-  variable: "--font-display",
-  weight: ["500", "600", "700", "800"],
-  display: "swap"
-});
-
-const sans = Source_Sans_3({
+// Single typeface for the whole site. Mapped to BOTH --font-display and
+// --font-sans so every `font-display` / `font-sans` / `font-serif` usage
+// resolves to Inter (see tailwind.config.ts).
+const inter = Inter({
   subsets: ["latin"],
   variable: "--font-sans",
   weight: ["300", "400", "500", "600", "700"],
@@ -60,7 +56,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${display.variable} ${sans.variable}`}>
+    <html lang="en" className={inter.variable}>
       <body>
         <Providers>{children}</Providers>
       </body>

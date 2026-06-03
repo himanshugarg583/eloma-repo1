@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -19,13 +21,12 @@ body {
 }
 
 body {
-  font-family: "Gill Sans", sans-serif;
+  font-family: var(--font-sans), "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-feature-settings: "cv11", "ss01";
 }
 
-/* Headings should use a neutral sans-serif for legibility */
+/* Headings use the same Inter family as the rest of the site */
 h1,
 h2,
 h3,
@@ -35,12 +36,26 @@ h6,
 .heading-xl,
 .heading-lg,
 .heading-md {
-  font-family: sans-serif;
+  font-family: var(--font-sans), "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
 /* Layout utilities */
 .container-x {
   @apply mx-auto w-full max-w-7xl px-6 lg:px-8;
+}
+
+/* Editorial layout utilities (used by WhyWeExist / FutureVision / BusinessUniverse) */
+.container-luxe {
+  @apply mx-auto w-full max-w-[1500px];
+}
+
+.section-pad {
+  @apply px-6 py-28 md:px-12 md:py-40 lg:px-20;
+}
+
+/* Gradient text — navy → emerald on a light ground */
+.text-grad {
+  @apply bg-gradient-to-r from-navy via-emerald-600 to-emerald-500 bg-clip-text text-transparent;
 }
 
 .section-padding {
@@ -58,9 +73,10 @@ h6,
 
 .eyebrow::before {
   content: "";
+  /* top: 40; */
   display: inline-block;
-  width: 28px;
-  height: 1px;
+  width: 48px;
+  height: 5px;
   background-color: #3CB98C;
 }
 
@@ -164,6 +180,13 @@ html.lenis {
     padding-right: 40px;
   }
 
+  /* Home-page editorial sections (Hero, BusinessUniverse, FutureVision,
+     WhyWeExist) use .container-luxe — scale it up too so content fills the
+     32" screen proportionally instead of sitting in a narrow 1500px column. */
+  .container-luxe {
+    max-width: 1760px;
+  }
+
   /* Widen the large content columns so sections that use an inline max-width
      (not .container-x) don't sit small + centered on ultra-wide monitors.
      Narrow reading widths (max-w-3xl / max-w-2xl / prose) are left untouched. */
@@ -257,6 +280,10 @@ html.lenis {
     padding-right: 80px;
   }
 
+  .container-luxe {
+    max-width: 2200px;
+  }
+
   .max-w-7xl {
     max-width: 2040px;
   }
@@ -347,6 +374,10 @@ html.lenis {
 @media (min-width: 3840px) {
   html {
     font-size: 24px;
+  }
+
+  .container-luxe {
+    max-width: 3000px;
   }
 
   .max-w-7xl {

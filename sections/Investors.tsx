@@ -21,7 +21,7 @@ export default function Investors() {
     <section
       id="investors"
       ref={sectionRef}
-      className="section-padding bg-white"
+      className="bg-white py-10 md:py-14"
     >
       <div className="container-x">
         <motion.div

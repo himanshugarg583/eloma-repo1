@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronDown, Menu, Phone, Search, X } from "lucide-react";
@@ -171,6 +172,23 @@ function MegaMenu({ menuKey }: { menuKey: MenuKey }) {
 export default function Navbar() {
   const [activeMenu, setActiveMenu] = useState<MenuKey>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const pathname = usePathname();
+
+  // Logo click: if already on the home page, jump straight to the hero (#top)
+  // instead of letting Next.js no-op the same-route navigation. Otherwise the
+  // <Link href="/"> handles normal navigation back home.
+  const handleLogoClick = (e: React.MouseEvent) => {
+    if (pathname === "/") {
+      e.preventDefault();
+      setMobileOpen(false);
+      const hero = document.getElementById("top");
+      if (hero) {
+        hero.scrollIntoView({ behavior: "smooth", block: "start" });
+      } else {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    }
+  };
 
   return (
     <header
@@ -198,7 +216,11 @@ export default function Navbar() {
       {/* </div> */}
 
       <div className="container-x flex h-16 items-center justify-between md:h-20 3xl:h-24 4xl:h-28">
-        <Link href="/" className="flex items-center gap-1.5 md:gap-1 3xl:gap-0">
+        <Link
+          href="/"
+          onClick={handleLogoClick}
+          className="flex items-center gap-1.5 md:gap-1 3xl:gap-0"
+        >
           <Image
             src={logoIcon}
             alt="Eloma Group"

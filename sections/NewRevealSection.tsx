@@ -135,9 +135,9 @@ export const NewRevealSection: React.FC = () => {
           <p className="text-[14.5px] text-[#444] leading-[1.7] mb-4 font-semibold">
             At Eloma Group, sustainability is not just a commitment; it is a core part of how we operate and grow. Across all our business verticals, we strive to minimize environmental impact, promote ethical practices, and build solutions that contribute to a more responsible and resilient future.
           </p>
-          <p className="text-[13px] text-[#666] leading-[1.65] font-medium">
+          {/* <p className="text-[13px] text-[#666] leading-[1.65] font-medium">
             We integrate eco-conscious strategies within our transportation, digital, and operational processes, ensuring efficiency without compromising the environment. From reducing carbon footprints to adopting smarter technologies, our approach is focused on long-term value creation for businesses, communities, and the planet.
-          </p>
+          </p> */}
         </div>
 
       </section>

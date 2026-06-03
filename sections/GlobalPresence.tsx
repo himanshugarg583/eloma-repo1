@@ -49,7 +49,7 @@ export default function GlobalPresence() {
       {/* <div className="w-screen relative -ml-[50vw] left-[50%] bg-gradient-to-br from-[#0a2342] via-[#1a3a52] to-[#0d1f35]"> */}
       <div className="w-screen relative -ml-[50vw] left-[50%] bg-white">
 
-        <section id="global" className="section-padding relative overflow-hidden">
+        <section id="global" className="relative overflow-hidden py-10 md:py-14">
           <div className="container-x relative">
             <SectionHeading
               eyebrow="Global Presence"
