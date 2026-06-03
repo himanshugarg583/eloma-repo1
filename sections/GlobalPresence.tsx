@@ -2,13 +2,12 @@
 
 import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
-import { Anchor, Globe2, Network, RotateCw, ShieldCheck } from "lucide-react";
+import { Anchor, Globe2, Network, ShieldCheck } from "lucide-react";
 
 import SectionHeading from "@/components/SectionHeading";
 import TiltCard from "@/components/animations/TiltCard";
-import CountUp from "@/components/animations/CountUp";
 
-const GlobeScene = dynamic(() => import("@/components/GlobeScene"), {
+const CobeGlobe = dynamic(() => import("@/components/CobeGlobe"), {
   ssr: false,
   loading: () => (
     <div className="flex h-full w-full items-center justify-center">
@@ -47,113 +46,65 @@ export default function GlobalPresence() {
   return (
     <>
       {/* Full width background */}
-      <div className="w-screen relative -ml-[50vw] left-[50%] bg-gradient-to-br from-[#0a2342] via-[#1a3a52] to-[#0d1f35]">
-        {/* Cinematic gradient background with lighting effects */}
-        <div className="absolute inset-0 bg-gradient-to-br from-[#1e4d6d]/50 via-[#0a2342] to-[#051520] pointer-events-none"></div>
-        <div className="absolute top-1/4 right-1/3 w-[500px] h-[500px] bg-[#1a56ff]/15 rounded-full blur-[100px] pointer-events-none"></div>
-        <div className="absolute bottom-0 left-1/4 w-[400px] h-[400px] bg-[#3dbf9e]/10 rounded-full blur-[80px] pointer-events-none"></div>
+      {/* <div className="w-screen relative -ml-[50vw] left-[50%] bg-gradient-to-br from-[#0a2342] via-[#1a3a52] to-[#0d1f35]"> */}
+      <div className="w-screen relative -ml-[50vw] left-[50%] bg-white">
 
         <section id="global" className="section-padding relative overflow-hidden">
           <div className="container-x relative">
             <SectionHeading
-          eyebrow="Global Presence"
-          title="A growing presence across key global regions"
-          description="We operate across multiple countries, connecting businesses and communities through trusted, scalable solutions."
-          align="center"
-          variant="dark"
-        />
+              eyebrow="Global Presence"
+              title="A growing presence across key global regions"
+              description="We operate across multiple countries, connecting businesses and communities through trusted, scalable solutions."
+              align="center"
+              variant="light"
+            />
 
-        <div className="mt-14 grid gap-10 lg:grid-cols-[1.5fr_1fr] lg:items-center">
-          {/* Interactive 3D globe */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-15% 0px" }}
-            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-            // className="relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-forest via-forest-dark to-[#04140f] shadow-2xl bg-blue"
-            className="relative overflow-hidden rounded-2xl   bg-blue"
-          >
-            {/* Ambient radial glow */}
-            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_45%,rgba(72,201,138,0.18),transparent_60%)]" />
+            <div className="mt-14 grid gap-10 lg:grid-cols-[1.5fr_1fr] lg:items-center">
 
-            <div className="relative aspect-[16/12] w-full sm:aspect-[16/11]">
-              <GlobeScene />
-            </div>
+              {/* Globe — dark blue card */}
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-15% 0px" }}
+                transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+                className="rounded-3xl p-6"
+              >
+                <CobeGlobe />
+              </motion.div>
 
-            {/* Drag-to-rotate hint */}
-            <div className="pointer-events-none absolute bottom-4 left-4 flex items-center gap-2 rounded-full border border-white/10 bg-forest-dark/60 px-3 py-1.5 backdrop-blur">
-              <RotateCw size={13} className="text-gold" />
-              <span className="text-[11px] font-medium uppercase tracking-wider text-white/70">
-                Drag to rotate · Hover the pins
-              </span>
-            </div>
-
-            {/* Live counter */}
-            <div className="pointer-events-none absolute right-4 top-4 flex items-center gap-2 rounded-full border border-white/10 bg-forest-dark/60 px-3 py-1.5 backdrop-blur">
-              <span className="relative flex h-2 w-2">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-gold opacity-75" />
-                <span className="relative inline-flex h-2 w-2 rounded-full bg-gold" />
-              </span>
-              <span className="text-[11px] font-semibold text-white">
-                8 global hubs
-              </span>
-            </div>
-          </motion.div>
-
-          {/* Capabilities */}
-          <div className="space-y-4">
-            <p className="text-xs font-semibold uppercase tracking-wider text-gold-dark">
-              Global Capabilities
-            </p>
-            <div className="space-y-3">
-              {capabilities.map((item, idx) => (
-                <motion.div
-                  key={item.title}
-                  initial={{ opacity: 0, x: 30 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true, margin: "-100px" }}
-                  transition={{
-                    duration: 0.7,
-                    delay: idx * 0.12,
-                    ease: [0.22, 1, 0.36, 1]
-                  }}
-                >
-                  <TiltCard maxTilt={5}>
-                    <div className="group flex gap-4 rounded-2xl border border-white/20 bg-white/10 backdrop-blur-md p-5 transition-all duration-500 hover:-translate-y-0.5 hover:border-[#3dbf9e]/50 hover:shadow-[0_20px_40px_rgba(61,191,158,0.15)]">
-                      <div className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-xl bg-white/15 text-white transition-all duration-500 group-hover:rotate-6 group-hover:bg-[#3dbf9e] group-hover:text-[#0a2342]">
-                        <item.icon size={20} strokeWidth={1.8} />
-                      </div>
-                      <div>
-                        <h3 className="font-semibold text-white">{item.title}</h3>
-                        <p className="mt-1 text-sm leading-relaxed text-white/70">
-                          {item.description}
-                        </p>
-                      </div>
-                    </div>
-                  </TiltCard>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        {/* Live stat strip */}
-        {/* <div className="mt-12 grid grid-cols-3 gap-6 border-t border-slate-200 pt-8 text-center sm:gap-10">
-          {[
-            { to: 8, suffix: "", label: "Countries" },
-            { to: 25, suffix: "+", label: "Cities" },
-            { to: 400, suffix: "+", label: "Specialists" }
-          ].map((s) => (
-            <div key={s.label}>
-              <div className="font-display text-4xl font-bold text-forest md:text-5xl">
-                <CountUp to={s.to} suffix={s.suffix} />
+              {/* Capabilities — light theme */}
+              <div className="space-y-4">
+                <p className="text-xs font-semibold uppercase tracking-wider text-[#3CB98C]">
+                  Global Capabilities
+                </p>
+                <div className="space-y-3">
+                  {capabilities.map((item, idx) => (
+                    <motion.div
+                      key={item.title}
+                      initial={{ opacity: 0, x: 30 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true, margin: "-100px" }}
+                      transition={{ duration: 0.7, delay: idx * 0.12, ease: [0.22, 1, 0.36, 1] }}
+                    >
+                      <TiltCard maxTilt={5}>
+                        <div className="group flex gap-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition-all duration-500 hover:-translate-y-0.5 hover:border-[#3CB98C]/40 hover:shadow-[0_12px_32px_rgba(61,185,140,0.12)]">
+                          <div className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-xl bg-slate-100 text-[#08213C] transition-all duration-500 group-hover:rotate-6 group-hover:bg-[#3CB98C] group-hover:text-white">
+                            <item.icon size={20} strokeWidth={1.8} />
+                          </div>
+                          <div>
+                            <h3 className="font-semibold text-[#08213C]">{item.title}</h3>
+                            <p className="mt-1 text-sm leading-relaxed text-slate-500">
+                              {item.description}
+                            </p>
+                          </div>
+                        </div>
+                      </TiltCard>
+                    </motion.div>
+                  ))}
+                </div>
               </div>
-              <p className="mt-1 text-xs font-semibold uppercase tracking-wider text-slate-500 md:text-sm">
-                {s.label}
-              </p>
             </div>
-          ))}
-        </div> */}
+
           </div>
         </section>
       </div>

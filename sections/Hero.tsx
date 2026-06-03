@@ -7,16 +7,9 @@ import { ArrowRight, Play } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import MagneticButton from "@/components/animations/MagneticButton";
+import HeroGlobe from "@/components/HeroGlobe";
 
-const HeroGlobe = dynamic(() => import("@/components/HeroGlobe"), {
-  ssr: false,
-  loading: () => <div className="h-full w-full" />
-});
 
-const GlobeScene = dynamic(() => import("@/components/GlobeScene"), {
-  ssr: false,
-  loading: () => <div className="h-full w-full" />
-});
 
 const INTRO_DELAY = 2.2;
 
@@ -189,7 +182,7 @@ export default function Hero() {
             aria-hidden
             className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(circle_at_center,rgba(201,165,87,0.14),transparent_60%)]"
           />
-          <GlobeScene />
+          <HeroGlobe />
         </motion.div>
       </div>
     </section>

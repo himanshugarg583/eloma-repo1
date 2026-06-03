@@ -22,15 +22,16 @@ import {
 } from "lucide-react";
 
 import Navbar from "@/components/Navbar";
+import HeroGlobe from "@/components/HeroGlobe";
 import Footer from "@/components/Footer";
 import Chatbot from "@/components/Chatbot";
 import DotWorldMap from "@/components/maps/DotWorldMap";
-import HeroGlobe from "@/components/HeroGlobe";
 import MagneticButton from "@/components/animations/MagneticButton";
 import Marquee from "@/components/animations/Marquee";
 import CountUp from "@/components/animations/CountUp";
 import { cn } from "@/lib/utils";
 import GlobalPresence from "@/sections/GlobalPresence";
+import InsightsCarousel from "@/sections/InsightsCarousel";
 import Investors from "@/sections/Investors";
 import Contact from "@/sections/Contact";
 import WhyChoose from "@/sections/WhyChoose";
@@ -59,6 +60,7 @@ export default function Home() {
       <Navbar />
       <main className="overflow-clip">
         <Hero />
+        <ExperienceEloma />
        
         <div id="home-animated" className="relative">
           {/* <HeroSection />
@@ -66,31 +68,30 @@ export default function Home() {
           <EcommerceSection /> */}
         </div>
   
+<RevealSection/>
   
 
-        <AboutGroup />
+        {/* <AboutGroup /> */}
 
         {/* "Experience Eloma" — scroll-zoom text mask reveals the office videos */}
-        <ExperienceEloma />
 
         {/* <Services /> */}
-<NewRevealSection/>
+{/* <NewRevealSection/> */}
 <NewVisionSection />
         {/* CommunitySection ("Global Presence & Hubs") — copied from pallet_rose.
             CSS scoped under #home-community in globals.css. */}
 <Insights/>
+        <InsightsCarousel />
         <GlobalPresence />
-  
-        <div id="home-community">
-          <CommunitySection />
-        </div>
+        {/* <div id="home-community"> */}
+          {/* <CommunitySection /> */}
+        {/* </div> */}
   <NewEcommerceSection />
         <WhyChoose />
         <Investors />
         <Contact />
   {/* new */}
   
-        {/* <RevealSection/> */}
         {/* <BusinessVerticals /> */}
   {/* <CaseStudies /> */}
   

@@ -375,52 +375,11 @@ html.lenis {
   scroll-behavior: auto;
 }
 
-/* ── Custom dot + ring cursor ─────────────────────────────────────────────
-   The dot tracks the pointer exactly; the ring follows with a soft lag and
-   grows over interactive elements. mix-blend-mode keeps it visible over both
-   light and dark sections. Mouse (fine-pointer) devices only — touch keeps the
-   native behaviour. Logic lives in components/CustomCursor.tsx. */
-@media (pointer: fine) {
-  * {
-    cursor: none !important;
-  }
+/* GSAP pin-spacer inherits the RevealSection background so no white gap shows */
+.pin-spacer {
+  background: #f8f8f8 !important;
 }
 
-.custom-cursor {
-  position: fixed;
-  inset: 0;
-  z-index: 9999;
-  pointer-events: none;
-}
-
-.cursor-dot {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 18px;
-  height: 18px;
-  margin: -4px 0 0 -4px; /* centre on the pointer (JS sets the top-left) */
-  border-radius: 99999px;
-  background: green;
-  mix-blend-mode: difference;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  will-change: transform;
-}
-
-.cursor-ring {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 68px;
-  height: 68px;
-  border-radius: 9999px;
-  border: 2.5px solid green;
-  mix-blend-mode: difference;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  will-change: transform;
-}
 
 .lenis.lenis-smooth [data-lenis-prevent] {
   overscroll-behavior: contain;
