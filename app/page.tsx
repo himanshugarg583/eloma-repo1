@@ -59,7 +59,7 @@ export default function Home() {
     <div className="relative bg-white">
       <Navbar />
       <main className="overflow-clip">
-        <Hero />
+        {/* <Hero /> */}
         <ExperienceEloma />
           <RevealSection/>
           {/* <NewVisionSection /> */}
