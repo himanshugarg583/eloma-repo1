@@ -61,6 +61,15 @@ export default function Home() {
       <main className="overflow-clip">
         <Hero />
         <ExperienceEloma />
+          <RevealSection/>
+          <NewVisionSection />
+          <Insights/>
+          <InsightsCarousel />
+          <GlobalPresence />
+          <NewEcommerceSection />
+                {/* <WhyChoose /> */}
+                <Investors />
+                <Contact />
        
         <div id="home-animated" className="relative">
           {/* <HeroSection />
@@ -68,7 +77,6 @@ export default function Home() {
           <EcommerceSection /> */}
         </div>
   
-<RevealSection/>
   
 
         {/* <AboutGroup /> */}
@@ -77,19 +85,11 @@ export default function Home() {
 
         {/* <Services /> */}
 {/* <NewRevealSection/> */}
-<NewVisionSection />
         {/* CommunitySection ("Global Presence & Hubs") — copied from pallet_rose.
             CSS scoped under #home-community in globals.css. */}
-<Insights/>
-        <InsightsCarousel />
-        <GlobalPresence />
         {/* <div id="home-community"> */}
           {/* <CommunitySection /> */}
         {/* </div> */}
-  <NewEcommerceSection />
-        <WhyChoose />
-        <Investors />
-        <Contact />
   {/* new */}
   
         {/* <BusinessVerticals /> */}
