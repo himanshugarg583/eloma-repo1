@@ -18,7 +18,7 @@ export function SmoothScrollProvider({
 
     // Expose the instance so other components (e.g. the navbar logo) can drive
     // smooth scrolling through Lenis instead of fighting it with native scroll.
-    const w = window as Window & { lenis?: Lenis };
+    const w = window as unknown as { lenis?: Lenis };
     w.lenis = lenis;
 
     gsap.registerPlugin(ScrollTrigger);
@@ -45,7 +45,7 @@ export function SmoothScrollProvider({
       window.removeEventListener("load", refresh);
       gsap.ticker.remove(update);
       lenis.destroy();
-      delete (window as typeof window & { lenis?: Lenis }).lenis;
+      w.lenis = undefined;
     };
   }, []);
 

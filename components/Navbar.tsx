@@ -184,7 +184,7 @@ export default function Navbar() {
       setMobileOpen(false);
       // Use Lenis if it's running (it controls scrolling); otherwise fall back
       // to native smooth scroll.
-      const lenis = (window as typeof window & { lenis?: { scrollTo: (t: number, o?: object) => void } }).lenis;
+      const lenis = (window as unknown as { lenis?: { scrollTo: (t: number, o?: object) => void } }).lenis;
       if (lenis) {
         lenis.scrollTo(0, { duration: 1.2 });
       } else {
