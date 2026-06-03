@@ -62,14 +62,13 @@ export default function Home() {
         <Hero />
         <ExperienceEloma />
           <RevealSection/>
-          <NewVisionSection />
+          {/* <NewVisionSection /> */}
           <Insights/>
           <InsightsCarousel />
           <GlobalPresence />
-          <NewEcommerceSection />
-                {/* <WhyChoose /> */}
-                <Investors />
-                <Contact />
+          {/* <NewEcommerceSection /> */}
+          <Investors />
+          <Contact />
        
         <div id="home-animated" className="relative">
           {/* <HeroSection />
@@ -77,6 +76,7 @@ export default function Home() {
           <EcommerceSection /> */}
         </div>
   
+                {/* <WhyChoose /> */}
   
 
         {/* <AboutGroup /> */}
@@ -981,7 +981,7 @@ function Insights() {
           </motion.div>
         </div>
 
-        <motion.div
+        {/* <motion.div
           initial="initial"
           whileHover="hover"
           variants={{
@@ -990,8 +990,8 @@ function Insights() {
           }}
           transition={{ duration: 0.3, ease: "easeOut" }}
           className="relative overflow-hidden rounded-3xl border border-slate-200 bg-white p-8 md:p-12 transition-all duration-300 hover:shadow-card-hover"
-        >
-          <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-gold-dark">
+        > */}
+          {/* <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-gold-dark">
             Our Motto
           </p>
           <h3 className="mt-4 font-display text-2xl font-semibold text-forest md:text-3xl">
@@ -1016,9 +1016,9 @@ function Insights() {
               connecting cities, industries, and ideas every day. Because when
               Australia is connected, everyone moves forward together.
             </p>
-          </div>
+          </div> */}
           {/* Animated border trace */}
-          <svg className="absolute inset-0 h-full w-full pointer-events-none rounded-3xl" fill="none">
+          {/* <svg className="absolute inset-0 h-full w-full pointer-events-none rounded-3xl" fill="none">
             <motion.rect
               x="1"
               y="1"
@@ -1040,8 +1040,9 @@ function Insights() {
                 }
               }}
             />
-          </svg>
-        </motion.div>
+          </svg> */}
+        {/* </motion.div> */}
+     
       </div>
     </section>
   );
