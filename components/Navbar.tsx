@@ -174,16 +174,19 @@ export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const pathname = usePathname();
 
-  // Logo click: if already on the home page, jump straight to the hero (#top)
-  // instead of letting Next.js no-op the same-route navigation. Otherwise the
-  // <Link href="/"> handles normal navigation back home.
+  // Logo click: if already on the home page, jump straight to the top (hero)
+  // instead of letting Next.js no-op the same-route navigation. The hero is the
+  // first section, so scrolling to the very top lands on it without the fixed
+  // navbar overlapping it. Otherwise <Link href="/"> navigates home normally.
   const handleLogoClick = (e: React.MouseEvent) => {
     if (pathname === "/") {
       e.preventDefault();
       setMobileOpen(false);
-      const hero = document.getElementById("top");
-      if (hero) {
-        hero.scrollIntoView({ behavior: "smooth", block: "start" });
+      // Use Lenis if it's running (it controls scrolling); otherwise fall back
+      // to native smooth scroll.
+      const lenis = (window as typeof window & { lenis?: { scrollTo: (t: number, o?: object) => void } }).lenis;
+      if (lenis) {
+        lenis.scrollTo(0, { duration: 1.2 });
       } else {
         window.scrollTo({ top: 0, behavior: "smooth" });
       }
