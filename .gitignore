@@ -19,7 +19,6 @@ uploads/media/*
 Thumbs.db
 
 # IDE
-.vscode/
 .idea/
 
 # Build
@@ -33,7 +32,6 @@ coverage/
 tmp/
 temp/
 config.bat
-.env
 .next
 
 # TypeScript incremental build cache (must NOT be committed — stale cache breaks
