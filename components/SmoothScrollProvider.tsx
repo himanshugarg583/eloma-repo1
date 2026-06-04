@@ -16,10 +16,9 @@ export function SmoothScrollProvider({
       smoothWheel: true
     });
 
-    // Expose the instance so other components (e.g. the navbar logo) can drive
-    // smooth scrolling through Lenis instead of fighting it with native scroll.
-    const w = window as unknown as { lenis?: Lenis };
-    w.lenis = lenis;
+    // Expose lenis globally so Navbar logo can use lenis.scrollTo() for smooth scroll
+    const win = window as unknown as { lenis?: Lenis };
+    win.lenis = lenis;
 
     gsap.registerPlugin(ScrollTrigger);
 
@@ -31,11 +30,6 @@ export function SmoothScrollProvider({
     gsap.ticker.add(update);
     gsap.ticker.lagSmoothing(0);
 
-    // Pinned ScrollTriggers measure their pin-spacer heights on creation.
-    // If that happens before Lenis is wired up and before images/fonts settle,
-    // the spacers get the wrong height and the page shows large blank gaps
-    // (the "blank screen after the animation" bug). Recompute once everything
-    // has loaded, and again on full window load, so pin positions are correct.
     const refresh = () => ScrollTrigger.refresh();
     const refreshTimer = setTimeout(refresh, 300);
     window.addEventListener("load", refresh);
@@ -45,7 +39,8 @@ export function SmoothScrollProvider({
       window.removeEventListener("load", refresh);
       gsap.ticker.remove(update);
       lenis.destroy();
-      w.lenis = undefined;
+      // Clean up global reference
+      win.lenis = undefined;
     };
   }, []);
 
