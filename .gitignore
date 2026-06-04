@@ -35,6 +35,11 @@ temp/
 config.bat
 .env
 .next
+
+# TypeScript incremental build cache (must NOT be committed — stale cache breaks
+# Vercel type-checking by skipping changed files)
+*.tsbuildinfo
+tsconfig.tsbuildinfo
 # Baileys auth session (contains private keys for WhatsApp pairing)
 auth_session/
 temp_auto_push.bat
